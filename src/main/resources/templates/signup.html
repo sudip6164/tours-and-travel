@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <!-- Form-->
+    <div class="form">
+      <div class="form-toggle"></div>
+      <div class="form-panel one">
+        <div class="form-header">
+          <h1>Register Account</h1>
+        </div>
+        <div class="form-content">
+          <form method="post" action="register">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input id="username" type="text" name="username" required="required"/>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input id="email" type="email" name="email" required="required"/>
+              </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input id="password" type="password" name="password" required="required"/>
+            </div>            
+            <div class="form-group">
+              <button type="submit" style="margin-bottom:1rem;">Register</button>
+            </div>
+          </form>
+        </div>
+        <a href="/login" style="text-decoration: none;color: black;" class="register_link">Already have an account? <strong style="color:#4285F4">Login Here</strong></a>
+
+      </div>
+    </div>
+  </body>
+</html>

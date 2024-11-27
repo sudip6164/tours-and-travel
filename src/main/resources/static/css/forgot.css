@@ -1,0 +1,13 @@
+.form-header span {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .form-header span i {
+    margin-right: 10px; 
+  }
+  
+  .form-header span h1 {
+    margin: 0; 
+  }
+  
