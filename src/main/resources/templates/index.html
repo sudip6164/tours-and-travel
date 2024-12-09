@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx" class="no-js">
+<html lang="zxx" class="no-js" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <!-- Mobile Specific Meta -->
@@ -40,7 +40,7 @@
     <header class="default-header">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="/">
             <!-- <img src="img/logo.png" alt=""> -->
             <h4 style="color: white">Yarsa Tour & Travel</h4>
           </a>
@@ -51,11 +51,11 @@
 
           <div class="collapse navbar-collapse justify-content-end align-items-center mt-4" id="navbarSupportedContent">
             <ul class="navbar-nav">
-              <li><a href="index.html">Home</a></li>
-              <li><a href="about.html">About</a></li>
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
               <li><a href="recommend.html">Recommendation</a></li>
               <li><a href="#gallery">Offers & discounts </a></li>
-              <li><a href="contact.html">Contact</a></li>
+              <li><a href="/contact">Contact</a></li>
               <li>
                 <a href="#search" data-toggle="modal" data-target="#searchModal" id="search-icon">
                   <i class="bi bi-search text-white"></i>
@@ -63,7 +63,7 @@
               </li>
 
               <li>
-                <a href="login.html">
+                <a href="/booknow">
                   <button class="btn btn-primary">
                     Book Now
                   </button>
@@ -71,15 +71,14 @@
               </li>
 
               <!-- Dropdown -->
-              <!-- <li class="dropdown">
-								<a class="dropdown-toggle" href="user.html" id="navbardrop" >
-								<button class="btn btn-primary rounded">User Profile</button>
-								</a>
-								<div class="dropdown-menu">
-								  <a class="dropdown-item" href="#">Logout</a>
-								</div>
-							</li> -->
-              
+                	<li class="dropdown" th:if="${user != null}">
+						<a class="dropdown-toggle" href="/user" id="navbardrop" >
+							<button class="btn btn-primary rounded" th:text="${user.username}"></button>
+							</a>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+					</li>
             </ul>
           </div>
           <!-- Search Modal -->

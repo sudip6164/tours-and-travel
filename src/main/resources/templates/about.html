@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Mobile Specific Meta -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png" />
+    <!-- Author Meta -->
+    <meta name="author" content="colorlib" />
+    <!-- Meta Description -->
+    <meta name="description" content="" />
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="" />
+    <!-- meta character set -->
+    <meta charset="UTF-8" />
+    <!-- Site Title -->
+    <title>Travel & Tour</title>
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+      rel="stylesheet"
+    />
+    <!--
+			CSS
+			============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/owl.carousel.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <!-- start banner Area -->
+    <section class="banner-area" id="home">
+      <!-- Start Header Area -->
+      <header class="default-header">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+            <a class="navbar-brand" href="/">
+              <!-- <img src="img/logo.png" alt=""> -->
+              <h4 style="color: white">Yarsa Tour & Travel</h4>
+            </a>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="text-white lnr lnr-menu"></span>
+            </button>
+
+            <div
+              class="collapse navbar-collapse justify-content-end align-items-center mt-4"
+              id="navbarSupportedContent"
+            >
+              <ul class="navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="recommend.html">Recommendation</a></li>
+                <li><a href="#gallery">Offers & discounts </a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li>
+					<a href="#search" data-toggle="modal" data-target="#searchModal" id="search-icon">
+					  <i class="bi bi-search text-white"></i>
+					</a>
+				</li>
+
+                <li>
+                  <a href="/booknow">
+                    <button class="btn btn-primary">
+                      Book Now
+                    </button>
+                  </a>
+                </li>
+
+                <!-- Dropdown -->
+                	<li class="dropdown" th:if="${user != null}">
+						<a class="dropdown-toggle" href="/user" id="navbardrop" >
+							<button class="btn btn-primary rounded" th:text="${user.username}"></button>
+							</a>
+							<div class="dropdown-menu">
+							  <a class="dropdown-item" href="/logout">Logout</a>
+							</div>
+					</li>
+              </ul>
+            </div>
+             <!-- Search Modal -->
+			 <!-- <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+				  <div class="modal-content">
+					<div class="modal-header">
+					  <h5 class="modal-title" id="searchModalLabel">Search</h5>
+					  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					  </button>
+					</div>
+					<div class="modal-body">
+					  <form action="/search" method="get">
+						<div class="form-group">
+						  <input type="text" class="form-control" name="q" placeholder="Search..." />
+						</div>
+						<button type="submit" class="btn btn-primary">Search</button>
+					  </form>
+					</div>
+				  </div> -->
+				</div>
+			</div>
+		  </nav>
+		</header>
+      <!-- End Header Area -->
+    </section>
+
+    <section class="default-banner active-blog-slider">
+        <div class="item-slider relative" style="background: url(img/slider1.jpg); background-size: cover; height: 400px;">
+          <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
+            <div class="container">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10 col-12">
+                        <div class="banner-content text-center">
+                            <p class="text-white" style="font-size: larger;margin-top: 10rem;">
+                                Embark on your next adventure with YARSA TRAVELS AND TOURS. Discover breathtaking destinations, create unforgettable memories, and let us be your guide to the world’s wonders, where every journey is a story waiting to be told.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        <div
+            class="item-slider relative"
+            style="background: url(img/slider2.jpg); background-size: cover; height: 400px;"
+        >
+        <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
+            <div class="container">
+                <div class="row justify-content-center align-items-center h-100">
+                    <div class="col-md-10 col-12">
+                        <div class="banner-content text-center">
+                            <h4 class="text-white mb-20 text-uppercase">
+                            </h4>
+                            <p class="text-white" style="font-size: larger;margin-top: 10rem;">
+                                Embark on your next adventure with YARSA TRAVELS AND TOURS. Discover breathtaking destinations, create unforgettable memories, and let us be your guide to the world’s wonders, where every journey is a story waiting to be told.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Start about Area -->
+    <section class="section-gap info-area" id="about">
+      <div class="container">
+        <div class="single-info row mt-40">
+          <div
+            class="col-lg-6 col-md-12 mt-50 text-center no-padding info-left"
+          >
+            <div class="info-thumb">
+              <img src="img/about.jpg" class="img-fluid" alt="" />
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-12 no-padding info-rigth">
+            <div class="info-content">
+              <h2 class="pb-30 ">
+                ABOUT US!
+              </h2>
+              <p>
+                At Yarsa Tour and Travel, we believe in creating unforgettable travel experiences that enrich your life. Based in the heart of Nepal, we are a dedicated team of travel enthusiasts committed to providing you with the highest quality travel services. Whether you are seeking adventure, culture, or relaxation, we have the perfect journey waiting for you.
+              </p>
+              <br />
+              <p>
+                Founded in 2020, Yarsa Tour and Travel started with a vision to share the beauty and diversity of Nepal with the world. Our founders, passionate travelers themselves, wanted to create a travel company that prioritizes customer satisfaction, sustainability, and authentic experiences. Over the years, we have grown into a trusted name in the travel industry, known for our personalized service and attention to detail.
+              </p>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End about Area -->
+
+  <!-- Start project Area -->
+  <section class="project-area section-gap" id="project">
+    <div class="container">
+      <div class="row d-flex justify-content-center">
+        <div class="menu-content pb-30 col-lg-8">
+          <div class="title text-center">
+            <h1 class="mb-10">Top Destinations</h1>
+            <p>Discover the most beautiful places in the world to visit.</p>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center d-flex">
+        <div class="active-works-carousel mt-40 col-lg-8">
+          <div class="item">
+            <img class="img-fluid destination-img" src="img/himalaya.jpg" alt="Gosaikunda, Nepal" />
+            <div class="caption text-center mt-20">
+              <h6 class="text-uppercase">Gosaikunda, Nepal</h6>
+              <p>
+                A sacred alpine lake surrounded by snow-capped peaks, attracting trekkers and pilgrims alike. </p>
+            </div>
+          </div>
+          <div class="item">
+            <img class="img-fluid destination-img" src="img/chitwan.jpg" alt="Chitwan, Nepal" />
+            <div class="caption text-center mt-20">
+              <h6 class="text-uppercase">Chitwan, Nepal</h6>
+              <p>
+                Famous for its national park, wildlife safaris, and rich cultural heritage.
+              </p>
+            </div>
+          </div>
+          <div class="item">
+            <img class="img-fluid destination-img" src="img/mustang.jpg" alt="Mustang, Nepal" />
+            <div class="caption text-center mt-20">
+              <h6 class="text-uppercase">Mustang, Nepal</h6>
+              <p>
+                A remote, desert-like region known for its ancient Tibetan culture, monasteries, and dramatic
+                landscapes. </p>
+            </div>
+          </div>
+          <div class="item">
+            <img class="img-fluid destination-img" src="img/manang.jpeg" alt="Manang, Nepal" />
+            <div class="caption text-center mt-20">
+              <h6 class="text-uppercase">Manang, Nepal</h6>
+              <p>
+                A scenic valley offering spectacular views and a popular stop for trekkers on the Annapurna Circuit.
+              </p>
+            </div>
+          </div>
+          <div class="item">
+            <img class="img-fluid destination-img" src="img/pokhara.jpg" alt="Pokhara, Nepal" />
+            <div class="caption text-center mt-20">
+              <h6 class="text-uppercase">Pokhara, Nepal</h6>
+              <p>
+                A serene city known for its stunning lakes and breathtaking views of the Himalayas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End project Area -->
+
+    <!-- Start feature Area -->
+    <section class="feature-area section-gap" id="secvice">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-60 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">Some Features that Made us Unique</h1>
+              <p>Who are in extremely love with eco friendly system.</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature mb-30">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-license"></span>
+                <h4><a href="#">Professional Service</a></h4>
+              </div>
+              <p>
+                Usage of the Internet is becoming more common due to rapid
+                advancement of technology and power.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature mb-30">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-phone"></span>
+                <h4><a href="#">Great Support</a></h4>
+              </div>
+              <p>
+                Usage of the Internet is becoming more common due to rapid
+                advancement of technology and power.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-rocket"></span>
+                <h4><a href="#">50+ Destinations</a></h4>
+              </div>
+              <p>
+                Explore over 50 breathtaking destinations around the world,
+                 tailored to suit every traveler's desire.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-diamond"></span>
+                <h4><a href="#">Best Price Guarantee</a></h4>
+              </div>
+              <p>
+                We offer competitive and affordable pricing, ensuring you get the best value for your money.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-bubble"></span>
+                <h4><a href="#">Quick Booking</a></h4>
+              </div>
+              <p>
+                Easy and efficient booking process, ensuring you spend less time planning and more time enjoying your trip.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="single-feature mb-30">
+              <div class="title d-flex flex-row pb-20">
+                <span class="lnr lnr-user"></span>
+                <h4><a href="#">Expert Guides</a></h4>
+              </div>
+              <p>
+                Usage of the Internet is becoming more common due to rapid
+                advancement of technology and power.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End feature Area -->
+
+    <!-- Start gallery Area -->
+    <section class="gallery-area" id="gallery">
+      <div class="container-fluid" >
+        <div class="row no-padding">
+          <div class="active-gallery" >
+            <div class="item single-gallery">
+              <img src="img/gosaikunda.jpg" alt="" />
+            </div>
+            <div class="item single-gallery">
+              <img src="img/manang.jpeg" alt="" />
+            </div>
+            <div class="item single-gallery">
+              <img src="img/himalaya.jpg" alt="" />
+            </div>
+            <div class="item single-gallery">
+              <img src="img/manang.jpeg" alt="" />
+            </div>
+            <div class="item single-gallery">
+              <img src="img/gosaikunda.jpg" alt="" />
+            </div>
+            <div class="item single-gallery">
+              <img src="img/pokhara.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End gallery Area -->
+
+   <!-- Start logo Area -->
+    <section class="logo-area">
+      <div class="container">
+        <div class="row"></div>
+      </div>
+    </section>
+    <!-- End logo Area -->
+
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>About Us</h6>
+              <div class="list-group list-group-flush">
+                <div class="list-group-item text-white">
+                  <p>At Yarsa Tour and Travel, we believe in creating unforgettable travel experiences that enrich your
+                    life. </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h6>Quick Link</h6>
+              <div class="footer-social d-flex align-items-left">
+                <div class="list-group list-group-flush">
+                  <div class="list-group-item">
+                    <ul>
+                      <li class="list-footer text-white">
+                        <a aria-current="page" class="active text-white" href="/">Recommendation</a>
+                      </li>
+                      <li class="list-footer">
+                        <a aria-current="page" class="active text-white" href="/">FAQ</a>
+                      </li>
+                      <li class="list-footer">
+                        <a aria-current="page" class="active text-white" href="/">Contact</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
+            <div class="single-footer-widget">
+              <h6>Follow Us</h6>
+              <p>Let us be social</p>
+              <div class="footer-social d-flex align-items-center">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End footer Area -->
+
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+      integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/slick.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/main.js"></script>
+
+  </body>
+</html>
