@@ -53,7 +53,7 @@
             <ul class="navbar-nav">
               <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
-              <li><a href="recommend.html">Recommendation</a></li>
+              <li><a href="recommendl">Recommendation</a></li>
               <li><a href="#gallery">Offers & discounts </a></li>
               <li><a href="/contact">Contact</a></li>
               <li><a href="#search" data-toggle="modal" data-target="#searchModal" id="search-icon">
@@ -68,15 +68,15 @@
                 </a>
               </li>
               
-                  <!-- Dropdown -->
-              <li class="dropdown" th:if="${user != null}">
-				<a class="dropdown-toggle" href="/user" id="navbardrop" >
-					<button class="btn btn-primary rounded" th:text="${user.username}"></button>
-					</a>
-					<div class="dropdown-menu">
-					  <a class="dropdown-item" href="/logout">Logout</a>
-					</div>
-			 </li>
+              <!-- Dropdown -->
+               	<li class="dropdown" th:if="${user != null}">
+					<a class="dropdown-toggle" href="/user" id="navbardrop" >
+						<button class="btn btn-primary rounded" th:text="${user.username}"></button>
+						</a>
+						<div class="dropdown-menu">
+						  <a class="dropdown-item" href="/logout">Logout</a>
+						</div>
+				</li>
             </ul>
           </div>
       </nav>
@@ -96,63 +96,61 @@
   <!-- Start Profile Dashboard Area -->
   <section class="profile-dashboard section-gap">
     <div class="container">
-      <div class="row">
-        <div class="col-lg-3">
-          <div class="profile-sidebar">
-            <h3 class="mb-4">User Profile</h3>
-            <!-- Sidebar Navigation -->
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link active" href="#" data-target="#personal-info">Personal Info</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-target="#booking-history">Booking History</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-9 p-3 profile-info">
-          <!-- Personal Info Section -->
-          <div id="personal-info" class="profile-section">
-            <h4>Personal Info</h4>
-            <div class="card mb-4">
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-8">
-                    <p><strong>Name:</strong> <span th:text="${user.username}"></span></p>
-					<p><strong>Email:</strong> <span th:text="${user.email}"></span></p>
-					<p><strong>Phone:</strong> <span th:text="${user.phone}"></span></p>
-					<p><strong>Address:</strong> <span th:text="${user.address}"></span></p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                    <img th:src="${user.profilePictureUrl != null ? user.profilePictureUrl : 'https://i.mydramalist.com/RB3VNP_5c.jpg'}" alt="User Image" class="img-fluid rounded-circle profile-image" />
-                  </div>
-                  <div class="profile-edit p-4">
-                    <a href="/editProfilePage">
-                      <button class="btn btn-primary">Edit Profile</button>
-                    </a>
-                  </div>
+        <div class="row">
+            <div class="col-lg-9 p-3 profile-info">
+                <!-- Personal Info Section -->
+                <div id="personal-info" class="profile-section">
+                    <h4>Edit Profile</h4>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form action="/editProfile" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                    	<input type="hidden" name="id" th:value="${user.id}" />
+                                    	<input type="hidden" name="password" th:value="${user.password}" />
+                                        <!-- Name -->
+                                        <div class="form-group">
+                                            <label for="name"><strong>Name:</strong></label>
+                                            <input type="text" class="form-control" id="name" name="username" th:value="${user.username}" required>
+                                        </div>
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="email"><strong>Email:</strong></label>
+                                            <input type="email" class="form-control" id="email" name="email" th:value="${user.email}" readonly required>
+                                        </div>
+                                        <!-- Phone -->
+                                        <div class="form-group">
+                                            <label for="phone"><strong>Phone:</strong></label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" th:value="${user.phone}" required>
+                                        </div>
+                                        <!-- Address -->
+                                        <div class="form-group">
+                                            <label for="address"><strong>Address:</strong></label>
+                                            <textarea class="form-control" id="address" name="address" rows="3" th:text="${user.address}" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <!-- Profile Image -->
+                                        <div class="form-group update-image">
+                                            <img id="preview-image" th:src="${user.profilePictureUrl != null ? user.profilePictureUrl : 'https://i.mydramalist.com/RB3VNP_5c.jpg'}" alt="User Image" class="img-fluid rounded-circle profile-image mt-2" />
+                                            <br>
+                                            <label for="file-upload" class="file-label"><strong>Profile</strong></label>
+                                            <input type="file" class="form-control-file file-upload" id="file-upload" name="profilePicture" onchange="previewImage(event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Save Changes Button -->
+                                <div class="profile-edit p-4 text-center">
+                                    <button type="submit" class="btn btn-success">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- Booking History Section -->
-          <div id="booking-history" class="profile-section d-none">
-            <h4>Booking History</h4>
-            <div class="card mb-4">
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="history-item p-3">Trip to Gosaikunda - <span class="badge badge-success">Completed</span></li>
-                  <li class="history-item p-3">Trip to Chitwan - <span class="badge badge-warning">Upcoming</span></li>
-                  <li class="history-item p-3">Trip to Mustang - <span class="badge badge-success">Completed</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>
   <!-- End Profile Dashboard Area -->
 
   <script src="js/vendor/jquery-2.2.4.min.js"></script>
@@ -170,6 +168,19 @@
   <script src="js/main.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Set the preview image src to the file's content
+                document.getElementById('preview-image').src = e.target.result;
+            };
+            reader.readAsDataURL(file); // Read the file as a data URL for preview
+        }
+    }
+</script>
   <script>
     $(document).ready(function() {
       $('.nav-link').click(function(e) {

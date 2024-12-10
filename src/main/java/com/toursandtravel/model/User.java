@@ -16,6 +16,7 @@ public class User {
     private String password;
     private String phone;
     private String address;
+    private String profilePictureUrl;
 
     // Getter and setter methods
     public int getId() {
@@ -64,6 +65,14 @@ public class User {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getProfilePictureUrl() {
+		return profilePictureUrl;
+	}
+
+	public void setProfilePictureUrl(String profilePictureUrl) {
+		this.profilePictureUrl = profilePictureUrl;
 	}
 	
 }
