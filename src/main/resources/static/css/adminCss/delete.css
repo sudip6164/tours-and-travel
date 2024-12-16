@@ -1,0 +1,65 @@
+/* Reset and basic styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Confirmation box styling */
+.confirm-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+/* Title styling */
+h1 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Button styling */
+.btn-yes,
+.btn-cancel {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.btn-yes {
+    background-color: #f44336;
+    color: #fff;
+    border: none;
+}
+
+.btn-yes:hover {
+    background-color: #d32f2f;
+}
+
+.btn-cancel {
+    background-color: #007bff;
+    color: #fff;
+    margin-left: 10px;
+    border: none;
+}
+
+.btn-cancel:hover {
+    background-color: #0056b3;
+}

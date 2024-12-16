@@ -1,0 +1,118 @@
+/* Form container */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1, .form-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="email"],
+.form-container input[type="email"],
+.form-container input[type="url"],
+.form-container textarea,
+.form-container input[type="file"],
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.form-container textarea {
+  resize: vertical;
+}
+
+.form-container button[type="button"],
+.form-container button[type=""] {
+  width: 50%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.form-container button[type="button"]:hover,
+.form-container button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: 10px;
+  }
+
+  .form-container input[type="text"],
+  .form-container input[type="url"],
+  .form-container textarea,
+  .form-container input[type="file"] ,
+  .form-container select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .form-container button[type="button"],
+  .form-container button[type="submit"] {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* Container for dynamic fields */
+#itineraryContainer div, 
+#highlightContainer div, 
+#includedContainer div, 
+#exclusionContainer div, 
+#imageContainer div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+#itineraryContainer textarea, 
+#highlightContainer textarea, 
+#includedContainer textarea, 
+#exclusionContainer textarea {
+  width: calc(100% - 20px);
+}
+
+#itineraryContainer button,
+#highlightContainer button,
+#includedContainer button,
+#exclusionContainer button,
+#imageContainer button {
+  align-self: flex-start;
+  background-color: #dc3545;
+}
+
+#itineraryContainer button:hover,
+#highlightContainer button:hover,
+#includedContainer button:hover,
+#exclusionContainer button:hover,
+#imageContainer button:hover {
+  background-color: #c82333;
+}

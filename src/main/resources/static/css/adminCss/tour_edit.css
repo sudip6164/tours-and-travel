@@ -1,0 +1,224 @@
+/* Responsive CSS */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .sidebar {
+    width: 250px;
+    height: 100%;
+    background: #111;
+    position: fixed;
+    overflow: hidden;
+    transition: width 0.5s;
+  }
+  
+  .sidebar.active {
+    width: 60px;
+  }
+  
+  .sidebar .logo-details {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar .logo-details i {
+    font-size: 28px;
+    color: #fff;
+  }
+  
+  .sidebar .logo-details .logo_name {
+    font-size: 20px;
+    color: #fff;
+    display: none;
+  }
+  
+  .sidebar.active .logo-details .logo_name {
+    display: none;
+  }
+  
+  .sidebar .nav-links {
+    height: 100%;
+    padding: 30px 0;
+    overflow-y: auto;
+  }
+  
+  .sidebar .nav-links li {
+    position: relative;
+    list-style: none;
+    height: 50px;
+    transition: all 0.4s ease;
+  }
+  
+  .sidebar .nav-links li a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+  }
+  
+  .sidebar .nav-links li a i {
+    min-width: 60px;
+    text-align: center;
+    font-size: 28px;
+    color: #fff;
+  }
+  
+  .sidebar .nav-links li a .links_name {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  
+  .sidebar .nav-links .log_out {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .sidebar .nav-links li a.active {
+    background: #1d1b31;
+  }
+  
+  .sidebar .nav-links li a:hover {
+    background: #1d1b31;
+  }
+  
+  .home-section {
+    position: relative;
+    min-height: 100vh;
+    width: calc(100% - 250px);
+    left: 250px;
+    transition: all 0.5s ease;
+  }
+  
+  .sidebar.active ~ .home-section {
+    width: calc(100% - 60px);
+    left: 60px;
+  }
+  
+  .home-section nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    background: #fff;
+    padding: 0 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .home-section .home-content {
+    position: relative;
+    padding: 20px 30px;
+    background: #f1f1f1;
+    min-height: calc(100vh - 80px);
+    transition: all 0.5s ease;
+  }
+  
+  .home-section .home-content .recent-sales-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+  .home-section .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .home-section .form-container h1,
+  .home-section .form-container h3,
+  .home-section .form-container h4 {
+    margin-bottom: 15px;
+  }
+  
+  .home-section .form-container .input-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .home-section .form-container .input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .home-section .form-container .input-group input,
+  .home-section .form-container .input-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+  }
+  
+  .home-section .form-container button {
+    padding: 10px 20px;
+    background: #1d1b31;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .home-section .form-container button:hover {
+    background: #333;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .sidebar {
+      width: 60px;
+    }
+  
+    .sidebar .logo-details .logo_name {
+      display: none;
+    }
+  
+    .sidebar .nav-links li a .links_name {
+      display: none;
+    }
+  
+    .home-section {
+      width: calc(100% - 60px);
+      left: 60px;
+    }
+  
+    .home-section nav {
+      padding: 0 10px;
+    }
+  
+    .home-section .form-container {
+      padding: 20px;
+    }
+  
+    .home-section .form-container .input-group {
+      width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .home-section {
+      width: 100%;
+      left: 0;
+    }
+  
+    .home-section nav {
+      justify-content: center;
+    }
+  
+    .home-section nav .sidebar-button {
+      display: none;
+    }
+  }
+  

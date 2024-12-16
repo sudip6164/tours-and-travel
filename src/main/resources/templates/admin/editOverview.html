@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Yarsha Admin</title>
+    <link rel="stylesheet" href="/css/adminCss/dash.css" />
+    <link rel="stylesheet" href="/css/adminCss/edit.css" />
+      <!-- Boxicons CDN Link -->
+      <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
+  
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css
+   "
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="bx bx-user"></i>
+        <span class="logo_name">Admin</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="active">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="tour_list.html" class="active">
+            <i class="bx bx-box"></i>
+            <span class="links_name">Tour</span>
+          </a>
+        </li>
+        <li>
+          <a href="review.html" class="active">
+            <i class="bx bx-star"></i>
+            <span class="links_name">Reviews</span>
+          </a>
+        </li>
+        <li>
+          <a href="booking.html" class="active">
+            <i class="bx bx-book-reader"></i>
+            <span class="links_name">Manage Bookings</span>
+          </a>
+        </li>
+        <li>
+          <a href="manageUser.html" class="active">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Manage User</span>
+          </a>
+        </li>
+        <li class="log_out">
+          <a href="login.html">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <section class="home-section">
+      <nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard">Dashboard</span>
+        </div>
+      </nav>
+
+      <div class="home-content">
+        <div class="recent-sales-box">
+          <div class="form-container">
+            <h1>Edit Overview Details</h1>
+            <form method="post" enctype="multipart/form-data">
+              <h3>Tour Overview Details</h3>
+              <div class="input-group">
+                <label for="overview">Overview</label>
+                <textarea type="text" name="overview" value=""></textarea>
+              </div>
+              <h4 style="font-weight: lighter">Tour Info</h4>
+
+              <div class="input-group">
+                <label for="title">Place:</label>
+                <input type="text" name="title" value="" />
+              </div>
+              <div class="input-group">
+                <label for="duration">Duration:</label>
+                <input type="text" name="duration" value="" />
+              </div>
+              <div class="input-group">
+                <label for="start_point">Start Point:</label>
+                <input type="text" name="start_point" value="" />
+              </div>
+              <div class="input-group">
+                <label for="end_point">End Point:</label>
+                <input type="text" name="end_point" value="" />
+              </div>
+              <div class="button-container">
+                <a href="tour_list.html">
+                  <button class="btn btn-danger">Cancel</button>
+                </a>
+                <button type="submit" class="btn btn-success">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".sidebarBtn");
+      sidebarBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("active")) {
+          sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      };
+
+      function showSection(section) {
+        const sections = document.querySelectorAll(".form-section");
+        sections.forEach((sec) => {
+          sec.classList.remove("active");
+        });
+        document.getElementById(`section-${section}`).classList.add("active");
+      }
+    </script>
+  </body>
+</html>
