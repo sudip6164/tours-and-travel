@@ -22,17 +22,17 @@
     <div class="sidebar">
       <div class="logo-details">
         <i class="bx bx-user" aria-hidden="true"></i>
-        <span class="logo_name">Admin</span>
+        <span class="logo_name" th:text="${user.username}"></span>
       </div>
       <ul class="nav-links">
         <li>
-          <a href="dashboard.html" class="active">
+          <a href="/admin" class="active">
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="tour_list.html" class="active">
+          <a href="/admin/tour_list" class="active">
             <i class="bx bx-box"></i>
             <span class="links_name">Tours</span>
           </a>
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li class="log_out">
-          <a href="login.html">
+          <a href="/admin/adminLogout">
             <i class="bx bx-log-out"></i>
             <span class="links_name">Log out</span>
           </a>
@@ -120,8 +120,12 @@
                       >
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <button class="btn btn-danger">Delete</button>
-                    </td>
+                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
+					</td>
                   </tr>
                 </tbody>
               </table>
@@ -150,7 +154,11 @@
                       <a href="editOverview.html" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <button class="btn btn-danger">Delete</button>
+                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -179,7 +187,11 @@
                       <a href="editItinery.html" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <button class="btn btn-danger">Delete</button>
+                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -215,7 +227,11 @@
                       >
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <button class="btn btn-danger">Delete</button>
+                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
                     </td>
                   </tr>
                 </tbody>

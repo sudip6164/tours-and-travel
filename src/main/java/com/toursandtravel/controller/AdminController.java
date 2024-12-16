@@ -134,5 +134,16 @@ public class AdminController {
         }
         return "redirect:/admin/adminLogin";
     }
+    
+    @GetMapping("/admin/delete_tour")
+    public String deleteTour(@RequestParam int id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            tRepo.deleteById(id); // Delete the tour by ID
+            model.addAttribute("tourList", tRepo.findAll());
+            return "redirect:/admin/tour_list"; // Redirect to the tour list page
+        }
+        return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
+    }
 
 }

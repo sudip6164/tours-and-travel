@@ -11,9 +11,8 @@
 </head>
 <body>
     <div class="confirm-box">
-        <h1>Are you sure you want to delete "<strong>{{ tour.title }}</strong>"?</h1>
+        <h1>Are you sure you want to delete "<strong>tour.title</strong>"?</h1>
         <form method="post">
-            {% csrf_token %}
             <button type="submit" class="btn-yes">Yes, delete</button>
             <a href="{% url 'tour_list' %}" class="btn-cancel">Cancel</a>
         </form>
