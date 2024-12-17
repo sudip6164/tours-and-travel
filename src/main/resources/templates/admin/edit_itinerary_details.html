@@ -22,13 +22,13 @@
     </div>
     <ul class="nav-links">
       <li>
-        <a href="dashboard.html" class="active">
+        <a href="/admin" class="active">
           <i class="bx bx-grid-alt"></i>
           <span class="links_name">Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="tour_list.html" class="active">
+        <a href="/admin/tour_list" class="active">
           <i class="bx bx-box"></i>
           <span class="links_name">Tour</span>
         </a>
@@ -52,7 +52,7 @@
         </a>
       </li>
       <li class="log_out">
-        <a href="login.html">
+        <a href="/admin/adminLogout">
           <i class="bx bx-log-out"></i>
           <span class="links_name">Log out</span>
         </a>
@@ -72,12 +72,16 @@
       <div class="recent-sales-box">
         <div class="form-container">
           <h1>Edit Itinerary Details</h1>
-          <form method="post" enctype="multipart/form-data">
+          <form action="/admin/update_itinerary_details" method="post" enctype="multipart/form-data">
             <h3>Itinerary</h3>
             <div id="itineraryContainer">
-              <div class="container">
-                <input type="text" name="itinerary_day[]" placeholder="Day" value="" />
-                <textarea name="itinerary_description[]" placeholder="Description"></textarea>
+              <div class="container" th:each="item, stat : ${tour.itinerary}">
+              	<input type="hidden" name="id" th:value="${tour.id}" />
+                <label for="itinerary_day">Day:</label>
+            	<input type="text" name="itinerary_day" th:value="${item.day}" required />
+
+            	<label for="itinerary_description">Description:</label>
+            	<textarea name="itinerary_description" required>[[${item.description}]]</textarea>
                 <button type="button" class="remove-button" onclick="this.parentElement.remove()">
                   Remove</button><br /><br />
               </div>
@@ -85,7 +89,7 @@
             <button type="button" onclick="addItineraryField()">
               Add More Itinerary</button><br /><br />
             <div class="button-container">
-              <a href="tour_list.html">
+              <a href="/admin/tour_list">
                 <button class="btn btn-danger">Cancel</button>
               </a>
               <button type="submit" class="btn btn-success">Submit</button>
@@ -117,8 +121,8 @@
       const container = document.getElementById("itineraryContainer");
       const newField = document.createElement("div");
       newField.innerHTML = `
-              <input type="text" name="itinerary_day[]" placeholder="Day" style="margin-bottom: 10px;">
-              <textarea name="itinerary_description[]" placeholder="Description" style="margin-bottom: 10px;"></textarea>
+              <input type="text" name="itinerary_day" placeholder="Day" style="margin-bottom: 10px;">
+              <textarea name="itinerary_description" placeholder="Description" style="margin-bottom: 10px;"></textarea>
               <button type="button" onclick="this.parentElement.remove()">Remove</button><br><br>
           `;
       container.appendChild(newField);

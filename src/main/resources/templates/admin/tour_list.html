@@ -88,10 +88,10 @@
                   <tr>
                     <th>Tour ID</th>
                     <th>Title</th>
-                    <th>Price</th>
+                    <th>Description</th>
                     <th>Rating</th>
+                    <th>Price</th>
                     <th>Image</th>
-                    <th>Duration</th>
                     <th>Description</th>
                     <th></th>
                   </tr>
@@ -104,18 +104,17 @@
                     <td th:text="${tour.description}"></td>
                     <td th:text="${tour.review}"></td>
                     <td th:text="${tour.price}"></td>
-                    <td th:text="${tour.tourImageUrl}"></td>
                     <td>
                       <img
-                        src="path/to/image.jpg"
+                        th:src="${tour.tourImageUrl}"
                         alt="Tour Title"
-                        class="tour-image"
+                        class="tour-image" width="100" height="100"
                       />
                     </td>
 
                     <td>
                       <a
-                        href="tour_edit_form.html"
+                        th:href="@{'/admin/edit_tour_details'(id=${tour.id})}"
                         style="text-decoration: none"
                       >
                         <button class="btn btn-success">Edit</button>
@@ -151,7 +150,7 @@
                     <td th:text="${tour.startPoint}"></td>
                     <td th:text="${tour.endPoint}"></td>
                     <td>
-                      <a href="editOverview.html" style="text-decoration: none">
+                      <a th:href="@{'/admin/edit_overview_details'(id=${tour.id})}" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
                       <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
@@ -170,8 +169,7 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Days</th>
-                    <th>Description</th>
+                    <th>Days: Description</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -184,7 +182,7 @@
                                 </li>
                             </ul></td>
                     <td>
-                      <a href="editItinery.html" style="text-decoration: none">
+                      <a th:href="@{'/admin/edit_itinerary_details'(id=${tour.id})}" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
                       <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
@@ -222,7 +220,7 @@
                             </ul></td>
                     <td>
                       <a
-                        href="editInclusion.html"
+                        th:href="@{'/admin/edit_inclusion_exclusion'(id=${tour.id})}"
                         style="text-decoration: none"
                       >
                         <button class="btn btn-success">Edit</button>
