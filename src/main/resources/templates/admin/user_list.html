@@ -50,7 +50,7 @@
           </a>
         </li>
         <li>
-          <a href="manageUser.html" class="active">
+          <a href="/admin/user_list" class="active">
             <i class="bx bx-user"></i>
             <span class="links_name">Manage User</span>
           </a>
@@ -85,22 +85,29 @@
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Profile Picture</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- Example row -->
-                  <tr>
-                    <td>1</td>
-                    <td>Neo Hou</td>
-                    <td>neo@gmail.com</td>
-                    <td>+977 9876543210</td>
-                    <td>Kathmandu</td>
+                  <tr th:each="user:${userList}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td><img
+                        th:src="${user.profilePictureUrl}"
+                        alt="Profile Picture"
+                        class="user-image" width="100" height="100"
+                      /></td>
                     <td>
-                        <a href="editUser.html" style="text-decoration: none">
-                            <button class="btn btn-success">Edit</button>
-                          </a>
-                      <button class="btn btn-danger">Delete</button>
+                          <a th:href="@{'/admin/delete_user'(id=${user.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
                     </td>
                   </tr>
                 </tbody>

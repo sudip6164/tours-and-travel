@@ -334,5 +334,27 @@ public class AdminController {
         }
         return "redirect:/admin/adminLogin";
     }
+    
+    @GetMapping("/admin/user_list")
+   	public String userList(HttpSession session, Model model) {
+   		User user = (User) session.getAttribute("user");
+   	    if (user != null) {
+   	    	model.addAttribute("user", user);
+            model.addAttribute("userList", uRepo.findAll());
+   	        return "admin/user_list.html";
+   	    }
+   	    return "redirect:/admin/adminLogin";
+   	}
+    
+    @GetMapping("/admin/delete_user")
+    public String deleteUser(@RequestParam int id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            uRepo.deleteById(id); // Delete the tour by ID
+            model.addAttribute("userList", uRepo.findAll());
+            return "redirect:/admin/user_list"; // Redirect to the tour list page
+        }
+        return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
+    }
 
 }
