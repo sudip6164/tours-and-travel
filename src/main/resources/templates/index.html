@@ -53,14 +53,10 @@
             <ul class="navbar-nav">
               <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
-              <li><a href="recommend.html">Recommendation</a></li>
+              <li><a href="/recommend">Recommendation</a></li>
               <li><a href="#gallery">Offers & discounts </a></li>
               <li><a href="/contact">Contact</a></li>
-              <li>
-                <a href="#search" data-toggle="modal" data-target="#searchModal" id="search-icon">
-                  <i class="bi bi-search text-white"></i>
-                </a>
-              </li>
+              <li><a href="review.html">Review</a></li>
 
               <li>
                 <a href="/booknow">
@@ -81,30 +77,19 @@
 					</li>
             </ul>
           </div>
-          <!-- Search Modal -->
-          <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="searchModalLabel">Search</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <form action="/search" method="get">
-                    <div class="form-group">
-                      <input type="text" class="form-control" name="q" placeholder="Search..." />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </nav>
+               <!-- Search Bar -->
+      <div class="search-bar-container sticky-top">
+        <div class="d-flex justify-content-center h-100 rounded">
+          <form class="search" action="searchedList.html" method="GET">
+            <input type="number" class="search-input" placeholder="Enter price" name="price" min="0" required>
+            <button type="submit" class="search-icon">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Search Bar End -->
     </header>
     <!-- End Header Area -->
   </section>

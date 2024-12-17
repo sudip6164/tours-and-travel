@@ -2796,3 +2796,76 @@ h6 {
   border-radius: 50%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 }
+.search {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 30px;
+  padding: 5px 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 30px;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #3572EF;
+  color: white;
+  margin-left: 10px;
+  border: none;
+}
+
+.search-icon:hover {
+  background-color: #1A237E;
+}
+
+@media (max-width: 768px) {
+  .search {
+      max-width: 300px;
+  }
+
+  .search-input {
+      font-size: 14px;
+  }
+}
+.discover-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 50px; 
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+.discover-btn i {
+  margin-right: 10px; 
+}
+
+.discover-btn:hover {
+  background-color: #0056b3; 
+}
+img.rounded-circle {
+  width: 80px;         
+  height: 80px;       
+  object-fit: cover;   
+  border-radius: 50%;  
+}

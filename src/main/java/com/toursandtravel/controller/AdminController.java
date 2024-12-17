@@ -44,6 +44,10 @@ public class AdminController {
         User user = uRepo.findByUsername(u.getUsername());
         if (user != null && BCrypt.checkpw(u.getPassword(), user.getPassword())) {
         	session.setAttribute("user", user);
+        	int totalTours = (int) tRepo.count();
+	    	int totalUsers = (int) uRepo.count();
+	    	model.addAttribute("totalTours", totalTours);
+	        model.addAttribute("totalUsers", totalUsers);
             return "admin/dashboard.html";
         } else {
             return "admin/login.html";
@@ -63,6 +67,12 @@ public class AdminController {
 		User user = (User) session.getAttribute("user");
 	    if (user != null) {
 	    	model.addAttribute("user", user);
+	    	
+	    	int totalTours = (int) tRepo.count();
+	    	int totalUsers = (int) uRepo.count();
+	    	model.addAttribute("totalTours", totalTours);
+	        model.addAttribute("totalUsers", totalUsers);
+	        
 	        return "admin/dashboard.html";
 	    }
 	    return "redirect:/admin/adminLogin";
