@@ -26,13 +26,13 @@
       </div>
       <ul class="nav-links">
         <li>
-          <a href="dashboard.html" class="active">
+          <a href="/admin" class="active">
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="tour_list.html" class="active">
+          <a href="/tour_list" class="active">
             <i class="bx bx-box"></i>
             <span class="links_name">Tours</span>
           </a>
@@ -44,18 +44,18 @@
           </a>
         </li>
         <li>
-          <a href="booking.html" class="active">
+          <a href="/admin/booking_list" class="active">
             <i class="bx bx-book-reader"></i>
             <span class="links_name">Manage Bookings</span>
           </a>
         </li>
         <li>
-          <a href="manageUser.html" class="active">
+          <a href="/admin/user_list" class="active">
             <i class="bx bx-user"></i>
             <span class="links_name">Manage User</span>
           </a>
         </li>
-        <li class="log_out">
+        <li class="/admin/adminLogout">
           <a href="login.html">
             <i class="bx bx-log-out"></i>
             <span class="links_name">Log out</span>
@@ -81,23 +81,25 @@
                 <thead>
                   <tr>
                     <th>Booking ID</th>
-                    <th>User ID</th>
                     <th>Tour ID</th>
+                    <th>Tour Name</th>
+					<th>User ID</th>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Package</th>
+                    <th>Approval Status</th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- Example row -->
-                  <tr>
-                    <td>1</td>
-                    <td>12</td>
-                    <td>20</td>
-                    <td>Neo Hou</td>
-                    <td>neo@gmail.com</td>
-                    <td>Customized or Normal</td>
+                  <tr th:each="booking:${bookingList}">
+                    <td th:text="${booking.id}"></td>
+                    <td th:text="${booking.tour.id}"></td>
+                    <td th:text="${booking.tour.title}"></td>
+                    <td th:text="${booking.user.id}"></td>
+                    <td th:text="${booking.user.username}"></td>
+                    <td th:text="${booking.user.email}"></td>
+                    <td th:text="${booking.approvalStatus}"></td>
                     <td>
                         <a href="editBooking.html" style="text-decoration: none">
                             <button class="btn btn-success">Edit</button>

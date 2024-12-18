@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.toursandtravel.model.User;
 import com.toursandtravel.model.ItineraryItem;
 import com.toursandtravel.model.Tour;
+import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
 
@@ -34,6 +35,9 @@ public class AdminController {
 	@Autowired
     private TourRepository tRepo;
 	
+	@Autowired
+    private BookingRepository bRepo;
+	
 	@GetMapping("/admin/adminLogin")
     public String adminLogin() {
         return "admin/login.html";
@@ -46,8 +50,10 @@ public class AdminController {
         	session.setAttribute("user", user);
         	int totalTours = (int) tRepo.count();
 	    	int totalUsers = (int) uRepo.count();
+	    	int totalBookings = (int) bRepo.count();
 	    	model.addAttribute("totalTours", totalTours);
 	        model.addAttribute("totalUsers", totalUsers);
+	        model.addAttribute("totalBookings", totalBookings);
             return "admin/dashboard.html";
         } else {
             return "admin/login.html";
@@ -367,4 +373,14 @@ public class AdminController {
         return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
     }
 
+    @GetMapping("/admin/booking_list")
+   	public String bookingList(HttpSession session, Model model) {
+   		User user = (User) session.getAttribute("user");
+   	    if (user != null) {
+   	    	model.addAttribute("user", user);
+            model.addAttribute("bookingList", bRepo.findAll());
+   	        return "admin/booking_list.html";
+   	    }
+   	    return "redirect:/admin/adminLogin";
+   	}
 }

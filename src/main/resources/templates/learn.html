@@ -126,11 +126,10 @@
         </a>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" id="customPkg" href="bookTour.html">
-          <button class="btn btn-success">
-            Book Tour
-          </button>  
-        </a>
+      	<form th:action="@{/bookTour}" method="post" class="nav-link" id="customPkg">
+			<input type="hidden" name="tourId" th:value="${tour.id}">
+			<button class="btn btn-success" type="submit">Book Tour</button>
+		 </form>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link" id="customPkg" href="customPkg.html">

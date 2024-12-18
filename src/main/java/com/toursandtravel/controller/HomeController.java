@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.toursandtravel.model.User;
+import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.Tour;
+import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.TourRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,6 +19,9 @@ import jakarta.servlet.http.HttpSession;
 public class HomeController {
 	@Autowired
     private TourRepository tRepo;
+	
+	@Autowired
+	private BookingRepository bRepo;
 	
 	@GetMapping("/")
     public String frontPage(HttpSession session, Model model) {
@@ -44,19 +50,19 @@ public class HomeController {
         return "contact.html";
     }
 	
-	@GetMapping("/bookingPage")
-    public String bookingPage(HttpSession session, Model model) {
-		User user = (User) session.getAttribute("user");
-	    if (user != null) {
-	        model.addAttribute("user", user);
-	    }
-        return "bookingPage.html";
-    }
-    
+//	@GetMapping("/bookingPage")
+//    public String bookingPage(HttpSession session, Model model) {
+//		User user = (User) session.getAttribute("user");
+//	    if (user != null) {
+//	        model.addAttribute("user", user);
+//	    }
+//        return "bookingPage.html";
+//    }
+//    
 	@GetMapping("/booknow")
 	public String booknow(HttpSession session) {
 	    if (session.getAttribute("user") != null) {
-	        return "redirect:/bookingPage";
+	        return "redirect:/recommend";
 	    }
 	    return "redirect:/login";
 	}
@@ -82,4 +88,23 @@ public class HomeController {
         return "learn.html";
     }
 
+	 @PostMapping("/bookTour")
+	    public String bookTour(@RequestParam int tourId, HttpSession session, Model model) {
+	        User user = (User) session.getAttribute("user");
+
+	        if (user == null) {
+	            return "redirect:/login"; // Redirect to login if user is not logged in
+	        }
+
+	        Tour tour = tRepo.findById(tourId).orElse(null);
+
+	        Booking booking = new Booking();
+	        booking.setUser(user);
+	        booking.setTour(tour);
+
+	        bRepo.save(booking);
+
+	        model.addAttribute("success", "Booking request submitted successfully.");
+	        return "bookingPage.html"; // Redirect to booking page
+	    }
 }
