@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.toursandtravel.model.User;
+import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.ItineraryItem;
 import com.toursandtravel.model.Tour;
 import com.toursandtravel.repository.BookingRepository;
@@ -383,4 +384,30 @@ public class AdminController {
    	    }
    	    return "redirect:/admin/adminLogin";
    	}
+    
+    @GetMapping("/admin/delete_booking")
+    public String deleteBooking(@RequestParam int id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            bRepo.deleteById(id);
+            model.addAttribute("bookingList", bRepo.findAll());
+            return "redirect:/admin/booking_list"; 
+        }
+        return "redirect:/admin/adminLogin"; 
+    }
+    
+    @GetMapping("/admin/update_booking_status")
+    public String updateBookingStatus(@RequestParam int id, @RequestParam String status, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            Booking booking = bRepo.findById(id).orElse(null);
+            if (booking != null) {
+                booking.setApprovalStatus(status); // Update status to 'Approved' or 'Denied'
+                bRepo.save(booking); // Save the updated booking
+            }
+            return "redirect:/admin/booking_list";
+        }
+        return "redirect:/admin/adminLogin";
+    }
+
 }

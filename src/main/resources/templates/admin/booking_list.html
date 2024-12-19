@@ -88,6 +88,7 @@
                     <th>Email</th>
                     <th>Approval Status</th>
                     <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -100,11 +101,21 @@
                     <td th:text="${booking.user.username}"></td>
                     <td th:text="${booking.user.email}"></td>
                     <td th:text="${booking.approvalStatus}"></td>
-                    <td>
-                        <a href="editBooking.html" style="text-decoration: none">
-                            <button class="btn btn-success">Edit</button>
-                          </a>
-                      <button class="btn btn-danger">Delete</button>
+					<td>
+						<button class="btn btn-success"
+						        th:onclick="|return confirmApprovalOrDenial('Approved', ${booking.id});|"
+						        style="margin-right: 5px;">Approve</button>
+						<button class="btn btn-danger"
+						        th:onclick="|return confirmApprovalOrDenial('Denied', ${booking.id});|">
+						        Deny</button>
+
+					</td>
+					<td>
+                      <a th:href="@{'/admin/delete_booking'(id=${booking.id})}"
+						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -133,5 +144,15 @@
         document.getElementById(`section-${section}`).classList.add("active");
       }
     </script>
+    <script>
+	function confirmApprovalOrDenial(action, bookingId) {
+	    const confirmation = confirm(`Are you sure you want to ${action.toLowerCase()} this booking?`);
+	    if (confirmation) {
+	        const url = `/admin/update_booking_status?id=${bookingId}&status=${action}`;
+	        window.location.href = url; // Redirect to the appropriate URL
+	    }
+	    return false; // Prevent default link action
+	}
+	</script>
   </body>
 </html>
