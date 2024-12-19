@@ -22,6 +22,7 @@
       <hr>
       <form action="/admin/adminPostLogin" method="post">
         <h1>Login</h1>
+        <div th:if="${error}" th:text="${error}" style="color:red;"></div><br>
         <label for="username">Username</label>
         <input type="text" placeholder="Enter Username" name="username" required />
 

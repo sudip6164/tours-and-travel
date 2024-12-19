@@ -55,8 +55,8 @@
             <span class="links_name">Manage User</span>
           </a>
         </li>
-        <li class="/admin/adminLogout">
-          <a href="login.html">
+        <li class="log_out">
+          <a href="/admin/adminLogout">
             <i class="bx bx-log-out"></i>
             <span class="links_name">Log out</span>
           </a>
@@ -103,9 +103,11 @@
                     <td th:text="${booking.approvalStatus}"></td>
 					<td>
 						<button class="btn btn-success"
+								th:if="${booking.approvalStatus} != 'Approved'"
 						        th:onclick="|return confirmApprovalOrDenial('Approved', ${booking.id});|"
 						        style="margin-right: 5px;">Approve</button>
 						<button class="btn btn-danger"
+								th:if="${booking.approvalStatus} != 'Denied'"
 						        th:onclick="|return confirmApprovalOrDenial('Denied', ${booking.id});|">
 						        Deny</button>
 

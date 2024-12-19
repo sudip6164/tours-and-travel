@@ -48,14 +48,19 @@ public class AdminController {
     public String adminPostLogin(@ModelAttribute User u, Model model, HttpSession session) {
         User user = uRepo.findByUsername(u.getUsername());
         if (user != null && BCrypt.checkpw(u.getPassword(), user.getPassword())) {
-        	session.setAttribute("user", user);
-        	int totalTours = (int) tRepo.count();
-	    	int totalUsers = (int) uRepo.count();
-	    	int totalBookings = (int) bRepo.count();
-	    	model.addAttribute("totalTours", totalTours);
-	        model.addAttribute("totalUsers", totalUsers);
-	        model.addAttribute("totalBookings", totalBookings);
-            return "admin/dashboard.html";
+        	if ("Admin".equals(user.getRole())) { // Check if the role is Admin
+                session.setAttribute("user", user);
+                int totalTours = (int) tRepo.count();
+                int totalUsers = (int) uRepo.count();
+                int totalBookings = (int) bRepo.count();
+                model.addAttribute("totalTours", totalTours);
+                model.addAttribute("totalUsers", totalUsers);
+                model.addAttribute("totalBookings", totalBookings);
+                return "admin/dashboard.html";
+            } else {
+                model.addAttribute("error", "You are not authorized to access the admin panel.");
+                return "admin/login.html";
+            }
         } else {
             return "admin/login.html";
         }
@@ -319,7 +324,6 @@ public class AdminController {
         return "redirect:/admin/adminLogin";
     }
 
-    // Edit Inclusion & Exclusion Details
     @GetMapping("/admin/edit_inclusion_exclusion")
     public String editInclusionExclusion(@RequestParam int id, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -410,4 +414,18 @@ public class AdminController {
         return "redirect:/admin/adminLogin";
     }
 
+    @GetMapping("/admin/change_user_role")
+    public String changeUserRole(@RequestParam int id, @RequestParam String role, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            User u = uRepo.findById(id).orElse(null);
+            if (u != null) {
+                u.setRole(role); // Update status to 'Approved' or 'Denied'
+                uRepo.save(u); // Save the updated booking
+            }
+            return "redirect:/admin/user_list";
+        }
+            return "redirect:/admin/adminLogin";
+    }
+        
 }

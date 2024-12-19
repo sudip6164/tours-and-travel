@@ -82,6 +82,8 @@
                   <tr>
                     <th>User ID</th>
                     <th>Username</th>
+                    <th>Role</th>
+                    <th>Change Role</th>
                     <th>Email</th>
                     <th>Phone</th>
                     <th>Address</th>
@@ -94,6 +96,17 @@
                   <tr th:each="user:${userList}">
                     <td th:text="${user.id}"></td>
                     <td th:text="${user.username}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td>
+			          <button class="btn btn-success"
+			          			th:if="${user.role} == 'Tourist'"
+						        th:onclick="|return changeRole('Admin', ${user.id});|"
+						        style="margin-right: 5px;">Admin</button>
+					   <button class="btn btn-danger"
+					   			th:if="${user.role} == 'Admin'"
+						        th:onclick="|return changeRole('Tourist', ${user.id});|">
+						        Tourist</button>
+				     </td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.phone}"></td>
                     <td th:text="${user.address}"></td>
@@ -136,5 +149,15 @@
         document.getElementById(`section-${section}`).classList.add("active");
       }
     </script>
+	<script>
+	function changeRole(action, userId) {
+	    const confirmation = confirm(`Are you sure you want to change this user's role to ${action.toLowerCase()} ?`);
+	    if (confirmation) {
+	        const url = `/admin/change_user_role?id=${userId}&role=${action}`;
+	        window.location.href = url; // Redirect to the appropriate URL
+	    }
+	    return false; // Prevent default link action
+	}
+	</script>
   </body>
 </html>

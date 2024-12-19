@@ -38,6 +38,7 @@ public class SignupController {
     @PostMapping("/register")
     public String register(@ModelAttribute User user, Model model) {
         try {
+        	user.setRole("Tourist");
             String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
             user.setPassword(hashedPassword);
             uRepo.save(user);

@@ -11,12 +11,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     private String username;
     private String email;
     private String password;
     private String phone;
     private String address;
     private String profilePictureUrl;
+    
+    private String role;
 
     // Getter and setter methods
     public int getId() {
@@ -74,5 +77,13 @@ public class User {
 	public void setProfilePictureUrl(String profilePictureUrl) {
 		this.profilePictureUrl = profilePictureUrl;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}	
 	
 }
