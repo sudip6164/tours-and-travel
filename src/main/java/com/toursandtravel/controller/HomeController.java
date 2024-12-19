@@ -49,16 +49,7 @@ public class HomeController {
 	    }
         return "contact.html";
     }
-	
-//	@GetMapping("/bookingPage")
-//    public String bookingPage(HttpSession session, Model model) {
-//		User user = (User) session.getAttribute("user");
-//	    if (user != null) {
-//	        model.addAttribute("user", user);
-//	    }
-//        return "bookingPage.html";
-//    }
-//    
+   
 	@GetMapping("/booknow")
 	public String booknow(HttpSession session) {
 	    if (session.getAttribute("user") != null) {
@@ -104,7 +95,7 @@ public class HomeController {
 
 	        bRepo.save(booking);
 
-	        model.addAttribute("success", "Booking request submitted successfully.");
+	        model.addAttribute("success", "Booking request submitted successfully. Please wait for approval.");
 	        return "bookingPage.html"; // Redirect to booking page
 	    }
 }
