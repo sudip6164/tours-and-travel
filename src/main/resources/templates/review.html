@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Mobile Specific Meta -->
@@ -109,55 +109,24 @@
                 </div>
             </div>
             <div class="py-5 row card-container">
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
+                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6" th:each="review : ${randomReviews}">
                     <div class="border-0 shadow-sm rounded-3 card">
                         <div class="text-center card-body shadow">
                             <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user3.jpg" alt="" class="rounded-circle img-fluid">
+                                <img th:src="${review.user.profilePictureUrl}" alt="Profile Picture" class="rounded-circle img-fluid">
                             </div>
-                            <div class="title fw-bold card-title h5">Neo Hou</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
+                            <div class="title fw-bold card-title h5" th:text="${review.user.username}"></div>
+                            <p class="mb-2 body-text" th:text="${review.reviewText}"></p>
                             <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
+                                <th:block th:each="star : ${#numbers.sequence(1, review.rating)}">
+                            		<i class="bi bi-star-fill me-1" style="color:orangered"></i>
+                        		</th:block>
                                 </span>
-                                <span>4.5</span>
-                             
+                                <span th:text="${review.rating}"></span>
                         </div>
                     </div>
                 </div>
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
-                    <div class="border-0 shadow-sm rounded-3 card">
-                        <div class="text-center card-body shadow">
-                            <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user1.jpg" alt="" class="rounded-circle img-fluid">
-                            </div>
-                            <div class="title fw-bold card-title h5">Jane Coleman</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
-                            <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
-                                </span>
-                                <span>4.5</span>
-                             
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
-                    <div class="border-0 shadow-sm rounded-3 card">
-                        <div class="text-center card-body shadow">
-                            <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user2.jpg" alt="" class="rounded-circle img-fluid">
-                            </div>
-                            <div class="title fw-bold card-title h5">John Doe</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
-                            <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
-                                </span>
-                                <span>4.5</span>
-                             
-                        </div>
-                    </div>
-                </div>
-            </div>
+				</div>
         </div>
     </section>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" class="no-js" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Mobile Specific Meta -->
@@ -106,11 +106,17 @@
             </div>
             <div class="row justify-content-center mb-5">
                 <div class="col-md-8">
-                    <form method="post" id="reviewForm" class="bg-light p-4 rounded shadow-sm">
+                    <form method="post" action="/add_review" id="reviewForm" class="bg-light p-4 rounded shadow-sm">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Tour</label>
-                            <input type="text" class="form-control" id="tour" name="tour" required>
-                        </div>
+                         <label for="tour" class="form-label">Tour</label>
+                          <select class="form-select" id="tour" name="tourId" required>
+								<option value="">Select a Tour</option>
+								<!-- Dynamic Options -->
+								<th:block th:each="tour : ${tours}">
+									<option th:value="${tour.id}" th:text="${tour.title}"></option>
+								</th:block>
+							</select>
+						</div>
                         <div class="mb-3">
                             <label for="reviewText" class="form-label">Your Review</label>
                             <textarea class="form-control" id="reviewText" name="reviewText" rows="4" required></textarea>

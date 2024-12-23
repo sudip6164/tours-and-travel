@@ -25,6 +25,7 @@ import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.ItineraryItem;
 import com.toursandtravel.model.Tour;
 import com.toursandtravel.repository.BookingRepository;
+import com.toursandtravel.repository.ReviewRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
 
@@ -42,6 +43,9 @@ public class AdminController {
 	
 	@Autowired
     private BookingRepository bRepo;
+	
+	@Autowired
+	private ReviewRepository rRepo;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -440,6 +444,7 @@ public class AdminController {
 	    helper.setTo(email); // Send to all admin emails
 	    javaMailSender.send(message);
 	}
+	
     @GetMapping("/admin/change_user_role")
     public String changeUserRole(@RequestParam int id, @RequestParam String role, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
@@ -452,6 +457,28 @@ public class AdminController {
             return "redirect:/admin/user_list";
         }
             return "redirect:/admin/adminLogin";
+    }
+    
+    @GetMapping("/admin/review_list")
+   	public String reviewList(HttpSession session, Model model) {
+   		User user = (User) session.getAttribute("user");
+   	    if (user != null) {
+   	    	model.addAttribute("user", user);
+            model.addAttribute("reviewList", rRepo.findAll());
+   	        return "admin/review_list.html";
+   	    }
+   	    return "redirect:/admin/adminLogin";
+   	}
+    
+    @GetMapping("/admin/delete_review")
+    public String deletereview(@RequestParam int id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            rRepo.deleteById(id); // Delete the tour by ID
+            model.addAttribute("reviewList", rRepo.findAll());
+            return "redirect:/admin/review_list"; // Redirect to the tour list page
+        }
+        return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
     }
         
 }

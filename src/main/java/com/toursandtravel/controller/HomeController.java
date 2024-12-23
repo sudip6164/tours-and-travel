@@ -1,5 +1,6 @@
 package com.toursandtravel.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.toursandtravel.model.User;
 import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.Contact;
+import com.toursandtravel.model.Review;
 import com.toursandtravel.model.Tour;
 import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.ContactRepository;
+import com.toursandtravel.repository.ReviewRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
 
@@ -37,6 +40,9 @@ public class HomeController {
 	
 	@Autowired
 	private UserRepository uRepo;
+	
+	@Autowired
+	private ReviewRepository rRepo;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -212,6 +218,8 @@ public class HomeController {
 		    if (user != null) {
 		        model.addAttribute("user", user);
 		    }
+		    List<Review> reviews = rRepo.findAll();
+		    model.addAttribute("randomReviews", reviews);
 	        return "review.html";
 	    }
 		
@@ -219,8 +227,35 @@ public class HomeController {
 	    public String addReviewPage(HttpSession session, Model model) {
 			User user = (User) session.getAttribute("user");
 		    if (user != null) {
+		    	List<Tour> tours = tRepo.findAll();
+		        model.addAttribute("tours", tours);
 		        model.addAttribute("user", user);
+		        return "add_review_page.html";
 		    }
-	        return "add_review_page.html";
+		    return "login.html";
 	    }
+		
+		@PostMapping("/add_review")
+		public String addReview(@RequestParam("tourId") int tourId,
+		                           @RequestParam("reviewText") String reviewText,
+		                           @RequestParam("starRating") double starRating,
+		                           HttpSession session,
+		                           Model model) {
+		    User user = (User) session.getAttribute("user");
+		    if (user != null) {
+			    Tour tour = tRepo.findById(tourId)
+			                              .orElseThrow(() -> new RuntimeException("Tour not found"));
+	
+			    Review review = new Review();
+			    review.setUser(user);
+			    review.setTour(tour);
+			    review.setReviewText(reviewText);
+			    review.setRating(starRating);
+	
+			    rRepo.save(review);
+	
+			    return "redirect:/review";
+		    }
+		    return "redirect:/login";
+		}
 }
