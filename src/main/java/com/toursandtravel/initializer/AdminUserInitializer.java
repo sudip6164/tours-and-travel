@@ -20,7 +20,7 @@ public class AdminUserInitializer {
                 User admin = new User();
                 admin.setUsername("admin");
                 admin.setPassword(BCrypt.hashpw("admin", BCrypt.gensalt())); // Hash the password
-                admin.setEmail("admin@example.com");
+                admin.setEmail("sudippradhanadgj@gmail.com");
                 admin.setRole("Admin");
                 admin.setPhone("1234567890");
                 admin.setAddress("Admin HQ");

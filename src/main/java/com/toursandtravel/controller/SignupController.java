@@ -105,7 +105,7 @@ public class SignupController {
         try {
             helper.setTo(email);
             helper.setSubject("Password Reset OTP");
-            helper.setText("Your OTP for password reset is: " + otp + "\n\nYour OTP will expire in 5 minutes.");
+            helper.setText("Your OTP for password reset is: " + otp + "\n\nYour OTP will expire in 5 minutes.\n\nDo not share this code with anyone.");
             emailSender.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();

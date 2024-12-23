@@ -52,27 +52,27 @@
                     <div class="collapse navbar-collapse justify-content-end align-items-center mt-4"
                         id="navbarSupportedContent">
                         <ul class="navbar-nav">
-                            <li><a href="/">Home</a></li>
-				             <li><a href="/about">About</a></li>
-				             <li><a href="/recommend">Recommendation</a></li>
-				             <li><a href="#gallery">Offers & discounts </a></li>
-				             <li><a href="/contact">Contact</a></li>
-				             <li><a href="/review">Review</a></li>
+                             <li><a href="/">Home</a></li>
+							<li><a href="/about">About</a></li>
+							<li><a href="/recommend">Recommendation</a></li>
+							<li><a href="#gallery">Offers & discounts </a></li>
+							<li><a href="/contact">Contact</a></li>
+							<li><a href="/review">Review</a></li>
 
 							<li><a href="/booknow">
 									<button class="btn btn-primary">Book Now</button>
 							</a></li>
 
 							<!-- Dropdown -->
-                	<li class="dropdown" th:if="${user != null}">
-						<a class="dropdown-toggle" href="/user" id="navbardrop" >
-							<button class="btn btn-primary rounded" th:text="${user.username}"></button>
+							<li class="dropdown" th:if="${user != null}"><a
+								class="dropdown-toggle" href="/user" id="navbardrop">
+									<button class="btn btn-primary rounded"
+										th:text="${user.username}"></button>
 							</a>
-							<div class="dropdown-menu">
-							  <a class="dropdown-item" href="/logout">Logout</a>
-							</div>
-					</li>
-                        </ul>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="/logout">Logout</a>
+								</div></li>
+						</ul>
                     </div>
             </nav>
             <!-- Search Bar -->
@@ -101,66 +101,37 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="mb-2 h1 font-bold text-center">Our Reviews</h1>
-                    <p class="body-text mt-1 text-center"> An inviting and positive statement to show customers that they are encouraged to share their experiences.</p>
-                </div>
-                <div class="text-center mt-3">
-                    <a href="/add_review_page" class="btn btn-primary">Add Your Review</a>
+                    <h1 class="mb-2 h1 font-bold text-center">Add Review</h1>
                 </div>
             </div>
-            <div class="py-5 row card-container">
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
-                    <div class="border-0 shadow-sm rounded-3 card">
-                        <div class="text-center card-body shadow">
-                            <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user3.jpg" alt="" class="rounded-circle img-fluid">
-                            </div>
-                            <div class="title fw-bold card-title h5">Neo Hou</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
-                            <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
-                                </span>
-                                <span>4.5</span>
-                             
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-8">
+                    <form method="post" id="reviewForm" class="bg-light p-4 rounded shadow-sm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Tour</label>
+                            <input type="text" class="form-control" id="tour" name="tour" required>
                         </div>
-                    </div>
-                </div>
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
-                    <div class="border-0 shadow-sm rounded-3 card">
-                        <div class="text-center card-body shadow">
-                            <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user1.jpg" alt="" class="rounded-circle img-fluid">
-                            </div>
-                            <div class="title fw-bold card-title h5">Jane Coleman</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
-                            <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
-                                </span>
-                                <span>4.5</span>
-                             
+                        <div class="mb-3">
+                            <label for="reviewText" class="form-label">Your Review</label>
+                            <textarea class="form-control" id="reviewText" name="reviewText" rows="4" required></textarea>
                         </div>
-                    </div>
-                </div>
-                <div class="mb-4 mb-lg-0 col-lg-4 col-md-6">
-                    <div class="border-0 shadow-sm rounded-3 card">
-                        <div class="text-center card-body shadow">
-                            <div class="d-flex justify-content-center align-items-center my-2">
-                                <img src="/img/user2.jpg" alt="" class="rounded-circle img-fluid">
+                        <div class="mb-3">
+                            <label for="reviewStars" class="form-label">Rating</label>
+                            <div id="reviewStars" class="d-flex">
+                                <i class="bi bi-star-fill me-1" data-value="1"></i>
+                                <i class="bi bi-star-fill me-1" data-value="2"></i>
+                                <i class="bi bi-star-fill me-1" data-value="3"></i>
+                                <i class="bi bi-star-fill me-1" data-value="4"></i>
+                                <i class="bi bi-star-fill me-1" data-value="5"></i>
+                                <input type="hidden" id="starRating" name="starRating" value="0">
                             </div>
-                            <div class="title fw-bold card-title h5">John Doe</div>
-                            <p class="mb-2 body-text">Very Good package to begin your travel journey!</p>
-                            <span>
-                                <i class="bi bi-star-fill me-1" style="color:orangered"></i>
-                                </span>
-                                <span>4.5</span>
-                             
                         </div>
-                    </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
-
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
         <div class="container">
@@ -228,7 +199,30 @@
     <script src="js/jquery.counterup.min.js"></script>
     <script src="js/waypoints.min.js"></script>
     <script src="js/main.js"></script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const stars = document.querySelectorAll('#reviewStars i');
+            const starRatingInput = document.getElementById('starRating');
+    
+            stars.forEach(star => {
+                star.addEventListener('click', function () {
+                    const rating = this.getAttribute('data-value');
+                    starRatingInput.value = rating;
+                    updateStarRating(rating);
+                });
+            });
+    
+            function updateStarRating(rating) {
+                stars.forEach(star => {
+                    if (star.getAttribute('data-value') <= rating) {
+                        star.style.color = 'gold';
+                    } else {
+                        star.style.color = 'gray';
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 

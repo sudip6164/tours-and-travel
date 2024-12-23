@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -26,6 +28,8 @@ import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -38,6 +42,9 @@ public class AdminController {
 	
 	@Autowired
     private BookingRepository bRepo;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	@GetMapping("/admin/adminLogin")
     public String adminLogin() {
@@ -408,12 +415,31 @@ public class AdminController {
             if (booking != null) {
                 booking.setApprovalStatus(status); // Update status to 'Approved' or 'Denied'
                 bRepo.save(booking); // Save the updated booking
+                Tour tour=booking.getTour();
+                String subject = "Booking Approval status ";
+    	        String emailContent = "The tour " + tour.getTitle() + " you booked is " + status.toLowerCase() + "." + "\n Please contact us for any queries.";
+
+    	        try {
+					sendEmailToUser(user.getEmail(), subject, emailContent);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
             return "redirect:/admin/booking_list";
         }
         return "redirect:/admin/adminLogin";
     }
 
+	private void sendEmailToUser(String email, String subject, String emailContent) throws MessagingException {
+	    MimeMessage message = javaMailSender.createMimeMessage();
+	    MimeMessageHelper helper = new MimeMessageHelper(message);
+
+	    helper.setSubject(subject);
+	    helper.setText(emailContent, false);
+	    helper.setTo(email); // Send to all admin emails
+	    javaMailSender.send(message);
+	}
     @GetMapping("/admin/change_user_role")
     public String changeUserRole(@RequestParam int id, @RequestParam String role, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");

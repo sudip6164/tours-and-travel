@@ -56,7 +56,7 @@
               <li><a href="/recommend">Recommendation</a></li>
               <li><a href="#gallery">Offers & discounts </a></li>
               <li><a href="/contact">Contact</a></li>
-              <li><a href="review.html">Review</a></li>
+              <li><a href="/review">Review</a></li>
               <li>
                 <a href="/booknow">
                     <button class="btn btn-primary">
@@ -173,14 +173,14 @@
         <!--Itinerary start-->
         <div class="tab-pane fade" id="itinerary" role="tabpanel" aria-labelledby="itinerary-tab">
           <h4 class="mt-3 m-3">Itinerary</h4>
-          <div th:each="itinerary : ${tour.itinerary}" th:var="index">
-          <p class="d-inline-flex gap-1">
-            <p class="btn btn-secondary" type="text" data-bs-toggle="collapse" data-bs-target="'#collapseDay' + $(index + 1)"
-              aria-expanded="false" aria-controls="'collapseDay' + $(index + 1)">
+          <div th:each="itinerary : ${tour.itinerary}">
+          <p class="d-inline-flex gap-1"></p>
+            <p class="btn btn-secondary" type="text" data-bs-toggle="collapse" data-bs-target="#collapseDay1"
+              aria-expanded="false" aria-controls="collapseDay1">
               [[${itinerary.day}]]
             </p>
-          </p>
-          <div class="collapse" id="'collapseDay' + $(index + 1)">
+            <p></p>
+          <div class="collapse" id="collapseDay1">
             <div class="card card-body">
               [[${itinerary.description}]]
             </div>
