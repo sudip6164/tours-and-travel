@@ -67,6 +67,8 @@ public class AdminController {
                 model.addAttribute("totalTours", totalTours);
                 model.addAttribute("totalUsers", totalUsers);
                 model.addAttribute("totalBookings", totalBookings);
+                
+                session.setMaxInactiveInterval(3600); 
                 return "admin/dashboard.html";
             } else {
                 model.addAttribute("error", "You are not authorized to access the admin panel.");

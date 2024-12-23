@@ -59,6 +59,9 @@ public class SignupController {
         User user = uRepo.findByUsername(u.getUsername());
         if (user != null && BCrypt.checkpw(u.getPassword(), user.getPassword())) {
         	session.setAttribute("user", user);
+        	
+        	session.setMaxInactiveInterval(3600); 
+        	
             return "index.html";
         } else {
             model.addAttribute("loginError", "Invalid username or password");
