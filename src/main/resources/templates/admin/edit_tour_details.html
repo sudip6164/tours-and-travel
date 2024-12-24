@@ -88,8 +88,8 @@
     			<textarea name="description" th:text="${tour.description}"></textarea>
               </div>
               <div class="input-group">
-                 <label for="review">Rating:</label>
-    			 <input type="number" name="review" step="0.1" th:value="${tour.review}" />
+                 <label for="review">Rating (Automatic):</label>
+    			 <input type="number" name="review" step="0.1" th:value="${tour.review}" readonly/>
               </div>
               <div class="input-group">
                 <label for="price">Price:</label>

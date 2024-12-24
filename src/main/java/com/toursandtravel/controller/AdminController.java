@@ -108,6 +108,19 @@ public class AdminController {
    		User user = (User) session.getAttribute("user");
    	    if (user != null) {
    	    	model.addAttribute("user", user);
+			// Fetch all tours
+			List<Tour> tours = tRepo.findAll();
+
+			// Compute the average review for each tour and update the database
+			for (Tour tour : tours) {
+				// Fetch average rating for this tour
+				Double averageRating = rRepo.findAverageRatingByTourId(tour.getId());
+				double finalRating = averageRating != null ? averageRating : 0.0;
+
+				// Update the review field in the database
+				tour.setReview(finalRating);
+				tRepo.save(tour); // Persist the updated value in the database
+			}
             model.addAttribute("tourList", tRepo.findAll());
    	        return "admin/tour_list.html";
    	    }
