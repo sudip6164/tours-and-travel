@@ -175,12 +175,12 @@
           <h4 class="mt-3 m-3">Itinerary</h4>
           <div th:each="itinerary : ${tour.itinerary}">
           <p class="d-inline-flex gap-1"></p>
-            <p class="btn btn-secondary" type="text" data-bs-toggle="collapse" data-bs-target="#collapseDay1"
-              aria-expanded="false" aria-controls="collapseDay1">
+            <p class="btn btn-secondary" type="text" data-bs-toggle="collapse" th:data-bs-target="'#collapseDay'+${itinerary.day}"
+              aria-expanded="false" th:aria-controls="'collapseDay'+${itinerary.day}">
               [[${itinerary.day}]]
             </p>
             <p></p>
-          <div class="collapse" id="collapseDay1">
+          <div class="collapse" th:id="'collapseDay'+${itinerary.day}">
             <div class="card card-body">
               [[${itinerary.description}]]
             </div>
