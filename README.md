@@ -62,7 +62,7 @@ cd toursandtravel
 5. Build and run the project:
 - Access the application at: http://localhost:8080
 
-#🛠️ Technologies Used
+# 🛠️ Technologies Used
 - Backend: Spring Boot
 - Frontend: Thymeleaf, HTML, CSS, JS, Bootstrap
 - Database: MySQL
