@@ -22,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.toursandtravel.model.User;
 import com.toursandtravel.model.Booking;
+import com.toursandtravel.model.CustomTour;
 import com.toursandtravel.model.ItineraryItem;
 import com.toursandtravel.model.Tour;
 import com.toursandtravel.repository.BookingRepository;
+import com.toursandtravel.repository.CustomTourRepository;
 import com.toursandtravel.repository.ReviewRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
@@ -46,6 +48,9 @@ public class AdminController {
 	
 	@Autowired
 	private ReviewRepository rRepo;
+	
+	@Autowired
+	private CustomTourRepository customTourRepository;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -495,5 +500,50 @@ public class AdminController {
         }
         return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
     }
-        
+     
+    @GetMapping("/admin/custom_tour_list")
+   	public String customTourList(HttpSession session, Model model) {
+   		User user = (User) session.getAttribute("user");
+   	    if (user != null) {
+   	    	model.addAttribute("user", user);
+            model.addAttribute("customTourList", customTourRepository.findAll());
+   	        return "admin/custom_tour_list.html";
+   	    }
+   	    return "redirect:/admin/adminLogin";
+   	}
+    
+    @GetMapping("/admin/delete_custom_tour")
+    public String deleteCustomTour(@RequestParam int id, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+        	customTourRepository.deleteById(id);
+            model.addAttribute("customTourList", customTourRepository.findAll());
+            return "redirect:/admin/custom_tour_list"; 
+        }
+        return "redirect:/admin/adminLogin"; 
+    }
+    
+    @GetMapping("/admin/update_custom_tour_booking_status")
+    public String updateCustomTourBookingStatus(@RequestParam int id, @RequestParam String status, HttpSession session, Model model) {
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            CustomTour customTour = customTourRepository.findById(id).orElse(null);
+            if (customTour != null) {
+            	customTour.setApprovalStatus(status); // Update status to 'Approved' or 'Denied'
+            	customTourRepository.save(customTour); // Save the updated booking
+                Tour tour=customTour.getTour();
+                String subject = "Booking Approval status ";
+    	        String emailContent = "The customized tour " + tour.getTitle() + " you booked is " + status.toLowerCase() + "." + "\n Please contact us for any queries.";
+
+    	        try {
+					sendEmailToUser(user.getEmail(), subject, emailContent);
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            }
+            return "redirect:/admin/custom_tour_list";
+        }
+        return "redirect:/admin/adminLogin";
+    }
 }
