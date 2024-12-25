@@ -9,16 +9,19 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.toursandtravel.model.User;
 import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.Contact;
+import com.toursandtravel.model.CustomTour;
 import com.toursandtravel.model.Review;
 import com.toursandtravel.model.Tour;
 import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.ContactRepository;
+import com.toursandtravel.repository.CustomTourRepository;
 import com.toursandtravel.repository.ReviewRepository;
 import com.toursandtravel.repository.TourRepository;
 import com.toursandtravel.repository.UserRepository;
@@ -43,6 +46,9 @@ public class HomeController {
 	
 	@Autowired
 	private ReviewRepository rRepo;
+	
+	@Autowired
+	private CustomTourRepository customTourRepository;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -170,7 +176,7 @@ public class HomeController {
     }
 	
 	 @PostMapping("/bookTour")
-	    public String bookTour(@RequestParam int tourId, HttpSession session, Model model) {
+	 public String bookTour(@RequestParam int tourId, HttpSession session, Model model) {
 	        User user = (User) session.getAttribute("user");
 
 	        if (user == null) {
@@ -258,4 +264,56 @@ public class HomeController {
 		    }
 		    return "redirect:/login";
 		}
+		
+		@GetMapping("/custom_tour_page")
+	    public String addCustomTourPage(@RequestParam("tourId") int tourId, HttpSession session, Model model) {
+			User user = (User) session.getAttribute("user");
+		    if (user != null) {		    
+		        Tour tour = tRepo.findById(tourId).orElse(null);
+		        model.addAttribute("tour", tour);
+		        model.addAttribute("user", user);
+		        return "customPkg.html";
+		    }
+		    return "login.html";
+	    }
+		
+		@PostMapping("/request_custom_tour")
+		 public String requestCustomTour(@RequestParam int tourId, @RequestParam int userId, HttpSession session, @ModelAttribute CustomTour customTour, Model model) {
+				User user = (User) session.getAttribute("user");
+				if (user != null) {
+					Tour tour = tRepo.findById(tourId).orElseThrow(() -> new RuntimeException("Tour not found"));
+
+					customTour.setUser(user);
+					customTour.setTour(tour);
+					customTour.setTitle(tour.getTitle());
+
+					customTourRepository.save(customTour);
+			
+						// Get all admin users
+					List<User> admins = uRepo.findByRole("Admin");
+					if (admins.isEmpty()) {
+						throw new RuntimeException("No admin users found to notify.");
+					}
+	
+					// Collect admin email addresses
+					String[] adminEmails = admins.stream().map(User::getEmail).toArray(String[]::new);
+	
+					// Send the email
+					String subject = "Tour Approval Request";
+					String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour."
+							+ "\n Please approve or deny this request.";
+	
+					try {
+						sendEmailToAdmins(adminEmails, subject, emailContent);
+					} catch (MessagingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        model.addAttribute("success", "Booking request submitted successfully. Please wait for approval.");
+					return "redirect:/bookingPage";
+				}
+
+		        return "redirect:/custom_tour_page"; // Redirect to booking page
+			
+		    }
 }

@@ -132,11 +132,10 @@
 		 </form>
       </li>
       <li class="nav-item" role="presentation">
-        <a class="nav-link" id="customPkg" href="customPkg.html">
-          <button class="btn btn-primary">
-            Customize Tour
-          </button>  
-        </a>
+            <form th:action="@{/custom_tour_page}" method="get" class="nav-link" id="customPkg">
+			<input type="hidden" name="tourId" th:value="${tour.id}">
+			<button class="btn btn-primary" type="submit">Customize Tour</button>
+		 </form>
       </li>
     </ul>
     <!-- Nav Tabs End -->
