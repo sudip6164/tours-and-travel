@@ -2,7 +2,7 @@
 A Java-based web application developed with Spring Boot and Thymeleaf to provide a seamless experience for exploring, booking, and managing tour packages. This project serves as a hands-on example of creating a feature-rich web application with modern tools and technologies.
 
 # 🚀 Features
-##🧳 User Features
+## 🧳 User Features
 1. Explore Tours
 = View recommended tours with detailed descriptions, itineraries, and prices.
 2. Book Tours
@@ -11,7 +11,7 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 - Submit requests for customized tour packages tailored to personal preferences.
 4. Rate & Review
 - Share experiences by leaving reviews and ratings for tours.
-##🛠️ Admin Features
+## 🛠️ Admin Features
 1. Dashboard
 - View key metrics, including total users, tours, and bookings.
 2. User Management
@@ -31,25 +31,22 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 4. IDE of your choice (e.g., IntelliJ IDEA, Eclipse, SpringToolSuite (Recommended) )
 5. Xampp
 
-#📂 Project Structure
-arduino
-Copy code
+# 📂 Project Structure
 src  
 ├── main  
-│   ├── java/com/example/toursandtravel  
+│   ├── java/com/toursandtravel  
 │   │   ├── controller  
-│   │   ├── service  
-│   │   ├── repository  
-│   │   ├── model  
-│   │   └── config  
+│   │   ├── initializer 
+│   │   ├── model 
+│   │   ├── repository    
 │   └── resources  
-│       ├── templates  
 │       ├── static  
+│       ├── templates  
 │       └── application.properties  
 ├── test  
 └── pom.xml  
 
-#💾 Installation & Setup
+# 💾 Installation & Setup
 1. Clone the repository:
 git clone https://github.com/yourusername/toursandtravel.git  
 cd toursandtravel  
@@ -66,7 +63,7 @@ cd toursandtravel
 - Access the application at: http://localhost:8080
 
 #🛠️ Technologies Used
-Backend: Spring Boot
-Frontend: Thymeleaf, HTML, CSS, JS, Bootstrap
-Database: MySQL
-API : Jakarta Mail
+- Backend: Spring Boot
+- Frontend: Thymeleaf, HTML, CSS, JS, Bootstrap
+- Database: MySQL
+- API : Jakarta Mail
