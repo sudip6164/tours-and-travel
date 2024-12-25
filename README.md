@@ -36,15 +36,15 @@ src
 ├── main  
 │   ├── java/com/toursandtravel  
 │   │   ├── controller  
-│   │   ├── initializer 
-│   │   ├── model 
-│   │   ├── repository    
+│   │   ├── initializer  
+│   │   ├── model  
+│   │   ├── repository  
 │   └── resources  
 │       ├── static  
 │       ├── templates  
 │       └── application.properties  
 ├── test  
-└── pom.xml  
+└── pom.xml
 
 # 💾 Installation & Setup
 1. Clone the repository:
