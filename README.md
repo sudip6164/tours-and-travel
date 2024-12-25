@@ -32,6 +32,7 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 5. Xampp
 
 # 📂 Project Structure
+```plaintext
 src  
 ├── main  
 │   ├── java/com/toursandtravel  
@@ -45,6 +46,7 @@ src
 │       └── application.properties  
 ├── test  
 └── pom.xml
+
 
 # 💾 Installation & Setup
 1. Clone the repository:
