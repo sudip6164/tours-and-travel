@@ -3,24 +3,24 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 
 # 🚀 Features
 ## 🧳 User Features
-1. Explore Tours
+### 1. Explore Tours
 - View recommended tours with detailed descriptions, itineraries, and prices.
-2. Book Tours
+### 2. Book Tours
 - Securely book tours directly through the platform.
-3. Request Custom Packages
+### 3. Request Custom Packages
 - Submit requests for customized tour packages tailored to personal preferences.
-4. Rate & Review
+### 4. Rate & Review
 - Share experiences by leaving reviews and ratings for tours.
 ## 🛠️ Admin Features
-1. Dashboard
+### 1. Dashboard
 - View key metrics, including total users, tours, and bookings.
-2. User Management
+### 2. User Management
 - View, update, or delete user accounts.
 - Assign admin roles to specific users.
-3. Booking Management
+### 3. Booking Management
 - Approve or deny tour bookings and custom tour requests.
 - Delete unwanted bookings or custom requests.
-4. Tour Management
+### 4. Tour Management
 - Add new tours to the platform.
 - Perform CRUD operations on tours to keep content up-to-date.
 
@@ -50,19 +50,24 @@ src
 
 # 💾 Installation & Setup
 1. Clone the repository:
-git clone (https://github.com/yourusername/toursandtravel.git)  
-cd toursandtravel  
+```plaintext
+git clone https://github.com/yourusername/toursandtravel.git
+cd toursandtravel
+```
 2. Change application.properties.example to application.properties
+
 3. Update application.properties:
-  1. Configure the database:
-  - Create a MySQL database or use already configured one.
-  2. Configure for mail:
-  - Add your email to spring.mail.username
-  - Add your gmail app password to spring.mail.password
-    + How to get app password: (https://itsupport.umd.edu/itsupport?id=kb_article_view&sysparm_article=KB0015112)
-4. Run xampp and start mysql and apache
+   - Configure the database:
+     - Create a MySQL database or use an already configured one.
+   - Configure for mail:
+     - Add your email to spring.mail.username
+     - Add your Gmail app password to spring.mail.password:
+       - How to get an app password: (https://itsupport.umd.edu/itsupport?id=kb_article_view&sysparm_article=KB0015112)
+
+4. Run XAMPP and start MySQL and Apache
+
 5. Build and run the project:
-- Access the application at: http://localhost:8080
+   - Access the application at: http://localhost:8080
 
 # 🛠️ Technologies Used
 - Backend: Spring Boot
