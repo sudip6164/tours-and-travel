@@ -100,8 +100,10 @@ public class AdminController {
 	    	
 	    	int totalTours = (int) tRepo.count();
 	    	int totalUsers = (int) uRepo.count();
+	    	int totalBookings = (int) bRepo.count();
 	    	model.addAttribute("totalTours", totalTours);
 	        model.addAttribute("totalUsers", totalUsers);
+            model.addAttribute("totalBookings", totalBookings);
 	        
 	        return "admin/dashboard.html";
 	    }
