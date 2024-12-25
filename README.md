@@ -4,7 +4,7 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 # 🚀 Features
 ## 🧳 User Features
 1. Explore Tours
-= View recommended tours with detailed descriptions, itineraries, and prices.
+- View recommended tours with detailed descriptions, itineraries, and prices.
 2. Book Tours
 - Securely book tours directly through the platform.
 3. Request Custom Packages
@@ -48,7 +48,7 @@ src
 
 # 💾 Installation & Setup
 1. Clone the repository:
-git clone https://github.com/yourusername/toursandtravel.git  
+git clone (https://github.com/yourusername/toursandtravel.git)  
 cd toursandtravel  
 2. Change application.properties.example to application.properties
 3. Update application.properties:
