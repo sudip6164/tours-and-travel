@@ -68,6 +68,8 @@ cd toursandtravel
 
 5. Build and run the project:
    - Access the application at: http://localhost:8080
+   - Access admin panel at: http://localhost:8080/admin
+   - Username and password for admin can be changed in initializer/AdminUserInitializer
 
 # 🛠️ Technologies Used
 - Backend: Spring Boot
