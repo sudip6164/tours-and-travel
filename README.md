@@ -11,6 +11,9 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 - Submit requests for customized tour packages tailored to personal preferences.
 ### 4. Rate & Review
 - Share experiences by leaving reviews and ratings for tours.
+### 5. Search and Filter
+- Search the desired tour or filter to find the one with best deal.
+
 ## 🛠️ Admin Features
 ### 1. Dashboard
 - View key metrics, including total users, tours, and bookings.
@@ -23,6 +26,9 @@ A Java-based web application developed with Spring Boot and Thymeleaf to provide
 ### 4. Tour Management
 - Add new tours to the platform.
 - Perform CRUD operations on tours to keep content up-to-date.
+### 5. Search and Filter
+- Search tours by title.
+- Filter tours by price.
 
 # 🛑 Prerequisites
 1. Java 17
