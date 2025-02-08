@@ -59,6 +59,8 @@ public class HomeController {
 	    if (user != null) {
 	        model.addAttribute("user", user);
 	    }
+	    List<Tour> topDestinations = tRepo.findTop5ByOrderByReviewDesc(); // Fetch top 5
+	    model.addAttribute("topDestinations", topDestinations);
         return "index.html";
     }
 	

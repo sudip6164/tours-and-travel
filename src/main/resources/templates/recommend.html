@@ -38,6 +38,7 @@
     <link rel="stylesheet" href="/css/animate.min.css" />
     <link rel="stylesheet" href="/css/owl.carousel.css" />
     <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="css/contact.css">
   </head>
   <body>
     <!-- start banner Area -->
@@ -82,70 +83,26 @@
             </div>
         </nav>
          <!-- Search Bar -->
-      <div class="search-bar-container sticky-top">
-        <div class="d-flex justify-content-center h-100 rounded">
-          <form class="search" action="searchedList.html" method="GET">
-            <input type="number" class="search-input" placeholder="Enter price" name="price" min="0" required>
-            <button type="submit" class="search-icon">
-              <i class="fa fa-search"></i>
-            </button>
-          </form>
-        </div>
-      </div>
+	<!-- Search Bar -->
+	<div class="search-bar-container sticky-top">
+	  <div class="d-flex justify-content-center h-100 rounded">
+	    <input type="text" id="search-input" class="search-input" placeholder="Search by tour title..." onkeyup="filterTours()" 
+	           style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
+	    <button class="search-icon" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; margin-left: 5px; border-radius: 5px; cursor: pointer;">
+	      <i class="fa fa-search"></i>
+	    </button>
+	  </div>
+	</div>
+	<!-- Search Bar End -->
+
       <!-- Search Bar End -->
       </header>
   <!-- End Header Area -->
     </section>
 
-    <section class="default-banner active-blog-slider">
-      <div
-        class="item-slider relative"
-        style="background: url(img/slider1.jpg); background-size: cover">
-        <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
-        <div class="container">
-          <div class="row fullscreen justify-content-center align-items-center">
-            <div class="col-md-10 col-12">
-              <div class="banner-content text-center">
-                <h4 class="text-white mb-20 text-uppercase">
-                  Discover the Colorful World
-                </h4>
-                <h1 class="text-uppercase text-white">New Adventure</h1>
-                <p class="text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod temp <br />
-                  or incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="item-slider relative"
-        style="background: url(img/slider2.jpg); background-size: cover"
-      >
-        <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
-        <div class="container">
-          <div class="row fullscreen justify-content-center align-items-center">
-            <div class="col-md-10 col-12">
-              <div class="banner-content text-center">
-                <h4 class="text-white mb-20 text-uppercase">
-                  Discover the Colorful World
-                </h4>
-                <h1 class="text-uppercase text-white">New Trip</h1>
-                <p class="text-white">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod temp <br />
-                  or incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
+<section class="default-banner">
+        <div class="overlay"></div>
+        <img src="img/slider1.jpg" alt="Banner Image">
     </section>
 
     <!-- Start about Area -->
@@ -159,14 +116,26 @@
             </div>
           </div>
         </div>
+		  <!-- Price Slider -->
+<div class="text-center mt-4">
+  <h5>Select Price Range (NPR)</h5>
+  <div class="d-flex align-items-center justify-content-center">
+    <span id="minPrice">1000</span>
+    <input type="range" id="priceSlider" min="1000" max="100000" step="500" value="100000"
+           oninput="filterToursByPrice()" style="width: 60%;">
+    <span id="maxPrice">100000</span>
+  </div>
+  <p class="mt-2">Selected Price: NPR <span id="selectedPrice">100000</span></p>
+</div>
+   
         <div class="single-info row mt-40">
            <!-- Card 1 -->
            <div class="col-lg-3 col-md-6 equal-padding info-right" th:each="tour:${tourList}">
-            <div class="card">
+            <div class="card tour-card">
               <img th:src="${tour.tourImageUrl}" class="card-img-top" alt="..." height="190 px" style="object-fit: scale-down;">
               <div class="card-body">
                 <i class="bi bi-geo-alt"></i>           
-                <span class="card-title" th:text="${tour.title}"></span>
+                <span class="card-title tour-title" th:text="${tour.title}"></span>
                 <p class="card-text">Explore [[${tour.title}]]</p>
                 <p class="review">
                   <span>
@@ -268,6 +237,78 @@
     <script src="js/jquery.counterup.min.js"></script>
     <script src="js/waypoints.min.js"></script>
     <script src="js/main.js"></script>
+<!-- JavaScript for Filtering -->
+<script>
+  function filterTours() {
+    let input = document.getElementById("search-input").value.toLowerCase();
+    let tourCards = document.querySelectorAll(".tour-card");
+    let firstMatch = null; // Store the first matching tour
 
+    tourCards.forEach((card) => {
+      let title = card.querySelector(".tour-title").innerText.toLowerCase();
+      let cardContainer = card.parentElement; // The column wrapper (div.col-lg-3)
+
+      if (title.includes(input)) {
+        cardContainer.style.display = "block";
+        if (!firstMatch) {
+          firstMatch = cardContainer; // Store the first match
+        }
+      } else {
+        cardContainer.style.display = "none";
+      }
+    });
+
+    // Scroll to the first matching tour if it exists
+    if (firstMatch) {
+      firstMatch.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }
+</script>
+<script>
+function filterToursByPrice() {
+    const selectedPrice = document.getElementById("priceSlider").value;
+    document.getElementById("selectedPrice").textContent = selectedPrice;
+    
+    const tourCards = document.querySelectorAll(".tour-card");
+    console.log("Number of tour cards found:", tourCards.length);
+    
+    tourCards.forEach((card, index) => {
+        // The price is in a p tag that comes after the review p tag
+        const priceElement = card.querySelector(".card-body > p:not(.review):not(.card-text)");
+        if (priceElement) {
+            const priceText = priceElement.textContent.trim();
+            console.log(`Card ${index} price text:`, priceText);
+            
+            // Extract just the number from the price text
+            const price = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+            console.log(`Card ${index} parsed price:`, price);
+            
+            // Show/hide based on price
+            const cardContainer = card.parentElement;
+            if (price <= parseFloat(selectedPrice)) {
+                console.log(`Card ${index} showing (${price} <= ${selectedPrice})`);
+                cardContainer.style.display = "block";
+            } else {
+                console.log(`Card ${index} hiding (${price} > ${selectedPrice})`);
+                cardContainer.style.display = "none";
+            }
+        } else {
+            console.log(`Card ${index} price element not found`);
+        }
+    });
+}
+
+// Initialize the slider when the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const priceSlider = document.getElementById("priceSlider");
+    if (priceSlider) {
+        console.log("Slider initialized");
+        // Set initial price display
+        document.getElementById("selectedPrice").textContent = priceSlider.value;
+    } else {
+        console.error("Price slider not found!");
+    }
+});
+</script>
   </body>
 </html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <!-- Mobile Specific Meta -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/fav.png" />
+    <!-- Meta Description -->
+    <meta name="description" content="" />
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="" />
+    <!-- meta character set -->
+    <meta charset="UTF-8" />
+    <!-- Site Title -->
+    <title>Travel & Tour</title>
+    <!-- Bootstrap Icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+      rel="stylesheet"
+    />
+    <!--
+			CSS
+			============================================= -->
+    <link rel="stylesheet" href="css/linearicons.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/magnific-popup.css" />
+    <link rel="stylesheet" href="css/animate.min.css" />
+    <link rel="stylesheet" href="css/owl.carousel.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/contact.css">
+
+  </head>
+
+  <body>
+    <!-- start banner Area -->
+    <section class="banner-area" id="home">
+      <!-- Start Header Area -->
+        <header class="default-header">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="index.html">
+                    <!-- <img src="img/logo.png" alt=""> -->
+                    <h4 style="color: white">Yarsa Tour & Travel</h4>
+                    </a>
+                    <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                    <span class="text-white lnr lnr-menu"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end align-items-center mt-4"id="navbarSupportedContent">   
+                    <ul class="navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About</a></li>
+                        <li><a href="/recommend">Recommendation</a></li>
+                        <li><a href="#gallery">Offers & discounts </a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/review">Review</a></li>
+
+							<li><a href="/booknow">
+									<button class="btn btn-primary">Book Now</button>
+							</a></li>
+
+							<!-- Dropdown -->
+							<li class="dropdown" th:if="${user != null}"><a
+								class="dropdown-toggle" href="/user" id="navbardrop">
+									<button class="btn btn-primary rounded"
+										th:text="${user.username}"></button>
+							</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="/logout">Logout</a>
+								</div></li>
+						</ul>
+			    </div>
+		    </nav>
+             <!-- Search Bar -->
+      <div class="search-bar-container sticky-top">
+        <div class="d-flex justify-content-center h-100 rounded">
+          <form class="search" action="searchedList.html" method="GET">
+            <input type="number" class="search-input" placeholder="Enter price" name="price" min="0" required>
+            <button type="submit" class="search-icon">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Search Bar End -->
+	    </header>
+        <!-- End Header Area -->
+    </section>
+
+    <section class="default-banner">
+        <div class="overlay"></div>
+        <img src="img/slider1.jpg" alt="Banner Image">
+        <div class="container">
+            <div class="row justify-content-center align-items-center h-100">
+                <div class="col-md-10 col-12">
+                    <div class="banner-content text-center">
+                        <p class="text-white" style="font-size: larger;margin-top: 10rem;">
+                            Embark on your next adventure with YARSA TRAVELS AND TOURS. Discover breathtaking destinations, create unforgettable memories, and let us be your guide to the world’s wonders, where every journey is a story waiting to be told.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact pt-5">
+        <div class="container">
+            <div class="g-4 g-lg-5 align-items-center py-5 mb-4 row">
+                <div class="col-xl-6 col-md-6">
+                    <div class="bg-light p-4 card border-0 shadow-sm">
+                        <div class="form-box">
+                            <h2 class="mb-2 h2 font-bold">Customize your package</h2>
+                            <form action="/request_custom_tour" method="post">
+                            <input type="hidden" name="tourId" th:value="${tour.id}">
+    						<input type="hidden" name="userId" th:value="${user.id}">
+                                <div class="row">
+                                    <!-- Full Name, Email, Phone Number -->
+                                    <div class="col-md-4">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingName">Full Name</label>
+                                            <input placeholder="Full Name" name="name" required type="text" id="floatingName" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingEmail">Email</label>
+                                            <input placeholder="name@example.com" name="email" required type="email" id="floatingEmail" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingPhone">Phone Number</label>
+                                            <input placeholder="Phone Number" name="phone" required type="text" id="floatingPhone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Number of Travelers -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingTravelers">Number of Travelers</label>
+                                            <input placeholder="Number of Travelers" name="travelers" required type="number" min="1" id="floatingTravelers" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Travel Dates -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingStartDate">Start Date</label>
+                                            <input placeholder="Start Date" name="startDate" required type="date" id="floatingStartDate" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingEndDate">End Date</label>
+                                            <input placeholder="End Date" name="endDate" required type="date" id="floatingEndDate" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingTour">Tour</label>
+                                            <input th:value="${tour.title}" name="title" required type="text" id="floatingTour" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                    <!-- Destination -->
+                                    <div class="col-md-12">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingDestination">Destination</label>
+											   <input placeholder="Destination"  name="destination" required type="text" id="floatingDestination" class="form-control">
+                                        </div>
+                                    </div>
+                                    <!-- Accommodation Type -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingAccommodation">Accommodation Type</label>
+                                            <select name="accommodation" required id="floatingAccommodation" class="form-control">
+                                                <option value="" disabled selected>Select Accommodation Type</option>
+                                                <option value="hotel">Hotel</option>
+                                                <option value="resort">Resort</option>
+                                                <option value="guesthouse">Guesthouse</option>
+                                                <option value="apartment">Apartment</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Transportation Preferences -->
+                                    <div class="col-md-6">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingTransportation">Transportation Preferences</label>
+                                            <select name="transportation" required id="floatingTransportation" class="form-control">
+                                                <option value="" disabled selected>Select Transportation</option>
+                                                <option value="car">Car</option>
+                                                <option value="bus">Bus</option>
+                                                <option value="train">Train</option>
+                                                <option value="plane">Plane</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- Budget -->
+                                    <div class="col-md-12">
+                                        <div class="mb-4 form-floating">
+                                            <label for="budget">Budget</label>
+                                            <input placeholder="Budget" name="budget" type="number" step="0.01" required id="budget" class="form-control" ></textarea>
+                                        </div>
+                                    </div>                                    
+                                    <!-- Activities and Interests -->
+                                    <div class="col-md-12">
+                                        <div class="mb-4 form-floating">
+                                            <label for="floatingActivities">Activities and Interests</label>
+                                            <textarea placeholder="Activities and Interests" name="activities" required id="floatingActivities" class="form-control" style="min-height: 125px;"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- Submit Button -->
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">Customize Tour</button>
+                                    </div>
+                                </div>
+                            </form>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="d-none d-md-block col-xl-6 col-md-6">
+                    <img src="./img/customPkg.jpeg" alt="contact" class="img-fluid me-3 rounded">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Start logo Area -->
+    <section class="logo-area">
+        <div class="container">
+            <div class="row">
+                <div class="col single-img">
+                    <img class="d-block mx-auto" src="img/l1.png" alt="">
+                </div>
+                <div class="col single-img">
+                    <img class="d-block mx-auto" src="img/l2.png" alt="">
+                </div>
+                <div class="col single-img">
+                    <img class="d-block mx-auto" src="img/l3.png" alt="">
+                </div>
+                <div class="col single-img">
+                    <img class="d-block mx-auto" src="img/l4.png" alt="">
+                </div>
+                <div class="col single-img">
+                    <img class="d-block mx-auto" src="img/l5.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End logo Area -->
+
+  <!-- start footer Area -->
+  <footer class="footer-area section-gap">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-md-6 col-sm-6">
+          <div class="single-footer-widget">
+            <h6>About Us</h6>
+            <div class="list-group list-group-flush">
+              <div class="list-group-item text-white">
+                <p>At Yarsa Tour and Travel, we believe in creating unforgettable travel experiences that enrich your
+                  life. </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-5 col-md-6 col-sm-6">
+          <div class="single-footer-widget">
+            <h6>Quick Link</h6>
+            <div class="footer-social d-flex align-items-left">
+              <div class="list-group list-group-flush">
+                <div class="list-group-item">
+                  <ul>
+                    <li class="list-footer text-white">
+                      <a aria-current="page" class="active text-white" href="/">Recommendation</a>
+                    </li>
+                    <li class="list-footer">
+                      <a aria-current="page" class="active text-white" href="/">FAQ</a>
+                    </li>
+                    <li class="list-footer">
+                      <a aria-current="page" class="active text-white" href="/">Contact</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
+          <div class="single-footer-widget">
+            <h6>Follow Us</h6>
+            <p>Let us be social</p>
+            <div class="footer-social d-flex align-items-center">
+              <a href="#"><i class="fa fa-facebook"></i></a>
+              <a href="#"><i class="fa fa-twitter"></i></a>
+              <a href="#"><i class="fa fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- End footer Area -->
+
+    <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="searchModalLabel">Search</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="#">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/easing.min.js"></script>
+    <script src="js/hoverIntent.js"></script>
+    <script src="js/superfish.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.sticky.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/parallax.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

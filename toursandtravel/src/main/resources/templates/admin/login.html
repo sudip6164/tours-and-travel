@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Bootstrap Icons CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <!-- Custom StyleSheet -->
+  <link rel="stylesheet" href="/css/adminCss/login.css" />
+  <link rel="icon" href="/img/adminImg/favicon.ico">
+  <title>Login</title>
+</head>
+<body>
+  <!-- Navigation -->
+  <div class="top-nav"></div>
+  <!-- Login -->
+  <div class="container">
+    <div class="login-form">
+      <img src="/img/adminImg/yarsaLogo.png" alt="" class="logo" height="200" width="200">
+      <h2>Welcome Admin</h2>
+      <br>
+      <hr>
+      <form action="/admin/adminPostLogin" method="post">
+        <h1>Login</h1>
+        <div th:if="${error}" th:text="${error}" style="color:red;"></div><br>
+        <label for="username">Username</label>
+        <input type="text" placeholder="Enter Username" name="username" required />
+
+        <label for="psw">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" placeholder="Enter password" name="password">
+          <span class="toggle-password">
+            <i class="bi bi-eye-slash-fill" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="buttons">
+          <button type="submit" class="signupbtn">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Custom Script -->
+  <script src="./js/index.js"></script>
+</body>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+
+    togglePasswordIcons.forEach(togglePassword => {
+      togglePassword.addEventListener('click', function () {
+        const passwordField = this.previousElementSibling;
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+
+        this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash-fill" aria-hidden="true"></i>' : '<i class="bi bi-eye-fill" aria-hidden="true"></i>';
+      });
+    });
+  });
+</script>
+</html>

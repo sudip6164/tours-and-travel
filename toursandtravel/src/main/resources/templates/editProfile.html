@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Mobile Specific Meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Favicon-->
+  <link rel="shortcut icon" href="img/fav.png" />
+  <!-- Author Meta -->
+  <meta name="author" content="colorlib" />
+  <!-- Meta Description -->
+  <meta name="description" content="" />
+  <!-- Meta Keyword -->
+  <meta name="keywords" content="" />
+  <!-- meta character set -->
+  <meta charset="UTF-8" />
+  <!-- Site Title -->
+  <title>Travel & Tour</title>
+  <!-- Bootstrap Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css"
+    rel="stylesheet" />
+
+  <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet" />
+  <!--
+			CSS
+			============================================= -->
+  <link rel="stylesheet" href="css/linearicons.css" />
+  <link rel="stylesheet" href="css/font-awesome.min.css" />
+  <link rel="stylesheet" href="css/bootstrap.css" />
+  <link rel="stylesheet" href="css/magnific-popup.css" />
+  <link rel="stylesheet" href="css/animate.min.css" />
+  <link rel="stylesheet" href="css/owl.carousel.css" />
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+  <!-- start banner Area -->
+  <section class="banner-area" id="home">
+    <!-- Start Header Area -->
+    <header class="default-header">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+          <a class="navbar-brand" href="/">
+            <!-- <img src="img/logo.png" alt=""> -->
+            <h4 style="color: white">Yarsa Tour & Travel</h4>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="text-white lnr lnr-menu"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end align-items-center mt-4" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/recommend">Recommendation</a></li>
+              <li><a href="#gallery">Offers & discounts </a></li>
+              <li><a href="/contact">Contact</a></li>
+              <li><a href="/review">Review</a></li>
+              <li>
+                <a href="/booknow">
+                  <button class="btn btn-primary">
+                    Book Now
+                  </button>
+                </a>
+              </li>
+              
+              <!-- Dropdown -->
+               	<li class="dropdown" th:if="${user != null}">
+					<a class="dropdown-toggle" href="/user" id="navbardrop" >
+						<button class="btn btn-primary rounded" th:text="${user.username}"></button>
+						</a>
+						<div class="dropdown-menu">
+						  <a class="dropdown-item" href="/logout">Logout</a>
+						</div>
+				</li>
+            </ul>
+          </div>
+      </nav>
+               <!-- Search Bar -->
+      <div class="search-bar-container sticky-top">
+        <div class="d-flex justify-content-center h-100 rounded">
+          <form class="search" action="searchedList.html" method="GET">
+            <input type="number" class="search-input" placeholder="Enter price" name="price" min="0" required>
+            <button type="submit" class="search-icon">
+              <i class="fa fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Search Bar End -->
+    </header>
+    <!-- End Header Area -->
+  </section>
+
+  <!--Banner-->
+  <section class="default-banner" style="position: relative;height: 250px; overflow: hidden;">
+    <div class="overlay"></div>
+    <img src="img/slider1.jpg" alt="Banner Image" style="width: 100%;
+      height: auto;
+      object-fit: cover;">
+  </section>
+  <!--Banner End-->
+
+  <!-- Start Profile Dashboard Area -->
+  <section class="profile-dashboard section-gap">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 p-3 profile-info">
+                <!-- Personal Info Section -->
+                <div id="personal-info" class="profile-section">
+                    <h4>Edit Profile</h4>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <form action="/editProfile" method="post" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                    	<input type="hidden" name="id" th:value="${user.id}" />
+                                    	<input type="hidden" name="password" th:value="${user.password}" />
+                                        <!-- Name -->
+                                        <div class="form-group">
+                                            <label for="name"><strong>Name:</strong></label>
+                                            <input type="text" class="form-control" id="name" name="username" th:value="${user.username}" required>
+                                        </div>
+                                        <!-- Email -->
+                                        <div class="form-group">
+                                            <label for="email"><strong>Email:</strong></label>
+                                            <input type="email" class="form-control" id="email" name="email" th:value="${user.email}" readonly required>
+                                        </div>
+                                        <!-- Phone -->
+                                        <div class="form-group">
+                                            <label for="phone"><strong>Phone:</strong></label>
+                                            <input type="tel" class="form-control" id="phone" name="phone" th:value="${user.phone}" required>
+                                        </div>
+                                        <!-- Address -->
+                                        <div class="form-group">
+                                            <label for="address"><strong>Address:</strong></label>
+                                            <textarea class="form-control" id="address" name="address" rows="3" th:text="${user.address}" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <!-- Profile Image -->
+                                        <div class="form-group update-image">
+                                            <img id="preview-image" th:src="${user.profilePictureUrl != null ? user.profilePictureUrl : 'https://i.mydramalist.com/RB3VNP_5c.jpg'}" alt="User Image" class="img-fluid rounded-circle profile-image mt-2" />
+                                            <br>
+                                            <label for="file-upload" class="file-label"><strong>Profile</strong></label>
+                                            <input type="file" class="form-control-file file-upload" id="file-upload" name="profilePicture" onchange="previewImage(event)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Save Changes Button -->
+                                <div class="profile-edit p-4 text-center">
+                                    <button type="submit" class="btn btn-success">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+  <!-- End Profile Dashboard Area -->
+
+  <script src="js/vendor/jquery-2.2.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+    integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/jquery.ajaxchimp.min.js"></script>
+  <script src="js/jquery.magnific-popup.min.js"></script>
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+  <script src="js/slick.js"></script>
+  <script src="js/jquery.counterup.min.js"></script>
+  <script src="js/waypoints.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script>
+    function previewImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Set the preview image src to the file's content
+                document.getElementById('preview-image').src = e.target.result;
+            };
+            reader.readAsDataURL(file); // Read the file as a data URL for preview
+        }
+    }
+</script>
+  <script>
+    $(document).ready(function() {
+      $('.nav-link').click(function(e) {
+        e.preventDefault();
+        // Remove active class from all links
+        $('.nav-link').removeClass('active');
+        // Add active class to the clicked link
+        $(this).addClass('active');
+        // Hide all profile sections
+        $('.profile-section').addClass('d-none');
+        // Show the targeted profile section
+        $($(this).data('target')).removeClass('d-none');
+      });
+    });
+  </script> 
+
+</body>
+
+</html>

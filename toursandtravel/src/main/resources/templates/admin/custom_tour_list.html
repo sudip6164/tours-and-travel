@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Yarsha Admin</title>
+    <link rel="stylesheet" href="/css/adminCss/dash.css" />
+    <link rel="icon" href="/img/adminImg/favicon.ico" type="image/x-icon" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css
+"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Tour Management</title>
+  </head>
+
+  <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="bx bx-user" aria-hidden="true"></i>
+        <span class="logo_name">Admin</span>
+      </div>
+      <ul class="nav-links">
+        <li>
+          <a href="/admin" class="active">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/tour_list" class="active">
+            <i class="bx bx-box"></i>
+            <span class="links_name">Tours</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/review_list" class="active">
+            <i class="bx bx-star"></i>
+            <span class="links_name">Reviews</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/booking_list" class="active">
+            <i class="bx bx-book-reader"></i>
+            <span class="links_name">Manage Bookings</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/custom_tour_list" class="active">
+            <i class="bx bx-book-reader"></i>
+            <span class="links_name">Manage Custom Tours</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/user_list" class="active">
+            <i class="bx bx-user"></i>
+            <span class="links_name">Manage Users</span>
+          </a>
+        </li>
+        <li class="log_out">
+          <a href="/admin/adminLogout">
+            <i class="bx bx-log-out"></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <section class="home-section">
+      <nav>
+        <div class="sidebar-button">
+          <i class="bx bx-menu sidebarBtn"></i>
+          <span class="dashboard">Dashboard</span>
+        </div>
+      </nav>
+
+      <div class="home-content">
+        <div class="sales-boxes">
+          <div class="recent-sales box">
+            <div class="title">Custom tour Details</div>
+            <div class="table-wrapper">
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>Custom Tour ID</th>
+                    <th>Tour ID</th>
+                    <th>Tour Name</th>
+					<th>User ID</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Start Date</th>
+                    <th>End date</th>
+                    <th>Destination</th>
+                    <th>Accommodation</th>
+                    <th>Transportation</th>
+                    <th>Budget</th>
+                    <th>Activities</th>
+                    <th>Approval Status</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Example row -->
+                  <tr th:each="customTour:${customTourList}">
+                    <td th:text="${customTour.id}"></td>
+                    <td th:text="${customTour.tour.id}"></td>
+                    <td th:text="${customTour.tour.title}"></td>
+                    <td th:text="${customTour.user.id}"></td>
+                    <td th:text="${customTour.user.username}"></td>
+                    <td th:text="${customTour.name}"></td>
+                    <td th:text="${customTour.email}"></td>
+                    <td th:text="${customTour.phone}"></td>
+                    <td th:text="${customTour.startDate}"></td>
+                    <td th:text="${customTour.endDate}"></td>
+                    <td th:text="${customTour.destination}"></td>
+                    <td th:text="${customTour.accommodation}"></td>
+                    <td th:text="${customTour.transportation}"></td>
+                    <td th:text="${customTour.budget}"></td>
+                    <td th:text="${customTour.activities}"></td>
+                    <td th:text="${customTour.approvalStatus}"></td>
+					<td>
+						<button class="btn btn-success"
+								th:if="${customTour.approvalStatus} != 'Approved'"
+						        th:onclick="|return confirmApprovalOrDenial('Approved', ${customTour.id});|"
+						        style="margin-right: 5px;">Approve</button>
+						<button class="btn btn-danger"
+								th:if="${customTour.approvalStatus} != 'Denied'"
+						        th:onclick="|return confirmApprovalOrDenial('Denied', ${customTour.id});|">
+						        Deny</button>
+
+					</td>
+					<td>
+                      <a th:href="@{'/admin/delete_custom_tour'(id=${customTour.id})}"
+						 onclick="return confirm('Are you sure you want to delete this custom tour booking?');"
+						 style="text-decoration: none">
+						 <button class="btn btn-danger">Delete</button>
+					  </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      let sidebar = document.querySelector(".sidebar");
+      let sidebarBtn = document.querySelector(".sidebarBtn");
+      sidebarBtn.onclick = function () {
+        sidebar.classList.toggle("active");
+        if (sidebar.classList.contains("active")) {
+          sidebarBtn.classList.replace("bx-menu", "bx-menu-alt-right");
+        } else sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      };
+
+      function showSection(section) {
+        const sections = document.querySelectorAll(".form-section");
+        sections.forEach((sec) => {
+          sec.classList.remove("active");
+        });
+        document.getElementById(`section-${section}`).classList.add("active");
+      }
+    </script>
+    <script>
+	function confirmApprovalOrDenial(action, customTourId) {
+	    const confirmation = confirm(`Are you sure you want to ${action.toLowerCase()} this booking?`);
+	    if (confirmation) {
+	        const url = `/admin/update_custom_tour_booking_status?id=${customTourId}&status=${action}`;
+	        window.location.href = url; // Redirect to the appropriate URL
+	    }
+	    return false; // Prevent default link action
+	}
+	</script>
+  </body>
+</html>
