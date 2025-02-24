@@ -73,6 +73,11 @@ cd toursandtravel
 4. Run XAMPP and start MySQL and Apache
 
 5. Build and run the project:
+   - Right click on project
+   - Go to Run As
+   - Select run as Spring Boot App
+
+6. Build and run the project:
    - Access the application at: http://localhost:8080
    - Access admin panel at: http://localhost:8080/admin
    - Username and password for admin can be changed in initializer/AdminUserInitializer
