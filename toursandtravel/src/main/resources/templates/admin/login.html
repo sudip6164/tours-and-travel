@@ -42,21 +42,20 @@
   </div>
 
   <!-- Custom Script -->
-  <script src="./js/index.js"></script>
-</body>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const togglePasswordIcons = document.querySelectorAll('.toggle-password');
 
-    togglePasswordIcons.forEach(togglePassword => {
-      togglePassword.addEventListener('click', function () {
-        const passwordField = this.previousElementSibling;
-        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordField.setAttribute('type', type);
+      togglePasswordIcons.forEach(togglePassword => {
+        togglePassword.addEventListener('click', function () {
+          const passwordField = this.previousElementSibling;
+          const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+          passwordField.setAttribute('type', type);
 
-        this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash-fill" aria-hidden="true"></i>' : '<i class="bi bi-eye-fill" aria-hidden="true"></i>';
+          this.innerHTML = type === 'password' ? '<i class="bi bi-eye-slash-fill" aria-hidden="true"></i>' : '<i class="bi bi-eye-fill" aria-hidden="true"></i>';
+        });
       });
     });
-  });
-</script>
+  </script>
+</body>
 </html>

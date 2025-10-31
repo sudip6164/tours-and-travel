@@ -19,3 +19,7 @@ upload.path=src/main/resources/static
 spring.servlet.multipart.max-file-size=100MB
 spring.servlet.multipart.max-request-size=100MB
 
+# eSewa Payment Configuration
+daisy.esewa.product_code=EPAYTEST
+daisy.esewa.secret=8gBm/:&EnhH.1/q
+

@@ -1,6 +1,5 @@
 package com.toursandtravel.controller;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +88,24 @@ public class HomeController {
 	        model.addAttribute("user", user);
 	    }
         return "contactSuccess.html";
+    }
+	
+	@GetMapping("/succefull.html")
+    public String paymentSuccess(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+	    if (user != null) {
+	        model.addAttribute("user", user);
+	    }
+        return "succefull.html";
+    }
+	
+	@GetMapping("/payment-failure.html")
+    public String paymentFailure(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+	    if (user != null) {
+	        model.addAttribute("user", user);
+	    }
+        return "payment-failure.html";
     }
 	
 	@PostMapping("/sendContactMessage")
