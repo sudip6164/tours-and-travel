@@ -47,60 +47,100 @@ $(document).ready(function(){
         fixedContentPos: false
     });
 
-    $('.active-works-carousel').owlCarousel({
-        items:1,
-        loop:true,
-        margin: 100,
-        dots: true,
-        autoplay:true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            480: {
-                items: 1,
-            },
-            768: {
-                items: 1,
-            }
-        }
+    // Wait for all scripts to load, then initialize carousels
+    $(window).on('load', function() {
+        initializeCarousels();
     });
+    
+    // Also try after a short delay as fallback
+    setTimeout(function() {
+        initializeCarousels();
+    }, 500);
 
-    $('.active-gallery').owlCarousel({
-        items:1,
-        loop:true,
-        dots: true,
-        autoplay:true,
-        nav:true,
-        navText: ["<span class='lnr lnr-arrow-up'></span>",
-        "<span class='lnr lnr-arrow-down'></span>"],        
-            responsive: {
-            0: {
-                items: 1
-            },
-            480: {
+    function initializeCarousels() {
+        // Check if owlCarousel is loaded
+        if (typeof $.fn.owlCarousel === 'undefined') {
+            console.warn('owlCarousel not loaded yet, retrying...');
+            setTimeout(initializeCarousels, 100);
+            return;
+        }
+
+        // Initialize banner slider (hero section) FIRST
+        var bannerSlider = $('.active-blog-slider');
+        if (bannerSlider.length && !bannerSlider.hasClass('owl-loaded')) {
+            bannerSlider.owlCarousel({
+                loop: true,
+                dots: true,
                 items: 1,
-            },
-            768: {
-                items: 2,
-            },
-            900: {
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                smartSpeed: 800,
+                nav: true,
+                navText: ['<span class="lnr lnr-arrow-left"></span>', '<span class="lnr lnr-arrow-right"></span>'],
+                margin: 0,
+                autoHeight: false,
+                mouseDrag: true,
+                touchDrag: true,
+                pullDrag: false,
+                freeDrag: false,
+                animateOut: 'fadeOut',
+                animateIn: 'fadeIn',
+                responsive: {
+                    0: { items: 1 },
+                    600: { items: 1 },
+                    1000: { items: 1 }
+                }
+            });
+            console.log('Banner slider initialized');
+        }
+
+        // Initialize top destinations carousel
+        var destCarousel = $('.active-works-carousel');
+        if (destCarousel.length && !destCarousel.hasClass('owl-loaded')) {
+            destCarousel.owlCarousel({
+                items: 1,
+                loop: false,
+                margin: 30,
+                dots: true,
+                autoplay: false,
+                nav: true,
+                navText: ['<span class="lnr lnr-arrow-left"></span>', '<span class="lnr lnr-arrow-right"></span>'],
+                smartSpeed: 800,
+                autoHeight: false,
+                mouseDrag: true,
+                touchDrag: true,
+                responsive: {
+                    0: { items: 1, margin: 10 },
+                    480: { items: 1, margin: 20 },
+                    768: { items: 1, margin: 30 }
+                }
+            });
+            console.log('Destinations carousel initialized');
+        }
+
+        // Initialize gallery carousel
+        var galleryCarousel = $('.active-gallery');
+        if (galleryCarousel.length && !galleryCarousel.hasClass('owl-loaded')) {
+            galleryCarousel.owlCarousel({
                 items: 6,
-            }
-
+                loop: false,
+                dots: true,
+                autoplay: false,
+                nav: true,
+                navText: ["<span class='lnr lnr-arrow-up'></span>",
+                    "<span class='lnr lnr-arrow-down'></span>"],
+                margin: 0,
+                responsive: {
+                    0: { items: 2 },
+                    480: { items: 3 },
+                    768: { items: 4 },
+                    900: { items: 6 }
+                }
+            });
+            console.log('Gallery carousel initialized');
         }
-    });
-
-
-$('.active-blog-slider').owlCarousel({
-        loop: true,
-        dots: true,
-        items: 1,
-        autoplay: true,
-        autoplayTimeout: 2000,
-        smartSpeed: 1000,
-        animateOut: 'fadeOut',
-      })
+    }
 
 
     // Select all links with hashes

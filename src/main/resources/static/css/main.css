@@ -2134,6 +2134,44 @@ h1, h2, h3, h4, h5, h6 {
 
 .default-banner {
   margin-top: -48px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Banner slider carousel styles */
+.active-blog-slider {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.active-blog-slider .item-slider {
+  min-height: 600px;
+  height: 100vh;
+  max-height: 800px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+}
+
+@media (max-width: 768px) {
+  .active-blog-slider .item-slider {
+    min-height: 500px;
+    height: 70vh;
+  }
+}
+
+.active-blog-slider .owl-stage-outer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.active-blog-slider .owl-item {
+  height: 100%;
 }
 
 @media (max-width: 991px) {
@@ -2301,11 +2339,33 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #f9f9ff;
 }
 
+.active-works-carousel .item {
+  padding: 0 15px;
+}
+
 .active-works-carousel .item .thumb {
   background-position: center center !important;
   background-size: cover !important;
   background-repeat: no-repeat !important;
   height: 460px;
+}
+
+.active-works-carousel .item img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+/* Destination carousel styles */
+.active-works-carousel {
+  width: 100%;
+}
+
+.active-works-carousel .owl-stage-outer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .active-works-carousel .item .caption {
@@ -2778,9 +2838,11 @@ h6 {
 }
 .destination-img {
   width: 100%;
-  height: 500px;  
+  max-width: 100%;
+  height: 400px;  
   object-fit: cover; 
-  border-radius: 1rem; 
+  border-radius: 1rem;
+  display: block;
 }
 .card-title{
   font-size: large;

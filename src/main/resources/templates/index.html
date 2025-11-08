@@ -23,13 +23,13 @@
   <!--
 			CSS
 			============================================= -->
-  <link rel="stylesheet" href="css/linearicons.css" />
-  <link rel="stylesheet" href="css/font-awesome.min.css" />
-  <link rel="stylesheet" href="css/bootstrap.css" />
-  <link rel="stylesheet" href="css/magnific-popup.css" />
-  <link rel="stylesheet" href="css/animate.min.css" />
-  <link rel="stylesheet" href="css/owl.carousel.css" />
-  <link rel="stylesheet" href="css/main.css" /> 
+  <link rel="stylesheet" href="/css/linearicons.css" />
+  <link rel="stylesheet" href="/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/css/bootstrap.css" />
+  <link rel="stylesheet" href="/css/magnific-popup.css" />
+  <link rel="stylesheet" href="/css/animate.min.css" />
+  <link rel="stylesheet" href="/css/owl.carousel.css" />
+  <link rel="stylesheet" href="/css/main.css" /> 
 </head>
 
 <body>
@@ -94,8 +94,8 @@
     <!-- End Header Area -->
   </section>
 
-  <section class="default-banner active-blog-slider">
-    <div class="item-slider relative" style="background: url(img/slider1.jpg); background-size: cover">
+  <section class="default-banner active-blog-slider owl-carousel owl-theme">
+    <div class="item item-slider relative" style="background: url(/img/slider1.jpg); background-size: cover; background-position: center;">
       <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
       <div class="container">
         <div class="row fullscreen justify-content-center align-items-center">
@@ -105,16 +105,16 @@
                 Discover the Colorful World
               </h4>
               <h1 class="text-uppercase text-white">New Adventure</h1>
-              <p class="text-white" style="font-weight: 700; font-size: 32px;">
+              <p class="text-white" style="font-weight: 700; font-size: 32px; line-height: normal;">
                 WE PROVIDE SERVICE BEYOND EXPECTATIONS
               </p>
               <a href="/recommend" class="text-uppercase header-btn">Discover Now</a>
-                          </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="item-slider relative" style="background: url(img/slider2.jpg); background-size: cover">
+    <div class="item item-slider relative" style="background: url(/img/slider2.jpg); background-size: cover; background-position: center;">
       <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
       <div class="container">
         <div class="row fullscreen justify-content-center align-items-center">
@@ -124,7 +124,7 @@
                 Discover the Colorful World
               </h4>
               <h1 class="text-uppercase text-white">New Trip</h1>
-              <p class="text-white" style="font-weight: 700; font-size: 32px;">
+              <p class="text-white" style="font-weight: 700; font-size: 32px; line-height: normal;">
                  WE PROVIDE SERVICE BEYOND EXPECTATIONS
               </p>
               <a href="/recommend" class="text-uppercase header-btn">Discover Now</a>
@@ -133,7 +133,7 @@
         </div>
       </div>
     </div>
-    <div class="item-slider relative" style="background: url(img/slider3.jpg); background-size: cover">
+    <div class="item item-slider relative" style="background: url(/img/slider3.jpg); background-size: cover; background-position: center;">
       <div class="overlay" style="background: rgba(0, 0, 0, 0.3)"></div>
       <div class="container">
         <div class="row fullscreen justify-content-center align-items-center">
@@ -143,7 +143,7 @@
                 Discover the Colorful World
               </h4>
               <h1 class="text-uppercase text-white">New Experience</h1>
-              <p class="text-white" style="font-weight: 700; font-size: 32px;">
+              <p class="text-white" style="font-weight: 700; font-size: 32px; line-height: normal;">
                  WE PROVIDE SERVICE BEYOND EXPECTATIONS
               </p>
               <a href="/recommend" class="text-uppercase header-btn">Discover Now</a>
@@ -270,16 +270,63 @@
         </div>
       </div>
       <div class="row justify-content-center d-flex">
-        <div class="active-works-carousel mt-40 col-lg-8">
-          <div class="item" th:each="tour : ${topDestinations}">
-          <a th:href="@{'/learnmore'(id=${tour.id})}" class="btn btn-primary" style="background-color: white; border-color: white"><img class="img-fluid destination-img" th:src="${tour.tourImageUrl}" alt="" /></a>
-                        <div class="caption text-center mt-20">
-              <h6 class="text-uppercase">[[${tour.title}]]</h6>
-              <p>
-                [[${tour.description}]] </p>
+        <div class="active-works-carousel owl-carousel owl-theme mt-40 col-lg-8">
+          <div class="item">
+            <div class="destination-item">
+              <a href="/learnmore" style="display: block;">
+                <img class="img-fluid destination-img" src="/img/himalaya.jpg" alt="Himalaya, Nepal" />
+              </a>
+              <div class="caption text-center mt-20">
+                <h6 class="text-uppercase">Himalaya, Nepal</h6>
+                <p>A sacred alpine lake surrounded by snow-capped peaks, attracting trekkers and pilgrims alike.</p>
+              </div>
             </div>
           </div>
-         </div>
+          <div class="item">
+            <div class="destination-item">
+              <a href="/learnmore" style="display: block;">
+                <img class="img-fluid destination-img" src="/img/chitwan.jpg" alt="Chitwan, Nepal" />
+              </a>
+              <div class="caption text-center mt-20">
+                <h6 class="text-uppercase">Chitwan, Nepal</h6>
+                <p>Famous for its national park, wildlife safaris, and rich cultural heritage.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="destination-item">
+              <a href="/learnmore" style="display: block;">
+                <img class="img-fluid destination-img" src="/img/mustang.jpg" alt="Mustang, Nepal" />
+              </a>
+              <div class="caption text-center mt-20">
+                <h6 class="text-uppercase">Mustang, Nepal</h6>
+                <p>A remote, desert-like region known for its ancient Tibetan culture, monasteries, and dramatic landscapes.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="destination-item">
+              <a href="/learnmore" style="display: block;">
+                <img class="img-fluid destination-img" src="/img/manang.jpeg" alt="Manang, Nepal" />
+              </a>
+              <div class="caption text-center mt-20">
+                <h6 class="text-uppercase">Manang, Nepal</h6>
+                <p>A scenic valley offering spectacular views and a popular stop for trekkers on the Annapurna Circuit.</p>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="destination-item">
+              <a href="/learnmore" style="display: block;">
+                <img class="img-fluid destination-img" src="/img/pokhara.jpg" alt="Pokhara, Nepal" />
+              </a>
+              <div class="caption text-center mt-20">
+                <h6 class="text-uppercase">Pokhara, Nepal</h6>
+                <p>A serene city known for its stunning lakes and breathtaking views of the Himalayas.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -374,32 +421,32 @@
   <!-- End feature Area -->
 
   <!-- Start gallery Area -->
-  <section class="gallery-area" id="gallery">
+  <!-- <section class="gallery-area" id="gallery">
     <div class="container-fluid">
       <div class="row no-padding">
         <div class="active-gallery">
           <div class="item single-gallery">
-            <img src="img/himalaya.jpg" alt="" />
+            <img src="/img/himalaya.jpg" alt="Himalaya" />
           </div>
           <div class="item single-gallery">
-            <img src="img/manang.jpeg" alt="" />
+            <img src="/img/manang.jpeg" alt="Manang" />
           </div>
           <div class="item single-gallery">
-            <img src="img/mustang.jpg" alt="" />
+            <img src="/img/mustang.jpg" alt="Mustang" />
           </div>
           <div class="item single-gallery">
-            <img src="img/pokhara.jpg" alt="" />
+            <img src="/img/pokhara.jpg" alt="Pokhara" />
           </div>
           <div class="item single-gallery">
-            <img src="img/chitwan.jpg" alt="" />
+            <img src="/img/chitwan.jpg" alt="Chitwan" />
           </div>
           <div class="item single-gallery">
-            <img src="img/gosaikunda.jpg" alt="" />
+            <img src="/img/gosaikunda.jpg" alt="Gosaikunda" />
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- End gallery Area -->
 
   <!-- Start faq Area -->
@@ -482,7 +529,7 @@
     <div class="overlay overlay-bg"></div>
     <div class="container">
       <div class="video-content">
-        <a href="https://www.youtube.com/watch?v=gCRNEJxDJKM" class="play-btn"><img src="img/play-btn.png" alt="" /></a>
+        <a href="https://www.youtube.com/watch?v=gCRNEJxDJKM" class="play-btn"><img src="/img/play-btn.png" alt="" /></a>
         <div class="video-desc">
           <h3 class="h2 text-white text-uppercase">
             Being unique is the preference
@@ -553,19 +600,19 @@
     </div>
   </footer>
   <!-- End footer Area -->
-  <script src="js/vendor/jquery-2.2.4.min.js"></script>
+  <script src="/js/vendor/jquery-2.2.4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
     integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
     crossorigin="anonymous"></script>
-  <script src="js/vendor/bootstrap.min.js"></script>
-  <script src="js/jquery.ajaxchimp.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.sticky.js"></script>
-  <script src="js/slick.js"></script>
-  <script src="js/jquery.counterup.min.js"></script>
-  <script src="js/waypoints.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="/js/vendor/bootstrap.min.js"></script>
+  <script src="/js/jquery.ajaxchimp.min.js"></script>
+  <script src="/js/jquery.magnific-popup.min.js"></script>
+  <script src="/js/owl.carousel.min.js"></script>
+  <script src="/js/jquery.sticky.js"></script>
+  <script src="/js/slick.js"></script>
+  <script src="/js/jquery.counterup.min.js"></script>
+  <script src="/js/waypoints.min.js"></script>
+  <script src="/js/main.js"></script>
 
 </body>
 
