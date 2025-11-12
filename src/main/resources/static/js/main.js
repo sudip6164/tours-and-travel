@@ -47,12 +47,12 @@ $(document).ready(function(){
         fixedContentPos: false
     });
 
-    // Wait for all scripts to load, then initialize carousels
+    // Initialize carousels after DOM and scripts are ready
     $(window).on('load', function() {
         initializeCarousels();
     });
     
-    // Also try after a short delay as fallback
+    // Fallback initialization after a short delay
     setTimeout(function() {
         initializeCarousels();
     }, 500);
@@ -65,7 +65,7 @@ $(document).ready(function(){
             return;
         }
 
-        // Initialize banner slider (hero section) FIRST
+        // Initialize banner slider (hero section) FIRST - most important
         var bannerSlider = $('.active-blog-slider');
         if (bannerSlider.length && !bannerSlider.hasClass('owl-loaded')) {
             bannerSlider.owlCarousel({
@@ -75,24 +75,18 @@ $(document).ready(function(){
                 autoplay: true,
                 autoplayTimeout: 3000,
                 autoplayHoverPause: true,
-                smartSpeed: 800,
-                nav: true,
-                navText: ['<span class="lnr lnr-arrow-left"></span>', '<span class="lnr lnr-arrow-right"></span>'],
-                margin: 0,
-                autoHeight: false,
-                mouseDrag: true,
-                touchDrag: true,
-                pullDrag: false,
-                freeDrag: false,
+                smartSpeed: 600,
                 animateOut: 'fadeOut',
                 animateIn: 'fadeIn',
+                nav: false,
+                margin: 0,
+                autoHeight: false,
                 responsive: {
                     0: { items: 1 },
                     600: { items: 1 },
                     1000: { items: 1 }
                 }
             });
-            console.log('Banner slider initialized');
         }
 
         // Initialize top destinations carousel
@@ -100,23 +94,22 @@ $(document).ready(function(){
         if (destCarousel.length && !destCarousel.hasClass('owl-loaded')) {
             destCarousel.owlCarousel({
                 items: 1,
-                loop: false,
+                loop: true,
                 margin: 30,
                 dots: true,
-                autoplay: false,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                smartSpeed: 800,
                 nav: true,
                 navText: ['<span class="lnr lnr-arrow-left"></span>', '<span class="lnr lnr-arrow-right"></span>'],
-                smartSpeed: 800,
                 autoHeight: false,
-                mouseDrag: true,
-                touchDrag: true,
                 responsive: {
                     0: { items: 1, margin: 10 },
                     480: { items: 1, margin: 20 },
                     768: { items: 1, margin: 30 }
                 }
             });
-            console.log('Destinations carousel initialized');
         }
 
         // Initialize gallery carousel
@@ -124,9 +117,10 @@ $(document).ready(function(){
         if (galleryCarousel.length && !galleryCarousel.hasClass('owl-loaded')) {
             galleryCarousel.owlCarousel({
                 items: 6,
-                loop: false,
+                loop: true,
                 dots: true,
-                autoplay: false,
+                autoplay: true,
+                autoplayTimeout: 3000,
                 nav: true,
                 navText: ["<span class='lnr lnr-arrow-up'></span>",
                     "<span class='lnr lnr-arrow-down'></span>"],
@@ -138,7 +132,6 @@ $(document).ready(function(){
                     900: { items: 6 }
                 }
             });
-            console.log('Gallery carousel initialized');
         }
     }
 

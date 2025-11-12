@@ -38,5 +38,9 @@
     border-radius: 0.5rem;
 }
 .list-group-item{
-    background-color: #222222;
+    background-color: transparent;
+    border: none;
+}
+.footer-area .list-group-item {
+    background-color: transparent;
 }

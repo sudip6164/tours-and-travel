@@ -25,6 +25,7 @@ import com.toursandtravel.model.Booking;
 import com.toursandtravel.model.CustomTour;
 import com.toursandtravel.model.ItineraryItem;
 import com.toursandtravel.model.Tour;
+import com.toursandtravel.model.Review;
 import com.toursandtravel.repository.BookingRepository;
 import com.toursandtravel.repository.CustomTourRepository;
 import com.toursandtravel.repository.ReviewRepository;
@@ -146,30 +147,118 @@ public class AdminController {
 
     @PostMapping("/admin/add_tour")
     public String addTour(
-    	@RequestParam("tourImage") MultipartFile tourImage,
-        @RequestParam String title,
-        @RequestParam String description,
-        @RequestParam double review,
-        @RequestParam double price,
-        @RequestParam String place,
-        @RequestParam String duration,
-        @RequestParam String startPoint,
-        @RequestParam String endPoint,
-        @RequestParam List<String> itinerary_day,
-        @RequestParam List<String> itinerary_description,
-        @RequestParam List<String> inclusion,
-        @RequestParam List<String> exclusion,
+    	@RequestParam(value = "tourImage", required = false) MultipartFile tourImage,
+        @RequestParam(required = false) String title,
+        @RequestParam(required = false) String description,
+        @RequestParam(required = false) String reviewStr,
+        @RequestParam(required = false) String priceStr,
+        @RequestParam(required = false) String place,
+        @RequestParam(required = false) String duration,
+        @RequestParam(required = false) String startPoint,
+        @RequestParam(required = false) String endPoint,
+        @RequestParam(required = false) List<String> itinerary_day,
+        @RequestParam(required = false) List<String> itinerary_description,
+        @RequestParam(required = false) List<String> inclusion,
+        @RequestParam(required = false) List<String> exclusion,
         HttpSession session, Model model) {
         
         User user = (User) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user);
+            
+            // Validate required fields
+            List<String> errors = new ArrayList<>();
+            
+            // Normalize and validate strings
+            title = (title != null) ? title.trim() : "";
+            description = (description != null) ? description.trim() : "";
+            place = (place != null) ? place.trim() : "";
+            duration = (duration != null) ? duration.trim() : "";
+            startPoint = (startPoint != null) ? startPoint.trim() : "";
+            endPoint = (endPoint != null) ? endPoint.trim() : "";
+            reviewStr = (reviewStr != null) ? reviewStr.trim() : "0.0";
+            priceStr = (priceStr != null) ? priceStr.trim() : "";
+            
+            if (title.isEmpty()) {
+                errors.add("Title is required.");
+            }
+            if (description.isEmpty()) {
+                errors.add("Description is required.");
+            }
+            if (priceStr.isEmpty()) {
+                errors.add("Price is required.");
+            }
+            if (place.isEmpty()) {
+                errors.add("Place is required.");
+            }
+            if (duration.isEmpty()) {
+                errors.add("Duration is required.");
+            }
+            if (startPoint.isEmpty()) {
+                errors.add("Start Point is required.");
+            }
+            if (endPoint.isEmpty()) {
+                errors.add("End Point is required.");
+            }
+            if (tourImage == null || tourImage.isEmpty()) {
+                errors.add("Tour Image is required.");
+            }
+            
+            // Validate itinerary - check if at least one entry has both day and description
+            boolean hasValidItinerary = false;
+            if (itinerary_day != null && itinerary_description != null && 
+                !itinerary_day.isEmpty() && !itinerary_description.isEmpty()) {
+                int minSize = Math.min(itinerary_day.size(), itinerary_description.size());
+                for (int i = 0; i < minSize; i++) {
+                    String day = (itinerary_day.get(i) != null) ? itinerary_day.get(i).trim() : "";
+                    String desc = (itinerary_description.get(i) != null) ? itinerary_description.get(i).trim() : "";
+                    if (!day.isEmpty() && !desc.isEmpty()) {
+                        hasValidItinerary = true;
+                        break;
+                    }
+                }
+            }
+            if (!hasValidItinerary) {
+                errors.add("At least one itinerary entry with both Day and Description is required.");
+            }
+            
+            // Parse numeric values
+            double review = 0.0;
+            double price = 0.0;
+            
+            try {
+                if (!reviewStr.isEmpty() && !reviewStr.equals("0.0")) {
+                    review = Double.parseDouble(reviewStr);
+                }
+            } catch (NumberFormatException e) {
+                errors.add("Invalid rating value.");
+            }
+            
+            try {
+                if (priceStr.isEmpty()) {
+                    errors.add("Price is required.");
+                } else {
+                    price = Double.parseDouble(priceStr);
+                    if (price <= 0) {
+                        errors.add("Price must be greater than 0.");
+                    }
+                }
+            } catch (NumberFormatException e) {
+                errors.add("Invalid price value. Please enter a valid number.");
+            }
+            
+            // If there are validation errors, return to form with error messages
+            if (!errors.isEmpty()) {
+                model.addAttribute("error", String.join("<br>", errors));
+                return "admin/tour_form.html";
+            }
+            
             Tour tour = new Tour();
     	    // Path to save the uploaded image (relative to static folder)
     	    String uploadDir = Paths.get("src", "main", "resources", "static", "img", "tour").toString();
 
     	    // Process image
-    	    if (!tourImage.isEmpty()) {
+    	    if (tourImage != null && !tourImage.isEmpty()) {
     	        try {
     	            // Get the original filename
     	            String imageName = StringUtils.cleanPath(tourImage.getOriginalFilename());
@@ -184,10 +273,11 @@ public class AdminController {
     	            tourImage.transferTo(imagePath);
     	            tour.setTourImageUrl("/img/tour/" + imageName);  
     	        } catch (IOException e) {
-    	            model.addAttribute("error", "Failed to upload image.");
-    	            return "redirect:/admin/add_tour";  
+    	            model.addAttribute("error", "Failed to upload image: " + e.getMessage());
+    	            return "admin/tour_form.html";
     	        }
     	    }
+            
             tour.setTitle(title);
             tour.setDescription(description);
             tour.setReview(review);
@@ -196,24 +286,54 @@ public class AdminController {
             tour.setDuration(duration);
             tour.setStartPoint(startPoint);
             tour.setEndPoint(endPoint);
-            System.out.println("itinerary_day: " + itinerary_day);
-            System.out.println("itinerary_description: " + itinerary_description);
             
             // Combine itinerary_day and itinerary_description
             List<ItineraryItem> itinerary = new ArrayList<>();
-            for (int i = 0; i < itinerary_day.size(); i++) {
-                ItineraryItem item = new ItineraryItem();
-                item.setDay(itinerary_day.get(i));
-                item.setDescription(itinerary_description.get(i));
-                itinerary.add(item);
+            if (itinerary_day != null && itinerary_description != null) {
+                int minSize = Math.min(itinerary_day.size(), itinerary_description.size());
+                for (int i = 0; i < minSize; i++) {
+                    String day = itinerary_day.get(i);
+                    String desc = itinerary_description.get(i);
+                    if (day != null && !day.trim().isEmpty() && 
+                        desc != null && !desc.trim().isEmpty()) {
+                        ItineraryItem item = new ItineraryItem();
+                        item.setDay(day.trim());
+                        item.setDescription(desc.trim());
+                        itinerary.add(item);
+                    }
+                }
             }
             tour.setItinerary(itinerary);
-            tour.setInclusion(inclusion);
-            tour.setExclusion(exclusion);
+            
+            // Filter out empty inclusion and exclusion entries
+            List<String> filteredInclusion = new ArrayList<>();
+            if (inclusion != null) {
+                for (String inc : inclusion) {
+                    if (inc != null && !inc.trim().isEmpty()) {
+                        filteredInclusion.add(inc.trim());
+                    }
+                }
+            }
+            tour.setInclusion(filteredInclusion);
+            
+            List<String> filteredExclusion = new ArrayList<>();
+            if (exclusion != null) {
+                for (String exc : exclusion) {
+                    if (exc != null && !exc.trim().isEmpty()) {
+                        filteredExclusion.add(exc.trim());
+                    }
+                }
+            }
+            tour.setExclusion(filteredExclusion);
 
-            tRepo.save(tour);
-            model.addAttribute("tourList", tRepo.findAll());
-            return "redirect:/admin/tour_list";
+            try {
+                tRepo.save(tour);
+                model.addAttribute("success", "Tour added successfully!");
+                return "redirect:/admin/tour_list";
+            } catch (Exception e) {
+                model.addAttribute("error", "Failed to save tour: " + e.getMessage());
+                return "admin/tour_form.html";
+            }
         }
         return "redirect:/admin/adminLogin";
     }
@@ -222,7 +342,24 @@ public class AdminController {
     public String deleteTour(@RequestParam int id, HttpSession session, Model model) {
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            tRepo.deleteById(id); // Delete the tour by ID
+            // Find the tour first
+            Tour tourToDelete = tRepo.findById(id).orElse(null);
+            if (tourToDelete != null) {
+                // Delete all reviews associated with this tour
+                List<Review> tourReviews = rRepo.findByTour(tourToDelete);
+                rRepo.deleteAll(tourReviews);
+                
+                // Delete all bookings associated with this tour
+                List<Booking> tourBookings = bRepo.findByTour(tourToDelete);
+                bRepo.deleteAll(tourBookings);
+                
+                // Delete all custom tours associated with this tour
+                List<CustomTour> tourCustomTours = customTourRepository.findByTour(tourToDelete);
+                customTourRepository.deleteAll(tourCustomTours);
+                
+                // Now delete the tour itself
+                tRepo.deleteById(id);
+            }
             model.addAttribute("tourList", tRepo.findAll());
             return "redirect:/admin/tour_list"; // Redirect to the tour list page
         }
@@ -402,11 +539,28 @@ public class AdminController {
     
     @GetMapping("/admin/delete_user")
     public String deleteUser(@RequestParam int id, HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            uRepo.deleteById(id); // Delete the tour by ID
+        User adminUser = (User) session.getAttribute("user");
+        if (adminUser != null) {
+            // Get the user to be deleted
+            User userToDelete = uRepo.findById(id).orElse(null);
+            if (userToDelete != null) {
+                // Delete all bookings associated with this user
+                List<Booking> userBookings = bRepo.findByUser(userToDelete);
+                bRepo.deleteAll(userBookings);
+                
+                // Delete all custom tours associated with this user
+                List<CustomTour> userCustomTours = customTourRepository.findByUser(userToDelete);
+                customTourRepository.deleteAll(userCustomTours);
+                
+                // Delete all reviews associated with this user
+                List<Review> userReviews = rRepo.findByUser(userToDelete);
+                rRepo.deleteAll(userReviews);
+                
+                // Now delete the user
+                uRepo.deleteById(id);
+            }
             model.addAttribute("userList", uRepo.findAll());
-            return "redirect:/admin/user_list"; // Redirect to the tour list page
+            return "redirect:/admin/user_list"; // Redirect to the user list page
         }
         return "redirect:/admin/adminLogin"; // Redirect to login if session is invalid
     }

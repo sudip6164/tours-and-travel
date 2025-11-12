@@ -47,9 +47,8 @@
       <header class="default-header">
         <nav class="navbar navbar-expand-lg navbar-light">
           <div class="container">
-            <a class="navbar-brand" href="index.html">
-              <!-- <img src="img/logo.png" alt=""> -->
-              <h4 style="color: white">Yarsa Tour & Travel</h4>
+            <a class="navbar-brand" href="/">
+              <img src="/img/logo.png" alt="Rahul's Tour & Travel" style="height: 50px;">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +59,6 @@
                 <li><a href="/">Home</a></li>
               <li><a href="/about">About</a></li>
               <li><a href="/recommend">Recommendation</a></li>
-              <li><a href="#gallery">Offers & discounts </a></li>
               <li><a href="/contact">Contact</a></li>
               <li><a href="/review">Review</a></li>
                 <li>
@@ -88,7 +86,7 @@
 	  <div class="d-flex justify-content-center h-100 rounded">
 	    <input type="text" id="search-input" class="search-input" placeholder="Search by tour title..." onkeyup="filterTours()" 
 	           style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; outline: none;">
-	    <button class="search-icon" style="background-color: #007bff; color: white; border: none; padding: 10px 15px; margin-left: 5px; border-radius: 5px; cursor: pointer;">
+	    <button type="button" class="search-icon">
 	      <i class="fa fa-search"></i>
 	    </button>
 	  </div>
@@ -139,7 +137,7 @@
                 <p class="card-text">Explore [[${tour.title}]]</p>
                 <p class="review">
                   <span>
-                  <i class="bi bi-star-fill me-1" style="color:orangered"></i>
+                  <i class="bi bi-star-fill me-1" style="color:#f97426"></i>
                   </span>
                   <span th:text="${tour.review}"></span>
                
@@ -178,7 +176,7 @@
             <h6>About Us</h6>
             <div class="list-group list-group-flush">
               <div class="list-group-item text-white">
-                <p>At Yarsa Tour and Travel, we believe in creating unforgettable travel experiences that enrich your
+                <p>At Rahul's Tour and Travel, we believe in creating unforgettable travel experiences that enrich your
                   life. </p>
               </div>
             </div>

@@ -20,7 +20,7 @@
 
 .profile-sidebar .nav-link.active,
 .profile-sidebar .nav-link:hover {
-  background-color: #007bff;
+  background-color: #090d62;
   color: #fff;
 }
 
@@ -60,11 +60,18 @@
     display: inline-block;
     margin-top: 12px;
     padding: 10px 21px;
-    background-color: #1a81f0;
+    background-color: #090d62;
     color: white;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
+    transition: all 0.3s ease;
+}
+
+.file-label:hover {
+    background-color: #070a4d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(9, 13, 98, 0.3);
 }
 
 .profile-image:focus + .file-label {

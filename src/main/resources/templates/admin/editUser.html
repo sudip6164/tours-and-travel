@@ -2,7 +2,8 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Yarsha Admin</title>
+    <title>Edit User - Rahul's Tour & Travel Admin</title>
+    <link rel="icon" href="/img/logo.png" type="image/png" />
     <link rel="stylesheet" href="/css/adminCss/dash.css" />
     <link rel="stylesheet" href="/css/adminCss/edit.css" />
     <!-- Boxicons CDN Link -->
@@ -44,7 +45,7 @@
           </a>
         </li>
         <li>
-          <a href="/admin/booking_listl" class="active">
+          <a href="/admin/booking_list" class="active">
             <i class="bx bx-book-reader"></i>
             <span class="links_name">Manage Bookings</span>
           </a>
@@ -61,8 +62,8 @@
             <span class="links_name">Manage Users</span>
           </a>
         </li>
-        <li class="/admin/adminLogout">
-          <a href="login.html">
+        <li class="log_out">
+          <a href="/admin/adminLogout">
             <i class="bx bx-log-out"></i>
             <span class="links_name">Log out</span>
           </a>
@@ -100,7 +101,7 @@
                 <input type="text" name="address" value="" />
               </div>
               <div class="button-container">
-                <a href="tour_list.html">
+                <a href="/admin/tour_list">
                   <button class="btn btn-danger">Cancel</button>
                 </a>
                 <button type="submit" class="btn btn-success">Submit</button>

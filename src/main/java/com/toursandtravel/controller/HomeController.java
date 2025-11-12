@@ -1,7 +1,10 @@
 package com.toursandtravel.controller;
 
 import java.util.List;
+import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,6 +34,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class HomeController {
+	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
+
 	@Autowired
     private TourRepository tRepo;
 	
@@ -147,6 +152,10 @@ public class HomeController {
 
 	// Helper method to send emails to admins
 	private void sendEmailToAdmins(String[] adminEmails, String subject, String emailContent) throws MessagingException {
+	    Objects.requireNonNull(adminEmails, "Admin email list must not be null");
+	    Objects.requireNonNull(subject, "Email subject must not be null");
+	    Objects.requireNonNull(emailContent, "Email content must not be null");
+	    
 	    MimeMessage message = javaMailSender.createMimeMessage();
 	    MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -212,25 +221,25 @@ public class HomeController {
 
 	        // Get all admin users
 	        List<User> admins = uRepo.findByRole("Admin");
+	        
 	        if (admins.isEmpty()) {
-	            throw new RuntimeException("No admin users found to notify.");
+	        	log.warn("Booking {} saved for user {}, but no admin users found to notify.", booking.getId(), user.getUsername());
+	        } else {
+	        	// Collect admin email addresses
+		        String[] adminEmails = admins.stream()
+		                                     .map(User::getEmail)
+		                                     .toArray(String[]::new);
+	
+		        // Send the email
+		        String subject = "Tour Approval Request";
+		        String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour." + "\n Please approve or deny this request.";
+	
+		        try {
+					sendEmailToAdmins(adminEmails, subject, emailContent);
+				} catch (MessagingException e) {
+					log.error("Failed to send booking notification email to admins.", e);
+				}
 	        }
-
-	        // Collect admin email addresses
-	        String[] adminEmails = admins.stream()
-	                                     .map(User::getEmail)
-	                                     .toArray(String[]::new);
-
-	        // Send the email
-	        String subject = "Tour Approval Request";
-	        String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour." + "\n Please approve or deny this request.";
-
-	        try {
-				sendEmailToAdmins(adminEmails, subject, emailContent);
-			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 	        model.addAttribute("success", "Booking request submitted successfully. Please wait for approval.");
 	        return "redirect:/bookingPage"; // Redirect to booking page

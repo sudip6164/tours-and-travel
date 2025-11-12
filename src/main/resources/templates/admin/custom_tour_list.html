@@ -2,9 +2,9 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Yarsha Admin</title>
+    <title>Custom Tour Management - Rahul's Tour & Travel Admin</title>
     <link rel="stylesheet" href="/css/adminCss/dash.css" />
-    <link rel="icon" href="/img/adminImg/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/img/logo.png" type="image/png" />
     <link
       href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
       rel="stylesheet"
@@ -86,62 +86,70 @@
               <table class="styled-table">
                 <thead>
                   <tr>
-                    <th>Custom Tour ID</th>
-                    <th>Tour ID</th>
+                    <th>ID</th>
                     <th>Tour Name</th>
-					<th>User ID</th>
                     <th>Username</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Start Date</th>
-                    <th>End date</th>
                     <th>Destination</th>
-                    <th>Accommodation</th>
-                    <th>Transportation</th>
-                    <th>Budget</th>
-                    <th>Activities</th>
-                    <th>Approval Status</th>
-                    <th></th>
-                    <th></th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Example row -->
-                  <tr th:each="customTour:${customTourList}">
+                  <tr th:each="customTour:${customTourList}"
+                      th:data-custom-tour-id="${customTour.id}"
+                      th:data-tour-id="${customTour.tour?.id}"
+                      th:data-tour-name="${customTour.tour?.title}"
+                      th:data-user-id="${customTour.user?.id}"
+                      th:data-username="${customTour.user?.username}"
+                      th:data-name="${customTour.name}"
+                      th:data-email="${customTour.email}"
+                      th:data-phone="${customTour.phone}"
+                      th:data-start-date="${customTour.startDate}"
+                      th:data-end-date="${customTour.endDate}"
+                      th:data-destination="${customTour.destination}"
+                      th:data-accommodation="${customTour.accommodation}"
+                      th:data-transportation="${customTour.transportation}"
+                      th:data-budget="${customTour.budget}"
+                      th:data-activities="${customTour.activities}"
+                      th:data-status="${customTour.approvalStatus}">
                     <td th:text="${customTour.id}"></td>
-                    <td th:text="${customTour.tour.id}"></td>
-                    <td th:text="${customTour.tour.title}"></td>
-                    <td th:text="${customTour.user.id}"></td>
-                    <td th:text="${customTour.user.username}"></td>
-                    <td th:text="${customTour.name}"></td>
-                    <td th:text="${customTour.email}"></td>
-                    <td th:text="${customTour.phone}"></td>
+                    <td th:text="${customTour.tour?.title}"></td>
+                    <td th:text="${customTour.user?.username}"></td>
+                    <td th:text="${customTour.destination}"></td>
                     <td th:text="${customTour.startDate}"></td>
                     <td th:text="${customTour.endDate}"></td>
-                    <td th:text="${customTour.destination}"></td>
-                    <td th:text="${customTour.accommodation}"></td>
-                    <td th:text="${customTour.transportation}"></td>
-                    <td th:text="${customTour.budget}"></td>
-                    <td th:text="${customTour.activities}"></td>
-                    <td th:text="${customTour.approvalStatus}"></td>
-					<td>
-						<button class="btn btn-success"
-								th:if="${customTour.approvalStatus} != 'Approved'"
-						        th:onclick="|return confirmApprovalOrDenial('Approved', ${customTour.id});|"
-						        style="margin-right: 5px;">Approve</button>
-						<button class="btn btn-danger"
-								th:if="${customTour.approvalStatus} != 'Denied'"
-						        th:onclick="|return confirmApprovalOrDenial('Denied', ${customTour.id});|">
-						        Deny</button>
-
-					</td>
-					<td>
+                    <td>
+                      <span th:if="${customTour.approvalStatus == 'Approved'}" class="badge bg-success" th:text="${customTour.approvalStatus}"></span>
+                      <span th:if="${customTour.approvalStatus == 'Denied'}" class="badge bg-danger" th:text="${customTour.approvalStatus}"></span>
+                      <span th:if="${customTour.approvalStatus != 'Approved' && customTour.approvalStatus != 'Denied'}" class="badge bg-warning text-dark" th:text="${customTour.approvalStatus}"></span>
+                    </td>
+                    <td style="white-space: nowrap;">
+                      <button class="btn btn-info btn-sm view-btn" 
+                              th:data-id="${customTour.id}"
+                              style="margin-right: 5px; font-size: 0.85em; padding: 4px 10px;">
+                        <i class="bx bx-show"></i> View
+                      </button>
+                      <button class="btn btn-success btn-sm"
+                              th:if="${customTour.approvalStatus != 'Approved'}"
+                              th:onclick="|return confirmApprovalOrDenial('Approved', ${customTour.id});|"
+                              style="margin-right: 5px; font-size: 0.85em; padding: 4px 10px;">
+                        Approve
+                      </button>
+                      <button class="btn btn-danger btn-sm"
+                              th:if="${customTour.approvalStatus != 'Denied'}"
+                              th:onclick="|return confirmApprovalOrDenial('Denied', ${customTour.id});|"
+                              style="margin-right: 5px; font-size: 0.85em; padding: 4px 10px;">
+                        Deny
+                      </button>
                       <a th:href="@{'/admin/delete_custom_tour'(id=${customTour.id})}"
-						 onclick="return confirm('Are you sure you want to delete this custom tour booking?');"
-						 style="text-decoration: none">
-						 <button class="btn btn-danger">Delete</button>
-					  </a>
+                         onclick="return confirm('Are you sure you want to delete this custom tour booking?');"
+                         style="text-decoration: none">
+                        <button class="btn btn-danger btn-sm" style="font-size: 0.85em; padding: 4px 10px;">
+                          <i class="bx bx-trash"></i> Delete
+                        </button>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
@@ -152,6 +160,90 @@
       </div>
     </section>
 
+    <!-- Modal for viewing full details -->
+    <div class="modal fade" id="customTourModal" tabindex="-1" aria-labelledby="customTourModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="customTourModalLabel">Custom Tour Details</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <strong>Custom Tour ID:</strong>
+                <p id="modal-custom-tour-id" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Tour ID:</strong>
+                <p id="modal-tour-id" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Tour Name:</strong>
+                <p id="modal-tour-name" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>User ID:</strong>
+                <p id="modal-user-id" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Username:</strong>
+                <p id="modal-username" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Name:</strong>
+                <p id="modal-name" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Email:</strong>
+                <p id="modal-email" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Phone:</strong>
+                <p id="modal-phone" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Start Date:</strong>
+                <p id="modal-start-date" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>End Date:</strong>
+                <p id="modal-end-date" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Destination:</strong>
+                <p id="modal-destination" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Accommodation:</strong>
+                <p id="modal-accommodation" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Transportation:</strong>
+                <p id="modal-transportation" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Budget:</strong>
+                <p id="modal-budget" class="text-muted">-</p>
+              </div>
+              <div class="col-12 mb-3">
+                <strong>Activities:</strong>
+                <p id="modal-activities" class="text-muted">-</p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <strong>Approval Status:</strong>
+                <p id="modal-status" class="text-muted">-</p>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       let sidebar = document.querySelector(".sidebar");
       let sidebarBtn = document.querySelector(".sidebarBtn");
@@ -169,16 +261,55 @@
         });
         document.getElementById(`section-${section}`).classList.add("active");
       }
+
+      // Handle View button click
+      const modalElement = document.getElementById('customTourModal');
+      const modal = new bootstrap.Modal(modalElement);
+      
+      document.querySelectorAll('.view-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const row = this.closest('tr');
+          
+          // Populate modal with data from data attributes
+          document.getElementById('modal-custom-tour-id').textContent = row.dataset.customTourId || '-';
+          document.getElementById('modal-tour-id').textContent = row.dataset.tourId || '-';
+          document.getElementById('modal-tour-name').textContent = row.dataset.tourName || '-';
+          document.getElementById('modal-user-id').textContent = row.dataset.userId || '-';
+          document.getElementById('modal-username').textContent = row.dataset.username || '-';
+          document.getElementById('modal-name').textContent = row.dataset.name || '-';
+          document.getElementById('modal-email').textContent = row.dataset.email || '-';
+          document.getElementById('modal-phone').textContent = row.dataset.phone || '-';
+          document.getElementById('modal-start-date').textContent = row.dataset.startDate || '-';
+          document.getElementById('modal-end-date').textContent = row.dataset.endDate || '-';
+          document.getElementById('modal-destination').textContent = row.dataset.destination || '-';
+          document.getElementById('modal-accommodation').textContent = row.dataset.accommodation || '-';
+          document.getElementById('modal-transportation').textContent = row.dataset.transportation || '-';
+          document.getElementById('modal-budget').textContent = row.dataset.budget || '-';
+          document.getElementById('modal-activities').textContent = row.dataset.activities || '-';
+          
+          // Set status with badge
+          const status = row.dataset.status || '-';
+          const statusElement = document.getElementById('modal-status');
+          if (status === 'Approved') {
+            statusElement.innerHTML = '<span class="badge bg-success">' + status + '</span>';
+          } else if (status === 'Denied') {
+            statusElement.innerHTML = '<span class="badge bg-danger">' + status + '</span>';
+          } else {
+            statusElement.innerHTML = '<span class="badge bg-warning text-dark">' + status + '</span>';
+          }
+          
+          modal.show();
+        });
+      });
+
+      function confirmApprovalOrDenial(action, customTourId) {
+        const confirmation = confirm(`Are you sure you want to ${action.toLowerCase()} this booking?`);
+        if (confirmation) {
+          const url = `/admin/update_custom_tour_booking_status?id=${customTourId}&status=${action}`;
+          window.location.href = url;
+        }
+        return false;
+      }
     </script>
-    <script>
-	function confirmApprovalOrDenial(action, customTourId) {
-	    const confirmation = confirm(`Are you sure you want to ${action.toLowerCase()} this booking?`);
-	    if (confirmation) {
-	        const url = `/admin/update_custom_tour_booking_status?id=${customTourId}&status=${action}`;
-	        window.location.href = url; // Redirect to the appropriate URL
-	    }
-	    return false; // Prevent default link action
-	}
-	</script>
   </body>
 </html>

@@ -51,15 +51,19 @@ h1 {
 
 .btn-yes:hover {
     background-color: #d32f2f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(244, 67, 54, 0.3);
 }
 
 .btn-cancel {
-    background-color: #007bff;
+    background-color: #090d62;
     color: #fff;
     margin-left: 10px;
     border: none;
 }
 
 .btn-cancel:hover {
-    background-color: #0056b3;
+    background-color: #070a4d;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(9, 13, 98, 0.3);
 }
