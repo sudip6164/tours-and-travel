@@ -25,6 +25,8 @@ public class Booking {
 
     private String approvalStatus = "Pending"; // Default status
     private LocalDateTime bookingDate = LocalDateTime.now(); // Automatically set booking time
+    private String paymentType; // eSewa or Cash
+    private String paymentStatus; // Paid or Pending
 
     // Getters and setters
     public int getId() {
@@ -65,5 +67,21 @@ public class Booking {
 
     public void setBookingDate(LocalDateTime bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public String getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(String paymentType) {
+        this.paymentType = paymentType;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
     }
 }

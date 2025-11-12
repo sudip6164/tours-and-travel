@@ -14,14 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
 
 import com.toursandtravel.model.User;
+import com.toursandtravel.model.Booking;
 import com.toursandtravel.repository.UserRepository;
+import com.toursandtravel.repository.BookingRepository;
 
 import jakarta.servlet.http.HttpSession;
+
+import java.util.List;
 
 @Controller
 public class UserController {
 	 @Autowired
 	 private UserRepository uRepo;
+	 
+	 @Autowired
+	 private BookingRepository bRepo;
 	 
 	@GetMapping("/user")
 	public String userProfile(HttpSession session, Model model) {
@@ -30,6 +37,9 @@ public class UserController {
 	    if (sessionUser != null) {
 	        // Use session user directly - it's updated immediately after save, no need to reload
 	    	model.addAttribute("user", sessionUser);
+	    	// Get user's bookings
+	    	List<Booking> userBookings = bRepo.findByUser(sessionUser);
+	    	model.addAttribute("userBookings", userBookings);
 	        return "user.html";
 	    }
 	    // User not logged in, redirect to login page

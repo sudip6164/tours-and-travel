@@ -96,10 +96,45 @@ public class HomeController {
     }
 	
 	@GetMapping("/succefull.html")
-    public String paymentSuccess(HttpSession session, Model model) {
+    public String paymentSuccess(@RequestParam(value = "tourId", required = false) Integer tourId, 
+                                 HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 	    if (user != null) {
 	        model.addAttribute("user", user);
+	        
+	        // Create booking with eSewa payment type if tourId is provided
+	        if (tourId != null) {
+	            Tour tour = tRepo.findById(tourId).orElse(null);
+	            if (tour != null) {
+	                Booking booking = new Booking();
+	                booking.setUser(user);
+	                booking.setTour(tour);
+	                booking.setPaymentType("eSewa");
+	                booking.setPaymentStatus("Paid");
+	                
+	                bRepo.save(booking);
+	                
+	                // Get all admin users
+	                List<User> admins = uRepo.findByRole("Admin");
+	                
+	                if (!admins.isEmpty()) {
+	                    // Collect admin email addresses
+	                    String[] adminEmails = admins.stream()
+	                                                 .map(User::getEmail)
+	                                                 .toArray(String[]::new);
+	
+	                    // Send the email
+	                    String subject = "Tour Approval Request";
+	                    String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour with eSewa payment." + "\n Please approve or deny this request.";
+	
+	                    try {
+	                        sendEmailToAdmins(adminEmails, subject, emailContent);
+	                    } catch (MessagingException e) {
+	                        log.error("Failed to send booking notification email to admins.", e);
+	                    }
+	                }
+	            }
+	        }
 	    }
         return "succefull.html";
     }
@@ -204,7 +239,9 @@ public class HomeController {
     }
 	
 	 @PostMapping("/bookTour")
-	 public String bookTour(@RequestParam int tourId, HttpSession session, Model model) {
+	 public String bookTour(@RequestParam int tourId, 
+	                        @RequestParam(value = "paymentType", defaultValue = "Cash") String paymentType,
+	                        HttpSession session, Model model) {
 	        User user = (User) session.getAttribute("user");
 
 	        if (user == null) {
@@ -216,6 +253,14 @@ public class HomeController {
 	        Booking booking = new Booking();
 	        booking.setUser(user);
 	        booking.setTour(tour);
+	        booking.setPaymentType(paymentType);
+	        
+	        // Set payment status based on payment type
+	        if ("eSewa".equalsIgnoreCase(paymentType)) {
+	            booking.setPaymentStatus("Paid");
+	        } else {
+	            booking.setPaymentStatus("Pending");
+	        }
 
 	        bRepo.save(booking);
 

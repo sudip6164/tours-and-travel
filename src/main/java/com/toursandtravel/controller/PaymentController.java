@@ -64,6 +64,10 @@ public class PaymentController {
         String baseUrl = request.getScheme() + "://" + request.getServerName() + 
                 ((request.getServerPort() == 80 || request.getServerPort() == 443) ? "" : ":" + request.getServerPort());
 
+        // Get tourId from payload if available
+        Object tourIdObj = payload.get("tourId");
+        String tourId = tourIdObj != null ? tourIdObj.toString() : null;
+        
         data.put("amount", totalStr);
         data.put("tax_amount", 0);
         data.put("total_amount", totalStr);
@@ -71,7 +75,13 @@ public class PaymentController {
         data.put("product_code", productCode);
         data.put("product_service_charge", 0);
         data.put("product_delivery_charge", 0);
-        data.put("success_url", baseUrl + "/succefull.html");
+        
+        // Add tourId to success URL if available
+        String successUrl = baseUrl + "/succefull.html";
+        if (tourId != null) {
+            successUrl += "?tourId=" + tourId;
+        }
+        data.put("success_url", successUrl);
         data.put("failure_url", baseUrl + "/payment-failure.html");
         data.put("signed_field_names", signedFields);
         data.put("signature", signature);

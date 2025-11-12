@@ -92,6 +92,8 @@
 					<th>User ID</th>
                     <th>Username</th>
                     <th>Email</th>
+                    <th>Payment Type</th>
+                    <th>Payment Status</th>
                     <th>Approval Status</th>
                     <th></th>
                     <th></th>
@@ -106,6 +108,15 @@
                     <td th:text="${booking.user.id}"></td>
                     <td th:text="${booking.user.username}"></td>
                     <td th:text="${booking.user.email}"></td>
+                    <td>
+                      <span th:if="${booking.paymentType != null}" th:text="${booking.paymentType}"></span>
+                      <span th:if="${booking.paymentType == null}" class="text-muted">-</span>
+                    </td>
+                    <td>
+                      <span th:if="${booking.paymentStatus == 'Paid'}" class="badge bg-success" th:text="${booking.paymentStatus}"></span>
+                      <span th:if="${booking.paymentStatus == 'Pending'}" class="badge bg-warning text-dark" th:text="${booking.paymentStatus}"></span>
+                      <span th:if="${booking.paymentStatus == null or (booking.paymentStatus != 'Paid' and booking.paymentStatus != 'Pending')}" class="text-muted">-</span>
+                    </td>
                     <td th:text="${booking.approvalStatus}"></td>
 					<td>
 						<button class="btn btn-success"

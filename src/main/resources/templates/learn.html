@@ -133,7 +133,8 @@
       </button>
       <form th:action="@{/bookTour}" method="post" style="display: inline-block; margin: 0.5rem;">
         <input type="hidden" name="tourId" th:value="${tour.id}">
-        <button class="btn btn-warning btn-lg" type="submit">Book Later (Pay Cash)</button>
+        <input type="hidden" name="paymentType" value="Cash">
+        <button class="btn btn-warning btn-lg" type="submit">Pay Cash</button>
       </form>
       <form th:action="@{/custom_tour_page}" method="get" style="display: inline-block; margin: 0.5rem;">
         <input type="hidden" name="tourId" th:value="${tour.id}">
@@ -295,7 +296,8 @@
         },
         body: JSON.stringify({
           total_amount: parseFloat(price),
-          amount: parseFloat(price)
+          amount: parseFloat(price),
+          tourId: tourId
         })
       })
       .then(response => response.json())

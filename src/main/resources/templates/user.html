@@ -146,11 +146,44 @@
             <h4>Booking History</h4>
             <div class="card mb-4">
               <div class="card-body">
-                <ul class="list-group">
-                  <li class="history-item p-3">Trip to Gosaikunda - <span class="badge badge-success">Completed</span></li>
-                  <li class="history-item p-3">Trip to Chitwan - <span class="badge badge-warning">Upcoming</span></li>
-                  <li class="history-item p-3">Trip to Mustang - <span class="badge badge-success">Completed</span></li>
-                </ul>
+                <div th:if="${userBookings != null and !userBookings.isEmpty()}">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Tour Name</th>
+                        <th>Booking Date</th>
+                        <th>Payment Type</th>
+                        <th>Payment Status</th>
+                        <th>Approval Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="booking : ${userBookings}">
+                        <td th:text="${booking.tour.title}"></td>
+                        <td th:text="${#temporals.format(booking.bookingDate, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td>
+                          <span th:if="${booking.paymentType != null}" th:text="${booking.paymentType}"></span>
+                          <span th:if="${booking.paymentType == null}" class="text-muted">-</span>
+                        </td>
+                        <td>
+                          <span th:if="${booking.paymentStatus == 'Paid'}" class="badge bg-success" th:text="${booking.paymentStatus}"></span>
+                          <span th:if="${booking.paymentStatus == 'Pending'}" class="badge bg-warning text-dark" th:text="${booking.paymentStatus}"></span>
+                          <span th:if="${booking.paymentStatus == null or (booking.paymentStatus != 'Paid' and booking.paymentStatus != 'Pending')}" class="text-muted">-</span>
+                        </td>
+                        <td>
+                          <span th:if="${booking.approvalStatus == 'Approved'}" class="badge bg-success">Approved</span>
+                          <span th:if="${booking.approvalStatus == 'Denied'}" class="badge bg-danger">Denied</span>
+                          <span th:if="${booking.approvalStatus != 'Approved' and booking.approvalStatus != 'Denied'}" class="badge bg-warning text-dark">
+                            <span th:text="${booking.approvalStatus != null ? booking.approvalStatus : 'Pending'}"></span>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div th:if="${userBookings == null or userBookings.isEmpty()}" class="text-center text-muted">
+                  <p>No bookings found.</p>
+                </div>
               </div>
             </div>
           </div>
