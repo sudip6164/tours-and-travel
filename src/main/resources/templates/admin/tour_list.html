@@ -111,10 +111,16 @@
                     <td th:text="${tour.price}"></td>
                     <td>
                       <img
+                        th:if="${tour.tourImageUrl != null and !tour.tourImageUrl.isEmpty()}"
                         th:src="${tour.tourImageUrl}"
                         alt="Tour Image"
                         class="tour-image" width="100" height="100"
+                        style="object-fit: cover; border-radius: 5px;"
                       />
+                      <span th:if="${tour.tourImageUrl == null or tour.tourImageUrl.isEmpty()}" 
+                            style="color: #999; font-style: italic; padding: 10px; display: inline-block;">
+                        No image
+                      </span>
                     </td>
 
                     <td>

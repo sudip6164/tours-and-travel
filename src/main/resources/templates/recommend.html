@@ -130,7 +130,17 @@
            <!-- Card 1 -->
            <div class="col-lg-3 col-md-6 equal-padding info-right" th:each="tour:${tourList}">
             <div class="card tour-card">
-              <img th:src="${tour.tourImageUrl}" class="card-img-top" alt="..." height="190 px" style="object-fit: scale-down;">
+              <img th:if="${tour.tourImageUrl != null and !tour.tourImageUrl.isEmpty()}" 
+                   th:src="${tour.tourImageUrl}" 
+                   class="card-img-top" 
+                   alt="Tour Image" 
+                   height="190 px" 
+                   style="object-fit: scale-down;">
+              <div th:if="${tour.tourImageUrl == null or tour.tourImageUrl.isEmpty()}" 
+                   class="card-img-top" 
+                   style="height: 190px; display: flex; align-items: center; justify-content: center; background-color: #f5f5f5; color: #999; font-style: italic; border: 1px solid #ddd;">
+                No image
+              </div>
               <div class="card-body">
                 <i class="bi bi-geo-alt"></i>           
                 <span class="card-title tour-title" th:text="${tour.title}"></span>

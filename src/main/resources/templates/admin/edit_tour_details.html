@@ -17,6 +17,7 @@
    "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
   </head>
 
   <body>
@@ -104,7 +105,24 @@
               </div>
               <div class="input-group">
                 <label for="tourImage">Image:</label>
-    			<input type="file" name="tourImage" />
+    			<input type="file" name="tourImage" id="tourImage" accept="image/*" onchange="previewImage(this)" />
+                <div id="imagePreview" style="margin-top: 10px; display: none;">
+                  <img id="previewImg" src="" alt="Image Preview" style="max-width: 300px; max-height: 300px; border: 1px solid #ccc; border-radius: 5px; padding: 5px; background-color: #f9f9f9;" />
+                </div>
+                <div id="currentImageContainer" 
+                     style="margin-top: 10px;"
+                     th:style="${tour.tourImageUrl != null and !tour.tourImageUrl.isEmpty() ? 'display: block;' : 'display: none;'}">
+                  <p style="font-size: 0.9em; color: #666;">Current image:</p>
+                  <img id="currentImage" 
+                       th:src="${tour.tourImageUrl != null and !tour.tourImageUrl.isEmpty() ? tour.tourImageUrl : ''}" 
+                       alt="Current Tour Image" 
+                       style="max-width: 300px; max-height: 300px; border: 1px solid #ccc; border-radius: 5px; padding: 5px; background-color: #f9f9f9;" />
+                </div>
+                <div id="noImageMessage" 
+                     style="margin-top: 10px;"
+                     th:style="${tour.tourImageUrl == null or tour.tourImageUrl.isEmpty() ? 'display: block;' : 'display: none;'}">
+                  <p style="font-size: 0.9em; color: #999; font-style: italic;">No image currently set</p>
+                </div>
               </div>
               <div class="button-container">
                 <a href="/admin/tour_list">
@@ -134,6 +152,43 @@
           sec.classList.remove("active");
         });
         document.getElementById(`section-${section}`).classList.add("active");
+      }
+
+      // Image preview function
+      function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        const currentImageContainer = document.getElementById('currentImageContainer');
+        const noImageMessage = document.getElementById('noImageMessage');
+        
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            // Hide current image and no image message
+            if (currentImageContainer) {
+              currentImageContainer.style.display = 'none';
+            }
+            if (noImageMessage) {
+              noImageMessage.style.display = 'none';
+            }
+            // Show preview
+            if (previewImg && preview) {
+              previewImg.src = e.target.result;
+              preview.style.display = 'block';
+            }
+          };
+          
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          // If file input is cleared, hide preview and show current image or no image message
+          if (preview) {
+            preview.style.display = 'none';
+          }
+          if (previewImg) {
+            previewImg.src = '';
+          }
+        }
       }
     </script>
   </body>

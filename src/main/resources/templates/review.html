@@ -111,7 +111,16 @@
                     <div class="border-0 shadow-sm rounded-3 card">
                         <div class="text-center card-body shadow">
                             <div class="d-flex justify-content-center align-items-center my-2">
-                                <img th:src="${review.user.profilePictureUrl}" alt="Profile Picture" class="rounded-circle img-fluid">
+                                <img th:if="${review.user.profilePictureUrl != null and !review.user.profilePictureUrl.isEmpty()}" 
+                                     th:src="${review.user.profilePictureUrl}" 
+                                     alt="Profile Picture" 
+                                     class="rounded-circle img-fluid" 
+                                     style="width: 60px; height: 60px; object-fit: cover;" />
+                                <div th:if="${review.user.profilePictureUrl == null or review.user.profilePictureUrl.isEmpty()}" 
+                                     class="rounded-circle d-flex align-items-center justify-content-center" 
+                                     style="width: 60px; height: 60px; background-color: #f5f5f5; color: #999; font-style: italic; border: 1px solid #ddd; font-size: 0.7em; margin: 0 auto;">
+                                  No image
+                                </div>
                             </div>
                             <div class="title fw-bold card-title h5" th:text="${review.user.username}"></div>
                             <p class="mb-2 body-text" th:text="${review.reviewText}"></p>

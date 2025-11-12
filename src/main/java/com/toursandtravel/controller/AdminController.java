@@ -264,8 +264,8 @@ public class AdminController {
             }
             
             Tour tour = new Tour();
-    	    // Path to save the uploaded image (relative to static folder)
-    	    String uploadDir = Paths.get("src", "main", "resources", "static", "img", "tour").toString();
+    	    // Path to save the uploaded image (separate uploads folder)
+    	    String uploadDir = Paths.get("src", "main", "resources", "static", "uploads", "tour").toString();
 
     	    // Process image
     	    if (tourImage != null && !tourImage.isEmpty()) {
@@ -276,12 +276,13 @@ public class AdminController {
     	            // Create a path for the image file in the upload directory
     	            Path imagePath = Paths.get(uploadDir, imageName);
 
-    	            // Create the directory if it doesn't exist
-    	            Files.createDirectories(imagePath.getParent());
+	            // Create the directory if it doesn't exist
+	            Files.createDirectories(imagePath.getParent());
 
-    	            // Save the image file
-    	            tourImage.transferTo(imagePath);
-    	            tour.setTourImageUrl("/img/tour/" + imageName);  
+	            // Save the image file - transferTo writes the file completely
+	            tourImage.transferTo(imagePath);
+	            
+	            tour.setTourImageUrl("/uploads/tour/" + imageName);
     	        } catch (IOException e) {
     	            model.addAttribute("error", "Failed to upload image: " + e.getMessage());
     	            // Preserve form values when image upload fails
@@ -415,24 +416,31 @@ public class AdminController {
             model.addAttribute("user", user);
             Tour tour = tRepo.findById(id).orElse(null);
             if (tour != null) {
+                // Update tour fields
                 tour.setTitle(title);
                 tour.setDescription(description);
                 tour.setReview(review);
                 tour.setPrice(price);
-                // Process image if uploaded
+                
+                // Process image only if a new one is uploaded
                 if (tourImage != null && !tourImage.isEmpty()) {
                     try {
-                        String uploadDir = Paths.get("src", "main", "resources", "static", "img", "tour").toString();
+                        String uploadDir = Paths.get("src", "main", "resources", "static", "uploads", "tour").toString();
                         String imageName = StringUtils.cleanPath(tourImage.getOriginalFilename());
                         Path imagePath = Paths.get(uploadDir, imageName);
                         Files.createDirectories(imagePath.getParent());
+                        
+                        // Save the image file - transferTo writes the file completely
                         tourImage.transferTo(imagePath);
-                        tour.setTourImageUrl("/img/tour/" + imageName);
+                        
+                        tour.setTourImageUrl("/uploads/tour/" + imageName);
                     } catch (IOException e) {
                         model.addAttribute("error", "Image upload failed.");
                         return "redirect:/admin/edit_tour_details?id=" + id;
                     }
                 }
+                // If no new image is uploaded, tour keeps its existing tourImageUrl
+                
                 tRepo.save(tour);
             }
             return "redirect:/admin/tour_list";

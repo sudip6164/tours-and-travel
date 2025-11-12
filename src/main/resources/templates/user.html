@@ -120,7 +120,17 @@
 					<p><strong>Address:</strong> <span th:text="${user.address}"></span></p>
                   </div>
                   <div class="col-md-4 text-center">
-                    <img th:src="${user.profilePictureUrl != null ? user.profilePictureUrl : 'https://i.mydramalist.com/RB3VNP_5c.jpg'}" alt="User Image" class="img-fluid rounded-circle profile-image" />
+                    <img th:if="${user.profilePictureUrl != null and !user.profilePictureUrl.isEmpty()}" 
+                         th:src="${user.profilePictureUrl}" 
+                         alt="User Image" 
+                         class="img-fluid rounded-circle profile-image" 
+                         style="width: 150px; height: 150px; object-fit: cover;"
+                         id="profile-image" />
+                    <div th:if="${user.profilePictureUrl == null or user.profilePictureUrl.isEmpty()}" 
+                         class="rounded-circle d-flex align-items-center justify-content-center" 
+                         style="width: 150px; height: 150px; background-color: #f5f5f5; color: #999; font-style: italic; border: 2px solid #ddd; margin: 0 auto;">
+                      No image
+                    </div>
                   </div>
                   <div class="profile-edit p-4">
                     <a href="/editProfilePage">
@@ -178,6 +188,16 @@
         // Show the targeted profile section
         $($(this).data('target')).removeClass('d-none');
       });
+      
+      // Add cache-busting to profile image to ensure it loads immediately after upload
+      var profileImage = document.getElementById('profile-image');
+      if (profileImage && profileImage.src) {
+        var src = profileImage.src;
+        // Check if URL already has query parameters
+        var separator = src.indexOf('?') !== -1 ? '&' : '?';
+        // Add cache-busting parameter
+        profileImage.src = src + separator + 'v=' + Date.now();
+      }
     });
   </script> 
 

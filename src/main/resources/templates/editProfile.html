@@ -126,11 +126,22 @@
                                     </div>
                                     <div class="col-md-4 text-center">
                                         <!-- Profile Image -->
-                                        <div class="form-group update-image">
-                                            <img id="preview-image" th:src="${user.profilePictureUrl != null ? user.profilePictureUrl : 'https://i.mydramalist.com/RB3VNP_5c.jpg'}" alt="User Image" class="img-fluid rounded-circle profile-image mt-2" />
+                                        <div class="form-group update-image" th:data-image-url="${user.profilePictureUrl}">
+                                            <img id="preview-image" 
+                                                 th:if="${user.profilePictureUrl != null and !user.profilePictureUrl.isEmpty()}"
+                                                 th:src="${user.profilePictureUrl}" 
+                                                 alt="User Image" 
+                                                 class="img-fluid rounded-circle profile-image mt-2" 
+                                                 style="width: 150px; height: 150px; object-fit: cover; margin: 0 auto; display: block;" />
+                                            <div id="no-image-placeholder" 
+                                                 th:if="${user.profilePictureUrl == null or user.profilePictureUrl.isEmpty()}"
+                                                 class="rounded-circle mt-2 d-flex align-items-center justify-content-center" 
+                                                 style="width: 150px; height: 150px; background-color: #f5f5f5; color: #999; font-style: italic; border: 2px solid #ddd; margin: 0 auto;">
+                                              No image
+                                            </div>
                                             <br>
                                             <label for="file-upload" class="file-label"><strong>Profile</strong></label>
-                                            <input type="file" class="form-control-file file-upload" id="file-upload" name="profilePicture" onchange="previewImage(event)">
+                                            <input type="file" class="form-control-file file-upload" id="file-upload" name="profilePicture" accept="image/*" onchange="previewImage(event)">
                                         </div>
                                     </div>
                                 </div>
@@ -165,17 +176,83 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script>
     function previewImage(event) {
-        const file = event.target.files[0];
+        var file = event.target.files[0];
+        var previewImageEl = document.getElementById('preview-image');
+        var noImagePlaceholder = document.getElementById('no-image-placeholder');
+        
         if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Set the preview image src to the file's content
-                document.getElementById('preview-image').src = e.target.result;
-            };
-            reader.readAsDataURL(file); // Read the file as a data URL for preview
+            // Create image element if it doesn't exist
+            if (!previewImageEl) {
+                var img = document.createElement('img');
+                img.id = 'preview-image';
+                img.className = 'img-fluid rounded-circle profile-image mt-2';
+                img.style.cssText = 'width: 150px; height: 150px; object-fit: cover; margin: 0 auto; display: block;';
+                img.alt = 'User Image';
+                var updateImageDiv = document.querySelector('.update-image');
+                var fileInput = document.getElementById('file-upload');
+                if (fileInput && updateImageDiv) {
+                    updateImageDiv.insertBefore(img, fileInput.parentElement);
+                }
+            }
+            
+            // Hide placeholder if it exists
+            if (noImagePlaceholder) {
+                noImagePlaceholder.style.display = 'none';
+            }
+            
+            // Show preview element
+            var currentPreviewEl = document.getElementById('preview-image');
+            if (currentPreviewEl) {
+                currentPreviewEl.style.display = 'block';
+                
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    // Update image source
+                    currentPreviewEl.src = e.target.result;
+                    // Ensure placeholder is hidden
+                    if (noImagePlaceholder) {
+                        noImagePlaceholder.style.display = 'none';
+                    }
+                };
+                reader.onerror = function() {
+                    console.error('Error reading file');
+                    // On error, hide preview and show placeholder
+                    if (currentPreviewEl) {
+                        currentPreviewEl.style.display = 'none';
+                    }
+                    if (noImagePlaceholder) {
+                        noImagePlaceholder.style.display = 'flex';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        } else {
+            // If file input is cleared, restore original state
+            var updateImageDiv = document.querySelector('.update-image');
+            var userImageUrl = updateImageDiv ? updateImageDiv.getAttribute('data-image-url') : null;
+            var existingPreviewEl = document.getElementById('preview-image');
+            
+            if (userImageUrl && userImageUrl !== 'null' && userImageUrl.trim() !== '') {
+                // Restore original image
+                if (existingPreviewEl) {
+                    existingPreviewEl.src = userImageUrl;
+                    existingPreviewEl.style.display = 'block';
+                }
+                if (noImagePlaceholder) {
+                    noImagePlaceholder.style.display = 'none';
+                }
+            } else {
+                // Show placeholder
+                if (existingPreviewEl) {
+                    existingPreviewEl.style.display = 'none';
+                }
+                if (noImagePlaceholder) {
+                    noImagePlaceholder.style.display = 'flex';
+                }
+            }
         }
     }
-</script>
+  </script>
   <script>
     $(document).ready(function() {
       $('.nav-link').click(function(e) {

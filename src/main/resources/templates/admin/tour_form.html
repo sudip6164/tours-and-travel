@@ -14,6 +14,7 @@
 "
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="google" content="notranslate" />
   </head>
 
   <body>
@@ -97,8 +98,11 @@
               <h3>Tour Info</h3>
               <div class="input-group">
                 <label for="tour_image">Image <span class="required-asterisk">*</span></label>
-                <input type="file" name="tourImage" id="tourImage" accept="image/*" required />
+                <input type="file" name="tourImage" id="tourImage" accept="image/*" required onchange="previewImage(this)" />
                 <small class="helper-text"><span class="required-asterisk">*</span> Please select a tour image</small>
+                <div id="imagePreview" style="margin-top: 10px; display: none;">
+                  <img id="previewImg" src="" alt="Image Preview" style="max-width: 300px; max-height: 300px; border: 1px solid #ccc; border-radius: 5px; padding: 5px; background-color: #f9f9f9;" />
+                </div>
               </div>
               <div class="input-group">
                 <label for="title">Title: <span class="required-asterisk">*</span></label>
@@ -327,6 +331,26 @@
       function removeImage(imageId) {
         // Logic to remove image by ID (this depends on how images are handled)
         console.log("Remove image:", imageId);
+      }
+
+      // Image preview function
+      function previewImage(input) {
+        const preview = document.getElementById('imagePreview');
+        const previewImg = document.getElementById('previewImg');
+        
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            previewImg.src = e.target.result;
+            preview.style.display = 'block';
+          };
+          
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          preview.style.display = 'none';
+          previewImg.src = '';
+        }
       }
     </script>
   </body>
