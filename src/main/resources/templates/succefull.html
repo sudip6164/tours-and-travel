@@ -162,6 +162,62 @@
             padding-bottom: 0 !important;
         }
         
+        /* Fix navbar text color on payment success page - ensure it's always primary color */
+        /* Override default white text for navbar links on this page */
+        body .banner-area .default-header {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body .banner-area .navbar-nav a,
+        body .banner-area .navbar-nav li a {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .navbar-nav a:hover,
+        body .banner-area .navbar-nav li a:hover {
+            color: #f97426 !important;
+        }
+        
+        body .banner-area .navbar-light .navbar-toggler {
+            color: #090d62 !important;
+            border-color: rgba(9, 13, 98, 0.3) !important;
+        }
+        
+        body .banner-area .text-white,
+        body .banner-area .default-header .text-white {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .navbar-toggler .text-white {
+            color: #090d62 !important;
+        }
+        
+        /* Ensure sticky state also has correct colors */
+        body .banner-area .is-sticky .default-header,
+        body .banner-area.is-sticky .default-header {
+            background-color: #ffffff !important;
+        }
+        
+        body .banner-area .is-sticky .navbar-nav a,
+        body .banner-area.is-sticky .navbar-nav a,
+        body .banner-area .is-sticky .navbar-nav li a,
+        body .banner-area.is-sticky .navbar-nav li a {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .is-sticky .navbar-nav a:hover,
+        body .banner-area.is-sticky .navbar-nav a:hover,
+        body .banner-area .is-sticky .navbar-nav li a:hover,
+        body .banner-area.is-sticky .navbar-nav li a:hover {
+            color: #f97426 !important;
+        }
+        
+        body .banner-area .is-sticky .text-white,
+        body .banner-area.is-sticky .text-white {
+            color: #090d62 !important;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .card-body[style*="padding: 60px"] {

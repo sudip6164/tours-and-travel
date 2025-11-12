@@ -15,7 +15,7 @@
     <!-- meta character set -->
     <meta charset="UTF-8" />
     <!-- Site Title -->
-    <title>Travel & Tour</title>
+    <title>Booking Success - Rahul's Tour & Travel</title>
     <!-- Bootstrap Icons -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.1/font/bootstrap-icons.min.css"
@@ -40,9 +40,9 @@
 
   </head>
 
-  <body>
+  <body style="background-color: #f8f9fa;">
     <!-- start banner Area -->
-    <section class="banner-area" id="home">
+    <section class="banner-area" id="home" style="min-height: auto; padding-bottom: 0;">
       <!-- Start Header Area -->
         <header class="default-header">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -88,44 +88,154 @@
                     </ul>
 			    </div>
 		    </nav>
-			             <!-- Search Bar -->
-	      <div class="search-bar-container sticky-top">
-	        <div class="d-flex justify-content-center h-100 rounded">
-	          <form class="search" action="searchedList.html" method="GET">
-	            <input type="number" class="search-input" placeholder="Enter price" name="price" min="0" required>
-	            <button type="submit" class="search-icon">
-	              <i class="fa fa-search"></i>
-	            </button>
-	          </form>
-	        </div>
-	      </div>
-	      <!-- Search Bar End -->
 	    </header>
         <!-- End Header Area -->
     </section>
 
-    <section class="default-banner">
-        <div class="overlay"></div>
-        <img src="img/slider1.jpg" alt="Banner Image">
-    </section>
-
-  <section class="contact pt-5">
+  <section class="contact pt-5 pb-5" style="background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%); min-height: 75vh; padding-top: 80px !important; padding-bottom: 60px !important;">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="mb-2 h1 font-bold"><span class="alert alert-success">Booking request submitted successfully.</span><br><br> <span class="alert alert-success">Please wait for approval.</span><br><br> <span class="alert alert-success">You will be notified via email.</span><br><br></h1>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <div class="card shadow-lg border-0" style="border-radius: 20px; overflow: hidden;">
+                        <div class="card-body text-center p-5" style="background: linear-gradient(135deg, #090d62 0%, #070a4d 100%); color: white; padding: 60px 40px !important;">
+                            <div class="mb-4" style="animation: scaleIn 0.5s ease-out;">
+                                <div style="width: 120px; height: 120px; background: white; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin: 0 auto;">
+                                    <i class="fa fa-check-circle" style="font-size: 70px; color: #28a745;"></i>
+                                </div>
+                            </div>
+                            <h2 class="mb-4" style="font-size: 2.5rem; font-weight: 600; color: white; margin-top: 20px;">Booking Submitted Successfully!</h2>
+                            <p class="mb-3" style="font-size: 1.15rem; color: rgba(255,255,255,0.95); line-height: 1.6;">Your booking request has been submitted successfully.</p>
+                            <p class="mb-3" style="font-size: 1.1rem; color: rgba(255,255,255,0.9); line-height: 1.6;">Please wait for admin approval.</p>
+                            <p class="mb-0" style="font-size: 1rem; color: rgba(255,255,255,0.85); line-height: 1.6;">You will be notified via email once your booking is approved.</p>
+                        </div>
+                        <div class="card-body p-5" style="background: white; padding: 50px 40px !important;">
+                            <div class="text-center mb-4">
+                                <p class="mb-4" style="font-size: 1.1rem; color: #666; font-weight: 400;">Thank you for choosing <strong style="color: #090d62;">Rahul's Tour & Travel</strong>!</p>
+                                <p class="text-muted mb-0" style="font-size: 0.95rem;">We look forward to providing you with an amazing travel experience.</p>
+                            </div>
+                            <div class="d-flex flex-column flex-md-row justify-content-center mt-4" style="gap: 15px;">
+                                <a href="/" class="btn btn-lg success-page-btn" style="background-color: #090d62; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(9, 13, 98, 0.3); text-decoration: none; display: inline-block;">
+                                    <i class="fa fa-home mr-2"></i> Back to Home
+                                </a>
+                                <a href="/recommend" class="btn btn-lg success-page-btn-secondary" style="background-color: #f97426; color: white; border: none; padding: 12px 30px; border-radius: 50px; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(249, 116, 38, 0.3); text-decoration: none; display: inline-block;">
+                                    <i class="fa fa-compass mr-2"></i> Explore More Tours
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
     
-    <!-- Start logo Area -->
-    <section class="logo-area">
-      <div class="container">
-        <div class="row"></div>
-      </div>
-    </section>
-    <!-- End logo Area -->
+    <style>
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .success-page-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(9, 13, 98, 0.4) !important;
+            background-color: #070a4d !important;
+        }
+        
+        .success-page-btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(249, 116, 38, 0.4) !important;
+            background-color: #e8651f !important;
+        }
+        
+        /* Hide search bar if it exists */
+        .search-bar-container {
+            display: none !important;
+        }
+        
+        /* Fix navbar text color on booking success page - ensure it's always primary color */
+        /* Override default white text for navbar links on this page */
+        body .banner-area .default-header {
+            background-color: #ffffff !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        body .banner-area .navbar-nav a,
+        body .banner-area .navbar-nav li a {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .navbar-nav a:hover,
+        body .banner-area .navbar-nav li a:hover {
+            color: #f97426 !important;
+        }
+        
+        body .banner-area .navbar-light .navbar-toggler {
+            color: #090d62 !important;
+            border-color: rgba(9, 13, 98, 0.3) !important;
+        }
+        
+        body .banner-area .text-white,
+        body .banner-area .default-header .text-white {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .navbar-toggler .text-white {
+            color: #090d62 !important;
+        }
+        
+        /* Ensure sticky state also has correct colors */
+        body .banner-area .is-sticky .default-header,
+        body .banner-area.is-sticky .default-header {
+            background-color: #ffffff !important;
+        }
+        
+        body .banner-area .is-sticky .navbar-nav a,
+        body .banner-area.is-sticky .navbar-nav a,
+        body .banner-area .is-sticky .navbar-nav li a,
+        body .banner-area.is-sticky .navbar-nav li a {
+            color: #090d62 !important;
+        }
+        
+        body .banner-area .is-sticky .navbar-nav a:hover,
+        body .banner-area.is-sticky .navbar-nav a:hover,
+        body .banner-area .is-sticky .navbar-nav li a:hover,
+        body .banner-area.is-sticky .navbar-nav li a:hover {
+            color: #f97426 !important;
+        }
+        
+        body .banner-area .is-sticky .text-white,
+        body .banner-area.is-sticky .text-white {
+            color: #090d62 !important;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .card-body[style*="padding: 60px"] {
+                padding: 40px 25px !important;
+            }
+            .card-body[style*="padding: 50px"] {
+                padding: 35px 25px !important;
+            }
+            h2[style*="font-size: 2.5rem"] {
+                font-size: 2rem !important;
+            }
+            .success-page-btn, .success-page-btn-secondary {
+                width: 100%;
+                margin-bottom: 10px;
+                display: block !important;
+            }
+            .d-flex[style*="gap: 15px"] {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+        }
+    </style>
+     
      
   <!-- start footer Area -->
   <footer class="footer-area section-gap">
