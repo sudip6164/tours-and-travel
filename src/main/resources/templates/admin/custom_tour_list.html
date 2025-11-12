@@ -144,7 +144,7 @@
                         Deny
                       </button>
                       <a th:href="@{'/admin/delete_custom_tour'(id=${customTour.id})}"
-                         onclick="return confirm('Are you sure you want to delete this custom tour booking?');"
+                         onclick="return confirmDeleteCustomTour();"
                          style="text-decoration: none">
                         <button class="btn btn-danger btn-sm" style="font-size: 0.85em; padding: 4px 10px;">
                           <i class="bx bx-trash"></i> Delete
@@ -309,6 +309,10 @@
           window.location.href = url;
         }
         return false;
+      }
+      
+      function confirmDeleteCustomTour() {
+        return confirm('⚠️ WARNING: Are you sure you want to delete this custom tour booking?\n\nThis will permanently delete the custom tour request.\n\nThis action cannot be undone!');
       }
     </script>
   </body>

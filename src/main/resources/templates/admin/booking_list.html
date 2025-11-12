@@ -120,7 +120,7 @@
 					</td>
 					<td>
                       <a th:href="@{'/admin/delete_booking'(id=${booking.id})}"
-						 onclick="return confirm('Are you sure you want to delete this booking?');"
+						 onclick="return confirmDeleteBooking();"
 						 style="text-decoration: none">
 						 <button class="btn btn-danger">Delete</button>
 					  </a>
@@ -161,6 +161,10 @@
 	    }
 	    return false; // Prevent default link action
 	}
+	
+	function confirmDeleteBooking() {
+        return confirm('⚠️ WARNING: Are you sure you want to delete this booking?\n\nThis will permanently delete the booking record.\n\nThis action cannot be undone!');
+    }
 	</script>
   </body>
 </html>

@@ -14,6 +14,15 @@
   color: #333;
 }
 
+.form-container h4 {
+  font-weight: normal;
+  color: #333;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 1.1em;
+}
+
 .form-container form {
   display: flex;
   flex-direction: column;
@@ -23,6 +32,76 @@
   font-weight: bold;
   margin-top: 10px;
 }
+
+/* Required field asterisk styling - bright orange for visibility */
+.required-asterisk {
+  color: #f97426 !important;
+  font-weight: bold !important;
+  font-size: 1.2em !important;
+  margin-left: 4px;
+  text-shadow: 0 1px 2px rgba(249, 116, 38, 0.3);
+  display: inline-block;
+}
+
+/* Make asterisks more visible in form containers */
+.form-container .required-asterisk,
+.form-container label .required-asterisk,
+.form-container h3 .required-asterisk,
+label .required-asterisk,
+h3 .required-asterisk {
+  color: #f97426 !important;
+  font-weight: bold !important;
+  font-size: 1.2em !important;
+  margin-left: 4px;
+  text-shadow: 0 1px 2px rgba(249, 116, 38, 0.3);
+  display: inline-block;
+}
+
+/* Ensure asterisks are visible in input groups */
+.input-group label .required-asterisk {
+  color: #f97426 !important;
+  font-weight: bold !important;
+  font-size: 1.2em !important;
+  margin-left: 4px;
+  text-shadow: 0 1px 2px rgba(249, 116, 38, 0.3);
+}
+
+/* Helper text styling - make it more visible */
+.helper-text {
+  color: #f97426 !important;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.form-container .helper-text,
+.input-group .helper-text {
+  color: #f97426 !important;
+  font-size: 0.9em;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+/* Override Bootstrap's text-muted for helper text in forms */
+.form-container small.helper-text,
+.input-group small.helper-text {
+  color: #f97426 !important;
+  margin-bottom: 15px;
+}
+
+/* Asterisk inside helper text */
+.helper-text .required-asterisk {
+  color: #f97426 !important;
+  font-weight: bold !important;
+  font-size: 1em !important;
+  margin-right: 4px;
+  text-shadow: 0 1px 2px rgba(249, 116, 38, 0.3);
+}
+
 .form-container input[type="text"],
 .form-container input[type="number"],
 .form-container input[type="email"],

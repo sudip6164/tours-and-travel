@@ -89,16 +89,14 @@
 
             	<label for="itinerary_description">Description:</label>
             	<textarea name="itinerary_description" required>[[${item.description}]]</textarea>
-                <button type="button" class="remove-button" onclick="this.parentElement.remove()">
+                <button type="button" class="remove-button" onclick="confirmRemoveItineraryItem(this)">
                   Remove</button><br /><br />
               </div>
             </div>
             <button type="button" onclick="addItineraryField()">
               Add More Itinerary</button><br /><br />
             <div class="button-container">
-              <a href="/admin/tour_list">
-                <button class="btn btn-danger">Cancel</button>
-              </a>
+              <button type="button" class="btn btn-danger" onclick="window.location.href='/admin/tour_list'">Cancel</button>
               <button type="submit" class="btn btn-success">Submit</button>
             </div>
           </form>
@@ -127,12 +125,31 @@
     function addItineraryField() {
       const container = document.getElementById("itineraryContainer");
       const newField = document.createElement("div");
+      newField.className = "container";
       newField.innerHTML = `
-              <input type="text" name="itinerary_day" placeholder="Day" style="margin-bottom: 10px;">
-              <textarea name="itinerary_description" placeholder="Description" style="margin-bottom: 10px;"></textarea>
-              <button type="button" onclick="this.parentElement.remove()">Remove</button><br><br>
+              <label for="itinerary_day">Day:</label>
+              <input type="text" name="itinerary_day" placeholder="Day" style="margin-bottom: 10px;" required>
+              <label for="itinerary_description">Description:</label>
+              <textarea name="itinerary_description" placeholder="Description" style="margin-bottom: 10px;" required></textarea>
+              <button type="button" class="remove-button" onclick="confirmRemoveItineraryItem(this)">Remove</button><br><br>
           `;
       container.appendChild(newField);
+    }
+    
+    function confirmRemoveItineraryItem(button) {
+      const container = document.getElementById("itineraryContainer");
+      const itineraryItems = container.querySelectorAll('.container');
+      
+      // Check if there's only one item left
+      if (itineraryItems.length <= 1) {
+        alert('⚠️ Warning: You cannot remove the last itinerary item. At least one itinerary entry is required.');
+        return;
+      }
+      
+      // Confirm before removing
+      if (confirm('Are you sure you want to remove this itinerary item?')) {
+        button.parentElement.remove();
+      }
     }
   </script>
 </body>

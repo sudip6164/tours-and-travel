@@ -125,7 +125,7 @@
                         <button class="btn btn-success">Edit</button>
                       </a>
                       <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
-						 onclick="return confirm('Are you sure you want to delete this tour?');"
+						 onclick="return confirmDeleteTour();"
 						 style="text-decoration: none">
 						 <button class="btn btn-danger">Delete</button>
 					  </a>
@@ -158,11 +158,6 @@
                       <a th:href="@{'/admin/edit_overview_details'(id=${tour.id})}" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
-						 onclick="return confirm('Are you sure you want to delete this tour?');"
-						 style="text-decoration: none">
-						 <button class="btn btn-danger">Delete</button>
-					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -190,11 +185,6 @@
                       <a th:href="@{'/admin/edit_itinerary_details'(id=${tour.id})}" style="text-decoration: none">
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
-						 onclick="return confirm('Are you sure you want to delete this tour?');"
-						 style="text-decoration: none">
-						 <button class="btn btn-danger">Delete</button>
-					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -230,11 +220,6 @@
                       >
                         <button class="btn btn-success">Edit</button>
                       </a>
-                      <a th:href="@{'/admin/delete_tour'(id=${tour.id})}"
-						 onclick="return confirm('Are you sure you want to delete this tour?');"
-						 style="text-decoration: none">
-						 <button class="btn btn-danger">Delete</button>
-					  </a>
                     </td>
                   </tr>
                 </tbody>
@@ -261,6 +246,10 @@
           sec.classList.remove("active");
         });
         document.getElementById(`section-${section}`).classList.add("active");
+      }
+      
+      function confirmDeleteTour() {
+        return confirm('⚠️ WARNING: Are you sure you want to delete this tour?\n\nThis will permanently delete:\n- The tour and all its details\n- All reviews for this tour\n- All bookings for this tour\n- All custom tour requests for this tour\n\nThis action cannot be undone!');
       }
     </script>
   </body>

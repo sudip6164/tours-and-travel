@@ -148,18 +148,18 @@ public class AdminController {
     @PostMapping("/admin/add_tour")
     public String addTour(
     	@RequestParam(value = "tourImage", required = false) MultipartFile tourImage,
-        @RequestParam(required = false) String title,
-        @RequestParam(required = false) String description,
-        @RequestParam(required = false) String reviewStr,
-        @RequestParam(required = false) String priceStr,
-        @RequestParam(required = false) String place,
-        @RequestParam(required = false) String duration,
-        @RequestParam(required = false) String startPoint,
-        @RequestParam(required = false) String endPoint,
-        @RequestParam(required = false) List<String> itinerary_day,
-        @RequestParam(required = false) List<String> itinerary_description,
-        @RequestParam(required = false) List<String> inclusion,
-        @RequestParam(required = false) List<String> exclusion,
+        @RequestParam(value = "title", required = false) String title,
+        @RequestParam(value = "description", required = false) String description,
+        @RequestParam(value = "review", required = false) String reviewStr,
+        @RequestParam(value = "price", required = false) String priceStr,
+        @RequestParam(value = "place", required = false) String place,
+        @RequestParam(value = "duration", required = false) String duration,
+        @RequestParam(value = "startPoint", required = false) String startPoint,
+        @RequestParam(value = "endPoint", required = false) String endPoint,
+        @RequestParam(value = "itinerary_day", required = false) List<String> itinerary_day,
+        @RequestParam(value = "itinerary_description", required = false) List<String> itinerary_description,
+        @RequestParam(value = "inclusion", required = false) List<String> inclusion,
+        @RequestParam(value = "exclusion", required = false) List<String> exclusion,
         HttpSession session, Model model) {
         
         User user = (User) session.getAttribute("user");
@@ -184,9 +184,6 @@ public class AdminController {
             }
             if (description.isEmpty()) {
                 errors.add("Description is required.");
-            }
-            if (priceStr.isEmpty()) {
-                errors.add("Price is required.");
             }
             if (place.isEmpty()) {
                 errors.add("Place is required.");
@@ -234,22 +231,35 @@ public class AdminController {
                 errors.add("Invalid rating value.");
             }
             
-            try {
-                if (priceStr.isEmpty()) {
-                    errors.add("Price is required.");
-                } else {
+            // Validate and parse price
+            if (priceStr == null || priceStr.isEmpty()) {
+                errors.add("Price is required.");
+            } else {
+                try {
                     price = Double.parseDouble(priceStr);
                     if (price <= 0) {
                         errors.add("Price must be greater than 0.");
                     }
+                } catch (NumberFormatException e) {
+                    errors.add("Invalid price value. Please enter a valid number.");
                 }
-            } catch (NumberFormatException e) {
-                errors.add("Invalid price value. Please enter a valid number.");
             }
             
-            // If there are validation errors, return to form with error messages
+            // If there are validation errors, return to form with error messages and preserve form values
             if (!errors.isEmpty()) {
                 model.addAttribute("error", String.join("<br>", errors));
+                // Preserve form values so user doesn't lose their input
+                model.addAttribute("formTitle", title);
+                model.addAttribute("formDescription", description);
+                model.addAttribute("formPrice", priceStr);
+                model.addAttribute("formPlace", place);
+                model.addAttribute("formDuration", duration);
+                model.addAttribute("formStartPoint", startPoint);
+                model.addAttribute("formEndPoint", endPoint);
+                model.addAttribute("formItineraryDay", itinerary_day);
+                model.addAttribute("formItineraryDescription", itinerary_description);
+                model.addAttribute("formInclusion", inclusion);
+                model.addAttribute("formExclusion", exclusion);
                 return "admin/tour_form.html";
             }
             
@@ -274,6 +284,18 @@ public class AdminController {
     	            tour.setTourImageUrl("/img/tour/" + imageName);  
     	        } catch (IOException e) {
     	            model.addAttribute("error", "Failed to upload image: " + e.getMessage());
+    	            // Preserve form values when image upload fails
+    	            model.addAttribute("formTitle", title);
+    	            model.addAttribute("formDescription", description);
+    	            model.addAttribute("formPrice", priceStr);
+    	            model.addAttribute("formPlace", place);
+    	            model.addAttribute("formDuration", duration);
+    	            model.addAttribute("formStartPoint", startPoint);
+    	            model.addAttribute("formEndPoint", endPoint);
+    	            model.addAttribute("formItineraryDay", itinerary_day);
+    	            model.addAttribute("formItineraryDescription", itinerary_description);
+    	            model.addAttribute("formInclusion", inclusion);
+    	            model.addAttribute("formExclusion", exclusion);
     	            return "admin/tour_form.html";
     	        }
     	    }
