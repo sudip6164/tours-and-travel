@@ -96,44 +96,97 @@ public class HomeController {
     }
 	
 	@GetMapping("/succefull.html")
-    public String paymentSuccess(@RequestParam(value = "tourId", required = false) Integer tourId, 
+    public String paymentSuccess(jakarta.servlet.http.HttpServletRequest request,
                                  HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 	    if (user != null) {
 	        model.addAttribute("user", user);
 	        
-	        // Create booking with eSewa payment type if tourId is provided
-	        if (tourId != null) {
-	            Tour tour = tRepo.findById(tourId).orElse(null);
-	            if (tour != null) {
-	                Booking booking = new Booking();
-	                booking.setUser(user);
-	                booking.setTour(tour);
-	                booking.setPaymentType("eSewa");
-	                booking.setPaymentStatus("Paid");
-	                
-	                bRepo.save(booking);
-	                
-	                // Get all admin users
-	                List<User> admins = uRepo.findByRole("Admin");
-	                
-	                if (!admins.isEmpty()) {
-	                    // Collect admin email addresses
-	                    String[] adminEmails = admins.stream()
-	                                                 .map(User::getEmail)
-	                                                 .toArray(String[]::new);
-	
-	                    // Send the email
-	                    String subject = "Tour Approval Request";
-	                    String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour with eSewa payment." + "\n Please approve or deny this request.";
-	
-	                    try {
-	                        sendEmailToAdmins(adminEmails, subject, emailContent);
-	                    } catch (MessagingException e) {
-	                        log.error("Failed to send booking notification email to admins.", e);
+	        // Get tourId from session (stored before redirecting to eSewa)
+	        Integer tourId = (Integer) session.getAttribute("pendingTourId");
+	        
+	        // If not in session, try to extract from URL parameter
+	        // eSewa may append data parameter, so we need to parse carefully
+	        if (tourId == null) {
+	            try {
+	                // Get all query parameters
+	                String queryString = request.getQueryString();
+	                if (queryString != null) {
+	                    // Try to extract tourId from query string
+	                    String[] params = queryString.split("&");
+	                    for (String param : params) {
+	                        if (param.startsWith("tourId=")) {
+	                            String tourIdValue = param.substring("tourId=".length());
+	                            // Extract only the part before "?" if present
+	                            if (tourIdValue.contains("?")) {
+	                                tourIdValue = tourIdValue.substring(0, tourIdValue.indexOf("?"));
+	                            }
+	                            Integer parsedTourId = Integer.parseInt(tourIdValue.trim());
+	                            log.info("Parsed tourId from query string: {}", parsedTourId);
+	                            tourId = parsedTourId;
+	                            break;
+	                        }
 	                    }
 	                }
+	            } catch (NumberFormatException e) {
+	                log.warn("Failed to parse tourId from query string: {}", request.getQueryString());
 	            }
+	        }
+	        
+	        // Store in final variable for use in lambda
+	        final Integer finalTourId = tourId;
+        
+        // Create booking with eSewa payment type if tourId is found
+        if (finalTourId != null) {
+            Tour tour = tRepo.findById(finalTourId).orElse(null);
+            if (tour != null) {
+                // Check if booking already exists to prevent duplicates
+                List<Booking> existingBookings = bRepo.findByUser(user);
+                boolean bookingExists = existingBookings.stream()
+                    .anyMatch(b -> b.getTour().getId() == finalTourId &&
+                                 "eSewa".equals(b.getPaymentType()) &&
+                                 b.getBookingDate().isAfter(java.time.LocalDateTime.now().minusMinutes(5)));
+	                
+	                if (!bookingExists) {
+	                    Booking booking = new Booking();
+	                    booking.setUser(user);
+	                    booking.setTour(tour);
+	                    booking.setPaymentType("eSewa");
+	                    booking.setPaymentStatus("Paid");
+	                    
+	                    bRepo.save(booking);
+	                    log.info("Created booking for tour {} with eSewa payment", finalTourId);
+	                    
+	                    // Clear the session attribute
+	                    session.removeAttribute("pendingTourId");
+	                    
+	                    // Get all admin users
+	                    List<User> admins = uRepo.findByRole("Admin");
+	                    
+	                    if (!admins.isEmpty()) {
+	                        // Collect admin email addresses
+	                        String[] adminEmails = admins.stream()
+	                                                     .map(User::getEmail)
+	                                                     .toArray(String[]::new);
+	
+	                        // Send the email
+	                        String subject = "Tour Approval Request";
+	                        String emailContent = user.getUsername() + " just booked " + tour.getTitle() + " the tour with eSewa payment." + "\n Please approve or deny this request.";
+	
+	                        try {
+	                            sendEmailToAdmins(adminEmails, subject, emailContent);
+	                        } catch (MessagingException e) {
+	                            log.error("Failed to send booking notification email to admins.", e);
+	                        }
+	                    }
+	                } else {
+	                    log.info("Booking already exists for tour {} with eSewa payment", finalTourId);
+	                }
+	            } else {
+	                log.warn("Tour not found for tourId: {}", finalTourId);
+	            }
+	        } else {
+	            log.warn("No tourId found in session or URL parameters");
 	        }
 	    }
         return "succefull.html";

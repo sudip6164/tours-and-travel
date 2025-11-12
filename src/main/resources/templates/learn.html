@@ -288,6 +288,12 @@
     function handlePaymentClick(price, tourId) {
       console.log('Button clicked! Price:', price, 'Tour ID:', tourId);
       
+      // Store tourId in sessionStorage so we can retrieve it after payment
+      if (tourId) {
+        sessionStorage.setItem('pendingTourId', tourId);
+        console.log('Stored tourId in sessionStorage:', tourId);
+      }
+      
       // Create a form dynamically for eSewa payment
       fetch('/api/payment/esewa', {
         method: 'POST',
@@ -308,9 +314,9 @@
         form.method = 'POST';
         form.action = data.action;
         
-        // Add all form fields
+        // Add all form fields (except action and tourId)
         Object.keys(data).forEach(key => {
-          if (key !== 'action') {
+          if (key !== 'action' && key !== 'tourId') {
             const input = document.createElement('input');
             input.type = 'hidden';
             input.name = key;
@@ -327,6 +333,8 @@
       .catch(error => {
         console.error('Error:', error);
         alert('An error occurred while initiating payment. Please try again.');
+        // Clear sessionStorage on error
+        sessionStorage.removeItem('pendingTourId');
       });
       
       return false; // Prevent default behavior

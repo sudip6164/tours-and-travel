@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/api/payment")
@@ -29,7 +33,9 @@ public class PaymentController {
     private String secret;
 
     @PostMapping("/esewa")
-    public ResponseEntity<Map<String, Object>> esewa(@RequestBody Map<String, Object> payload, jakarta.servlet.http.HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> esewa(@RequestBody Map<String, Object> payload, 
+                                                      jakarta.servlet.http.HttpServletRequest request,
+                                                      HttpSession session) {
         Number total = (Number) payload.getOrDefault("total_amount", payload.getOrDefault("amount", 0));
         double totalAmount = total == null ? 0 : total.doubleValue();
         String totalStr = String.format(java.util.Locale.US, "%.2f", totalAmount);
@@ -66,7 +72,16 @@ public class PaymentController {
 
         // Get tourId from payload if available
         Object tourIdObj = payload.get("tourId");
-        String tourId = tourIdObj != null ? tourIdObj.toString() : null;
+        if (tourIdObj != null) {
+            try {
+                Integer tourId = Integer.parseInt(tourIdObj.toString());
+                // Store tourId in session so we can retrieve it after eSewa redirect
+                session.setAttribute("pendingTourId", tourId);
+                System.out.println("Stored tourId in session: " + tourId);
+            } catch (NumberFormatException e) {
+                System.err.println("Failed to parse tourId: " + tourIdObj);
+            }
+        }
         
         data.put("amount", totalStr);
         data.put("tax_amount", 0);
@@ -76,11 +91,9 @@ public class PaymentController {
         data.put("product_service_charge", 0);
         data.put("product_delivery_charge", 0);
         
-        // Add tourId to success URL if available
+        // Don't add tourId to success URL as eSewa may append data parameter
+        // We'll retrieve it from the session instead
         String successUrl = baseUrl + "/succefull.html";
-        if (tourId != null) {
-            successUrl += "?tourId=" + tourId;
-        }
         data.put("success_url", successUrl);
         data.put("failure_url", baseUrl + "/payment-failure.html");
         data.put("signed_field_names", signedFields);
@@ -88,6 +101,22 @@ public class PaymentController {
         data.put("action", "https://rc-epay.esewa.com.np/api/epay/main/v2/form");
 
         return ResponseEntity.ok(data);
+    }
+    
+    @GetMapping("/confirm")
+    public ResponseEntity<Map<String, String>> confirmPayment(@RequestParam(value = "tourId", required = false) Integer tourId,
+                                                               HttpSession session) {
+        Map<String, String> response = new HashMap<>();
+        // Store tourId in session when confirmed from frontend (fallback method)
+        if (tourId != null) {
+            session.setAttribute("pendingTourId", tourId);
+            System.out.println("Confirmed and stored tourId in session via confirm endpoint: " + tourId);
+            response.put("status", "ok");
+        } else {
+            response.put("status", "error");
+            response.put("message", "No tourId provided");
+        }
+        return ResponseEntity.ok(response);
     }
 
     private static String hmacSha256Base64(String secret, String message) {
